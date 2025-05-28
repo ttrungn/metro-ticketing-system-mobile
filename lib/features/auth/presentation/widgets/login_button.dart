@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/logic/login_cubit.dart';
 
 class LoginButton extends StatelessWidget {
@@ -13,9 +14,9 @@ class LoginButton extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) async {
         if (state is LoginFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.error)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.error)));
         }
 
         if (state is LoginFinished) {
@@ -33,11 +34,11 @@ class LoginButton extends StatelessWidget {
           width: double.infinity,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromRGBO(216, 239, 211, 1),
+              backgroundColor: AppColor.primary,
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(vertical: 12),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(12),
               ),
             ),
             onPressed: () => context.read<LoginCubit>().login(email, password),

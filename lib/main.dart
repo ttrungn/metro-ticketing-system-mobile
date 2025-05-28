@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/presentation/screens/login_screen.dart';
 
 void main() {
@@ -14,10 +15,10 @@ class MyApp extends StatelessWidget {
       title: 'Metro Ticketing System',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: AppColor.primaryLight,
         colorScheme: ColorScheme.light(
-          primary: Color(0xFF00B14F),
-          surface: Color.fromRGBO(216, 239, 211, 1),
+          primary: AppColor.primary,
+          surface: AppColor.primaryLight,
         ),
         inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(),

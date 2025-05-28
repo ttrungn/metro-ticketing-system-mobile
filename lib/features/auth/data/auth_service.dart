@@ -9,7 +9,10 @@ class AuthService {
   Future<Map<String, dynamic>> loginUser(LoginRequest loginRequest) async {
     return await authRepository.loginUser(loginRequest.toJson());
   }
-  Future<Map<String, dynamic>> registerUser(RegisterRequest registerRequest) async {
+
+  Future<Map<String, dynamic>> registerUser(
+    RegisterRequest registerRequest,
+  ) async {
     return await authRepository.registerUser(registerRequest.toJson());
   }
 }
