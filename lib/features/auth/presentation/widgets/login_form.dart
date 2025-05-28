@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/presentation/widgets/login_button.dart';
+import 'package:metro_ticketing_system_mobile/features/auth/presentation/widgets/login_google_button.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -15,7 +17,7 @@ class _LoginFormState extends State<LoginForm> {
   final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
 
-  final Color _focusColor = Colors.green;
+  final Color _focusColor = AppColor.primary;
   final Color _unfocusColor = Colors.grey[400]!;
 
   bool _obscureText = true;
@@ -80,7 +82,8 @@ class _LoginFormState extends State<LoginForm> {
             decoration: InputDecoration(
               labelText: 'Password',
               labelStyle: TextStyle(
-                color: _passwordFocusNode.hasFocus ? _focusColor : _unfocusColor,
+                color:
+                    _passwordFocusNode.hasFocus ? _focusColor : _unfocusColor,
               ),
               prefixIcon: Icon(
                 Icons.lock,
@@ -115,6 +118,21 @@ class _LoginFormState extends State<LoginForm> {
             email: _emailController.text,
             password: _passwordController.text,
           ),
+          const SizedBox(height: 24),
+          // Separator line
+          Row(
+            children: [
+              Expanded(child: Divider(color: Colors.grey[400], thickness: 1)),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text('OR', style: TextStyle(color: Colors.grey)),
+              ),
+              Expanded(child: Divider(color: Colors.grey[400], thickness: 1)),
+            ],
+          ),
+          const SizedBox(height: 24),
+          // Login with Google button
+          LoginGoogleButton(),
         ],
       ),
     );
