@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:metro_ticketing_system_mobile/core/storage/secure_storage.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/data/auth_service.dart';
@@ -23,6 +24,8 @@ class LoginFailure extends LoginState {
   LoginFailure(this.error);
 }
 
+
+@injectable
 class LoginCubit extends Cubit<LoginState> {
   final AuthService _authService;
   LoginCubit(this._authService) : super(LoginInitial());

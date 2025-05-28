@@ -17,7 +17,7 @@ class _LoginFormState extends State<LoginForm> {
   final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
 
-  final Color _focusColor = AppColor.primary;
+  final Color _focusColor = ConstantAppColor.primary;
   final Color _unfocusColor = Colors.grey[400]!;
 
   bool _obscureText = true;
