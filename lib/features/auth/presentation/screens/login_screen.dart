@@ -16,6 +16,7 @@ class LoginScreen extends StatelessWidget {
 
 
     return Scaffold(
+
       appBar: AppBar(title: const Text('Login')),
       body: BlocProvider(
         create: (_) => LoginCubit(getIt<AuthService>()),
