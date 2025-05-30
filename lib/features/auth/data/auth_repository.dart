@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:injectable/injectable.dart';
 import 'package:metro_ticketing_system_mobile/core/network/api_client.dart';
 
+
+@lazySingleton
 class AuthRepository {
   AuthRepository();
 
