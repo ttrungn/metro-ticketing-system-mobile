@@ -39,6 +39,11 @@ dependencies:
   dio: ^5.8.0+1
   flutter_localization: ^0.3.2
 
+  #DI package
+  get_it: ^7.6.4
+  injectable: ^2.3.2
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -49,7 +54,16 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
+  injectable_generator: ^2.4.1
+  build_runner: ^2.4.8
 
+  flutter_launcher_icons: ^0.13.1 # or latest version
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/playstore.png"
+  adaptive_icon_foreground: "assets/icon/playstore.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -60,6 +74,8 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/icon/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

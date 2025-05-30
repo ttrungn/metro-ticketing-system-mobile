@@ -17,7 +17,7 @@ class _LoginFormState extends State<LoginForm> {
   final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
 
-  final Color _focusColor = AppColor.primary;
+  final Color _focusColor = ConstantAppColor.primary;
   final Color _unfocusColor = Colors.grey[400]!;
 
   bool _obscureText = true;
@@ -46,8 +46,15 @@ class _LoginFormState extends State<LoginForm> {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Align(
+            alignment: Alignment.topCenter,
+            child: Image.asset(
+              'assets/icon/metro_logo_nobg.png',
+              height: MediaQuery.of(context).size.height * 0.35), // or whatever height works
+            ),
           TextField(
             controller: _emailController,
             focusNode: _emailFocusNode,

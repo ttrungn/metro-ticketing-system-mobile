@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
-import 'package:metro_ticketing_system_mobile/features/auth/presentation/screens/login_screen.dart';
+import 'package:metro_ticketing_system_mobile/core/routes/app_router.dart';
+import 'package:metro_ticketing_system_mobile/core/routes/app_routes.dart';
 
-void main() {
+import 'core/di/service_locator.dart';
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
   runApp(const MyApp());
 }
 
@@ -15,16 +20,18 @@ class MyApp extends StatelessWidget {
       title: 'Metro Ticketing System',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: AppColor.primaryLight,
+        scaffoldBackgroundColor: ConstantAppColor.primaryLight,
         colorScheme: ColorScheme.light(
-          primary: AppColor.primary,
-          surface: AppColor.primaryLight,
+          primary: ConstantAppColor.primary,
+          surface: ConstantAppColor.primaryLight,
         ),
         inputDecorationTheme: const InputDecorationTheme(
           border: OutlineInputBorder(),
         ),
       ),
-      home: LoginScreen(),
+
+      initialRoute: AppRoutes.home,
+      onGenerateRoute: AppRouter.onGenerateRoute,
     );
   }
 }
