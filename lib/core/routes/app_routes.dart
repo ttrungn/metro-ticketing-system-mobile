@@ -16,4 +16,7 @@ abstract class AppRoutes {
   static const profile = '/profile';
 
   static const settings = '/settings';
+
+  // Student Verification Form Screen
+  static const studentVerificationForm = '/student-verification-form';
 }
