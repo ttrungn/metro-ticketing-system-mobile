@@ -61,6 +61,18 @@ class ErrorScreen extends StatelessWidget {
                   Navigator.pushNamed(context, AppRoutes.home);
                 },
                 child: const Text('Home'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ConstantAppColor.primary,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.studentVerificationForm);
+                },
+                child: const Text('Student Verification Form'),
               )
             ],
           ),
