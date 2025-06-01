@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
 
-      initialRoute: AppRoutes.home,
+      initialRoute: AppRoutes.login,
       onGenerateRoute: AppRouter.onGenerateRoute,
     );
   }

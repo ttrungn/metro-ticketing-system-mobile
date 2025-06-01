@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/logic/login_cubit.dart';
 
+import '../../../../core/routes/app_routes.dart';
+
 class LoginButton extends StatelessWidget {
   final String email;
   final String password;
@@ -41,7 +43,11 @@ class LoginButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            onPressed: () => context.read<LoginCubit>().login(email, password),
+            onPressed: () {
+            //   context.read<LoginCubit>().login
+            // (email, password);
+              Navigator.pushNamed(context, AppRoutes.home);
+              },
             child: const Text(
               "Login",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
