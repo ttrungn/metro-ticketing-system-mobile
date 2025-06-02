@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/presentation/screens/login_screen.dart';
+import 'package:metro_ticketing_system_mobile/features/auth/presentation/screens/register_screen.dart';
 import '../../features/student_verification/presentation/screens/verification_form_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/user/presentation/screens/profile_screen.dart';
@@ -12,6 +13,11 @@ class AppRouter {
       case AppRoutes.login:
         return MaterialPageRoute(
           builder: (_) => const LoginScreen(),
+          settings: settings,
+        );
+      case AppRoutes.register:
+        return MaterialPageRoute(
+          builder: (_) => const RegisterScreen(),
           settings: settings,
         );
       case AppRoutes.home:
