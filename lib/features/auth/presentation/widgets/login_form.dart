@@ -51,9 +51,12 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           Align(
             alignment: Alignment.topCenter,
-            child: Image.asset(
-              'assets/icon/metro_logo_nobg.png',
-              height: MediaQuery.of(context).size.height * 0.35), // or whatever height works
+            child: Hero(
+              tag: 'logo',
+              child: Image.asset(
+                'assets/icon/metro_logo_nobg.png',
+                height: MediaQuery.of(context).size.height * 0.35),
+            ), // or whatever height works
             ),
           TextField(
             controller: _emailController,
