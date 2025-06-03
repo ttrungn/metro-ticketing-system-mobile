@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:metro_ticketing_system_mobile/core/configs/env.dart';
 import 'package:metro_ticketing_system_mobile/core/storage/secure_storage.dart';
 
 class ApiClient {
   static final Dio dio = Dio(
     BaseOptions(
-      baseUrl: 'http://localhost:9000',
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
+      baseUrl: Env.apiUrl,
+      connectTimeout: const Duration(seconds: 60),
+      receiveTimeout: const Duration(seconds: 60),
       headers: {'Content-Type': 'application/json'},
     ),
   );
@@ -26,8 +27,8 @@ class ApiClient {
         onResponse: (response, handler) {
           return handler.next(response);
         },
-        onError: (DioException e, handler) {
-          return handler.next(e);
+        onError: (DioException err, handler) {
+          return handler.next(err);
         },
       ),
     );
