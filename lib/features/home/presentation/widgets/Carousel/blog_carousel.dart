@@ -54,7 +54,7 @@ class BlogCarousel extends StatelessWidget {
 }
 
 class _BlogCard extends StatelessWidget {
-  const _BlogCard({super.key});
+  const _BlogCard();
 
   @override
   Widget build(BuildContext context) {
