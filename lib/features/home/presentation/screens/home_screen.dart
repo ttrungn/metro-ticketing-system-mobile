@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
+import 'package:metro_ticketing_system_mobile/features/home/presentation/widgets/Carousel/blog_carousel.dart';
+import 'package:metro_ticketing_system_mobile/features/home/presentation/widgets/custom_app_bar.dart';
+import 'package:metro_ticketing_system_mobile/features/home/presentation/widgets/main_buttons_list/main_grid_button_list.dart';
+import 'package:metro_ticketing_system_mobile/features/home/presentation/widgets/phone_button.dart';
 
+import '../widgets/Carousel/info_carousel.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,34 +12,16 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: ConstantAppColor.primary,
+      extendBodyBehindAppBar: true,
+      body: CustomScrollView(
+        slivers: [
+          CustomAppBar(),
+          MainGridButtonList(),
+          InfoCarousel(),
+          BlogCarousel()
+        ],
       ),
-      body: SizedBox(
-        height: double.infinity,
-        width: double.infinity,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Hello Metro', style:
-                      TextStyle(
-                        color: ConstantAppColor.primary,
-                        fontSize: 40.0,
-                        fontWeight: FontWeight.w600,
-                      )
-                    ,),
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
+      floatingActionButton: PhoneButton(),
     );
   }
 }
