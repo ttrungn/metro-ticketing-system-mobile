@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
 
 class MetroInfoCard extends StatelessWidget {
   const MetroInfoCard({super.key});
