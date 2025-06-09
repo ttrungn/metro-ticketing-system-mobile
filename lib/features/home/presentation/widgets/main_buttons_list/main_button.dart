@@ -6,8 +6,9 @@ import '../../../../../core/constants/app_color.dart';
 class MainButton extends StatelessWidget {
   final IconData icon;
   final String text;
+  final VoidCallback onPressed;
 
-  const MainButton({super.key, required this.icon, required this.text});
+  const MainButton({super.key, required this.icon, required this.text, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class MainButton extends StatelessWidget {
           ),
         ],
       ),
-      onPressed: () {},
+      onPressed: onPressed,
     );
   }
 }

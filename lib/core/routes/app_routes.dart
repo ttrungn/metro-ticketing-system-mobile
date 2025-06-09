@@ -10,9 +10,10 @@ abstract class AppRoutes {
   // Main screen - Core Feature
   static const home= '/home';
 
+  static const myTicket = '/my-ticket';
 
 
-  // Secondary Screens - Auxiliary Screen
+  // Secondary Screens - Auxiliary Screens
   static const profile = '/profile';
 
   static const settings = '/settings';
