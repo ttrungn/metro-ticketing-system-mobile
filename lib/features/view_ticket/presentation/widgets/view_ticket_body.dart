@@ -4,9 +4,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:metro_ticketing_system_mobile/features/view_ticket/data/models/response/ticket_box_info_list_response.dart';
 import 'package:metro_ticketing_system_mobile/features/view_ticket/presentation/widgets/components/ticket_toggle_panel.dart';
 
+import '../../../../core/common/presentation/widgets/ticket_widgets/ticket_box.dart';
 import '../../../../core/constants/app_color.dart';
 import '../../logic/view_ticket_cubit.dart';
-import 'components/ticket_box.dart';
 
 class ViewTicketBody extends StatelessWidget {
   const ViewTicketBody({super.key});
@@ -42,19 +42,31 @@ class ViewTicketBody extends StatelessWidget {
                       itemCount: tickets.length,
                       itemBuilder: (context, index) {
                         final name = tickets[index].name;
-                        final DateTime? activateDate = tickets[index].activateDate;
+                        final DateTime? activateDate =
+                            tickets[index].activateDate;
 
                         // --- Alternative way to format the date manually ---
-                        final String formattedActivateDate = activateDate != null
-                            ? '${activateDate.hour.toString().padLeft(2, '0')}:'
-                            '${activateDate.minute.toString().padLeft(2, '0')} '
-                            '${activateDate.day.toString().padLeft(2, '0')}/'
-                            '${activateDate.month.toString().padLeft(2, '0')}/'
-                            '${activateDate.year}'
-                            : 'N/A'; // Or h
-                        return TicketBox(
-                          ticketName: name,
-                          activateDate: formattedActivateDate,
+                        final String formattedActivateDate =
+                            activateDate != null
+                                ? '${activateDate.hour.toString().padLeft(2, '0')}:'
+                                    '${activateDate.minute.toString().padLeft(2, '0')} '
+                                    '${activateDate.day.toString().padLeft(2, '0')}/'
+                                    '${activateDate.month.toString().padLeft(2, '0')}/'
+                                    '${activateDate.year}'
+                                : 'N/A'; // Or h
+
+                        return FittedBox(
+                          child: TicketBox(
+                            ticketName: name,
+                            bottomContent: Text(
+                              overflow: TextOverflow.ellipsis,
+                              'Tự động kích hoạt: ${formattedActivateDate.toString()}',
+                              style: TextStyle(
+                                fontSize: 17,
+                                color: ConstantAppColor.primary,
+                              ),
+                            ), onTap: () {  },
+                          ),
                         );
                       },
                     );

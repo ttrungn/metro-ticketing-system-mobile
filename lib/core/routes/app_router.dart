@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/presentation/screens/login_screen.dart';
+import 'package:metro_ticketing_system_mobile/features/buy_ticket/presentation/screens/buy_ticket_page.dart';
 import 'package:metro_ticketing_system_mobile/features/view_ticket/presentation/screens/view_ticket_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/presentation/screens/register_screen.dart';
 import '../../features/student_verification/presentation/screens/verification_form_screen.dart';
@@ -40,6 +41,10 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => const ViewTicketScreen(),
           settings: settings,
+        );
+      case AppRoutes.buyTicket:
+        return MaterialPageRoute(
+          builder: (_) => const BuyTicketPage(),
         );
       default:
         return MaterialPageRoute(

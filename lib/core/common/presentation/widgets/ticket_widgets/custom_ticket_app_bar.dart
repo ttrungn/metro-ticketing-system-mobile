@@ -43,7 +43,7 @@ class CustomTicketAppBar extends StatelessWidget {
                 ),
                 Positioned(
                   right: 16,
-                  child: leftWidget ?? Placeholder(),
+                  child: leftWidget ?? Container(),
                 ),
               ],
             ),
