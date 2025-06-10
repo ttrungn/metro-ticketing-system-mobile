@@ -43,19 +43,19 @@ class CustomTicketAppBar extends StatelessWidget {
                 ),
                 Positioned(
                   right: 16,
-                  child: leftWidget ?? Placeholder(),
+                  child: leftWidget ?? Container(),
                 ),
               ],
             ),
           ),
         ),
         Container(
-          height: 200,
+          height: 180,
           decoration: BoxDecoration(
             color: ConstantAppColor.primary,
             image: DecorationImage(
               image: AssetImage('assets/banners/test_transparent.png'),
-              fit: BoxFit.cover,
+              fit: BoxFit.contain,
             ),
           ),
         ),

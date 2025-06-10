@@ -62,6 +62,7 @@ class MainGridButtonList extends StatelessWidget {
                         icon: FontAwesomeIcons.ticket,
                         text: 'Mua vé',
                         onPressed: () {
+                          Navigator.pushNamed(context, '/buy-ticket');
                         },
                       ),
                       MainButton(

@@ -12,6 +12,8 @@ abstract class AppRoutes {
 
   static const myTicket = '/my-ticket';
 
+  static const buyTicket = '/buy-ticket';
+
 
   // Secondary Screens - Auxiliary Screens
   static const profile = '/profile';
@@ -20,4 +22,5 @@ abstract class AppRoutes {
 
   // Student Verification Form Screen
   static const studentVerificationForm = '/student-verification-form';
+
 }
