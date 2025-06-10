@@ -12,30 +12,33 @@ class ViewTicketScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ConstantAppColor.primary,
-      body: Column(
-        children: [
-          CustomTicketAppBar(
-            title: screenTitle,
-            leftWidget: GestureDetector(
-              onTap: () {},
-              child: Text(
-                "Hết hạn",
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 15,
+    return BlocProvider(
+      create: (_) => ViewTicketCubit(),
+      child: Scaffold(
+        backgroundColor: ConstantAppColor.primary,
+        body: Column(
+          children: [
+            CustomTicketAppBar(
+              title: screenTitle,
+              leftWidget: GestureDetector(
+                onTap: () {},
+                child: Text(
+                  "Hết hạn",
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 15,
+                  ),
                 ),
               ),
             ),
-          ),
 
-          SizedBox(height: 20),
-          ViewTicketBody(
+            SizedBox(height: 20),
+            ViewTicketBody(
 
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

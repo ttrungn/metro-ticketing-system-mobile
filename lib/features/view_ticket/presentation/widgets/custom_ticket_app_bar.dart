@@ -50,12 +50,12 @@ class CustomTicketAppBar extends StatelessWidget {
           ),
         ),
         Container(
-          height: 200,
+          height: 180,
           decoration: BoxDecoration(
             color: ConstantAppColor.primary,
             image: DecorationImage(
               image: AssetImage('assets/banners/test_transparent.png'),
-              fit: BoxFit.cover,
+              fit: BoxFit.contain,
             ),
           ),
         ),
