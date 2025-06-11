@@ -12,7 +12,7 @@ class ViewTicketRepository {
 
     try {
       final response = await ApiClient.dio.get(
-        '/tickets',
+        '/user-tickets',
         queryParameters: queryParams, //status : used, unused, expire
       );
 
