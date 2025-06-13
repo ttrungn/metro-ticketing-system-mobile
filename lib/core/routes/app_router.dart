@@ -6,6 +6,7 @@ import 'package:metro_ticketing_system_mobile/features/auth/presentation/screens
 import '../../features/student_verification/presentation/screens/verification_form_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/user/presentation/screens/profile_screen.dart';
+import '../../features/settings/presentation/screens/settings_screen.dart';
 import '../common/presentation/screens/error_screen.dart';
 import 'app_routes.dart';
 
@@ -45,6 +46,11 @@ class AppRouter {
       case AppRoutes.buyTicket:
         return MaterialPageRoute(
           builder: (_) => const BuyTicketPage(),
+        );
+      case AppRoutes.settings:
+        return MaterialPageRoute(
+          builder: (_) => const SettingsScreen(), // Replace with actual SettingsScreen
+          settings: settings,
         );
       default:
         return MaterialPageRoute(
