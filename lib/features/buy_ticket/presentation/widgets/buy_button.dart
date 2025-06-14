@@ -9,8 +9,10 @@ class BuyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
+
       },
       style: ButtonStyle(
+          overlayColor: WidgetStatePropertyAll(Colors.white.withAlpha(25)),
           backgroundColor: WidgetStatePropertyAll(ConstantAppColor.primary),
           shape: WidgetStatePropertyAll(
               RoundedRectangleBorder(
