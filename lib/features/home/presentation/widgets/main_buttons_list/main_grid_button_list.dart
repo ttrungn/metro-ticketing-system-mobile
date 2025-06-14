@@ -61,26 +61,26 @@ class MainGridButtonList extends StatelessWidget {
                       MainButton(
                         icon: FontAwesomeIcons.ticket,
                         text: 'Mua vé',
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/buy-ticket');
+                        onPressed: () async {
+                          await Navigator.pushNamed(context, '/buy-ticket');
                         },
                       ),
                       MainButton(
                         icon: FontAwesomeIcons.train,
                         text: 'Vé của tôi',
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/my-ticket');
+                        onPressed: () async {
+                          await Navigator.pushNamed(context, '/my-ticket');
                         },
                       ),
                       MainButton(
                         icon: Icons.feedback_rounded,
                         text: 'Đánh giá',
-                        onPressed: () {},
+                        onPressed: () async {},
                       ),
                       MainButton(
                         icon: Icons.settings,
                         text: 'Cài đặt',
-                        onPressed: () {},
+                        onPressed: () async {},
                       ),
                     ],
                   ),
