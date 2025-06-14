@@ -21,7 +21,7 @@ class _PhoneButtonState extends State<PhoneButton> {
         child: LayoutBuilder(
           builder: (context, constraints) {
             return Icon(
-              Icons.phone,
+              Icons.shopping_cart,
               color: Colors.white,
               size: constraints.maxHeight * 0.6,
             );

@@ -3,7 +3,7 @@
 import '../../../features/buy_ticket/data/models/dto/buy_ticket_info.dart';
 
 class TicketBuilder{
-   static List<Map<String, dynamic>> buildTicketDetailItems(BuyTicketInfo ticket) {
+   static List<Map<String, dynamic>> buildBuyTicketDetailItems(BuyTicketInfo ticket) {
     return [
       {
         'label': 'Ticket type:',

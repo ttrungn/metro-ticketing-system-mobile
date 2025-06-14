@@ -24,20 +24,34 @@ final class BuyTicketFetch extends BuyTicketState{
   BuyTicketFetch({required this.buyTickets});
 }
 
+final class BuyTicketSearchRoute extends BuyTicketState{
+
+}
+
 class BuyTicketCubit extends Cubit<BuyTicketState>{
   BuyTicketCubit():super(BuyTicketLoading());
 
-  void fetchBuyTickets(){
+  void fetchBuyTickets() async{
     emit(BuyTicketLoading());
 
     //mock api loading
-    Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(milliseconds: 300));
     List<BuyTicketInfo> sortedList = getMockData().toList()
       ..sort((a, b) => a.type.index.compareTo(b.type.index));
     emit(BuyTicketFetch(buyTickets: sortedList));
 
   }
+  void switchToSearchRoute() async{
+    emit(BuyTicketLoading());
+    await Future.delayed(Duration(milliseconds: 300));
+
+    emit(BuyTicketSearchRoute());
+  }
 }
+
+
+
+
 
 List<BuyTicketInfo> getMockData() {
   return [

@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
 
+import '../../../../features/buy_ticket/presentation/widgets/buy_button.dart';
+import '../../../../features/buy_ticket/presentation/widgets/ticket_dialog_content.dart';
 import 'custom_ticket_shape.dart';
 import 'dashed_line_painter.dart';
 
@@ -14,7 +16,6 @@ class DialogUtils {
 
   static void showCustomDialog(
       BuildContext context, {
-        required VoidCallback okBtnFunction,
         required Widget Function() childBuilder,
         required Widget bottomPart,
         double? contentWidth,
@@ -46,16 +47,14 @@ class DialogUtils {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(25),
-                          child: Container(
+                          child: SizedBox(
                             width: contentWidth ?? MediaQuery.of(context).size.width * 0.15,
                             height: contentWidth ?? MediaQuery.of(context).size.width * 0.15,
                             child: Image.asset('assets/icon/sm_metro_logo_nobg.png'),
                           ),
                         ),
 
-
                         childBuilder(), // <-- DYNAMIC BODY CONTENT
-
 
                         SizedBox(
                           width: double.infinity,
@@ -84,6 +83,18 @@ class DialogUtils {
       },
     );
   }
+
+  static VoidCallback buildAndShowBuyTicketDialogAction({required BuildContext context,required List<Map<String,dynamic>> ticketDetails , Widget? bottomPart}) {
+    return () {
+      showCustomDialog(
+        context,
+        childBuilder: () => TicketDialogContent(
+          ticketDetails: ticketDetails,
+        ), bottomPart: BuyButton(),
+      );
+    };
+  }
+
 }
 
 
