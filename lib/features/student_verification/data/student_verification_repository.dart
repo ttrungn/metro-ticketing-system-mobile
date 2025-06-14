@@ -9,14 +9,15 @@ class StudentVerificationRepository {
 
   StudentVerificationRepository(this._secureStorage);
 
-  Future<Response> submitVerificationRequest(FormData data) async {
+  Future<Map<String, dynamic>> submitVerificationRequest(FormData data) async {
     try {
       final token = await _secureStorage.readSecureData(key: 'accessToken');
       final response = await ApiClient.dio.post(
         '/user/StudentRequest/',
         data: data,
-          options: Options(contentType: 'multipart/form-data',
-          headers: {
+        options: Options(
+            contentType: 'multipart/form-data',
+            headers: {
             'Authorization': 'Bearer $token',
           }
         ),
