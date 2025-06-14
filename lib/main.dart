@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:metro_ticketing_system_mobile/core/configs/api_client.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metro_ticketing_system_mobile/core/common/cubit/loading_cubit.dart';
 import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
@@ -10,6 +11,7 @@ import 'core/di/service_locator.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
+  ApiClient.init();
   runApp(
     MultiBlocProvider(
       providers: [BlocProvider(create: (_) => LoadingCubit())],
