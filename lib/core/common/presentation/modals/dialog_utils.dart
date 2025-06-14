@@ -1,111 +1,92 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
 
-class DialogUtils{
+import 'custom_ticket_shape.dart';
+import 'dashed_line_painter.dart';
+
+class DialogUtils {
   static DialogUtils _instance = new DialogUtils.internal();
 
   DialogUtils.internal();
 
   factory DialogUtils() => _instance;
 
-  static void showCustomDialog(BuildContext context,{
-    required String title,
-    String okBtnText="OK",
-    String cancelBtnText="Cancel",
-    required VoidCallback okBtnFunction,
-    double? contentWidth,
-    double? contentHeight,
-  }){
-    showDialog(
+  static void showCustomDialog(
+      BuildContext context, {
+        required VoidCallback okBtnFunction,
+        required Widget Function() childBuilder,
+        required Widget bottomPart,
+        double? contentWidth,
+        double? contentHeight,
+      }) {
+    showGeneralDialog(
       context: context,
-      builder: (_) {
-        return Dialog(
-          // Đặt backgroundColor là transparent để ClipPath và Material bên trong kiểm soát hình dạng và màu
-          backgroundColor: Colors.transparent,
-          // Đảm bảo không có padding mặc định từ Dialog
-          insetPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0), // Khoảng cách với mép màn hình
+      barrierDismissible: true,
 
-          child: ClipPath( // <--- ClipPath bao bọc toàn bộ nội dung của Dialog
-            clipper: CustomTicketShape(),
-            child: Material( // <--- Material để cung cấp màu nền và bóng đổ cho hình dạng vé
-              color: Colors.white, // Màu nền của toàn bộ Dialog có hình dạng vé
-              elevation: 5.0, // Độ nổi cho Dialog
-              child: IntrinsicWidth( // Giúp Dialog tự điều chỉnh chiều rộng theo nội dung (hoặc theo width của SizedBox)
-                child: Column(
-                  mainAxisSize: MainAxisSize.min, // Giúp Column chỉ chiếm không gian cần thiết
-                  children: [
-                    // Title Section
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 0.0),
-                      child: Text(
-                        title,
-                        style: Theme.of(context).textTheme.headlineSmall, // Sử dụng style mặc định của AlertDialog title
-                        textAlign: TextAlign.center, // Canh giữa title nếu muốn
-                      ),
-                    ),
-
-                    // Content Section
-                    SizedBox(
-                      width: contentWidth ?? MediaQuery.of(context).size.width * 0.7,
-                      height: contentHeight ?? 100,
-                      child: Center(
-                        child: Text("hehe"),
-                      ),
-                    ),
-
-                    // Actions Section
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          TextButton(
-                            onPressed: okBtnFunction,
-                            child: Text(okBtnText),
+      barrierLabel: "Dismiss",
+      pageBuilder: (_, __, ___) => const SizedBox(),
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        final curvedAnimation = CurvedAnimation(parent: animation, curve: Curves.easeInOut);
+        return SlideTransition(
+          position: Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(curvedAnimation),
+          child: Dialog(
+            backgroundColor: Colors.transparent,
+            insetPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
+            child: ClipPath(
+              clipper: CustomTicketShape(),
+              child: Material(
+                color: ConstantAppColor.primaryLight,
+                elevation: 5.0,
+                child: IntrinsicWidth(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(25),
+                          child: Container(
+                            width: contentWidth ?? MediaQuery.of(context).size.width * 0.15,
+                            height: contentWidth ?? MediaQuery.of(context).size.width * 0.15,
+                            child: Image.asset('assets/icon/sm_metro_logo_nobg.png'),
                           ),
-                          TextButton(
-                            child: Text(cancelBtnText),
-                            onPressed: () => Navigator.pop(context),
+                        ),
+
+
+                        childBuilder(), // <-- DYNAMIC BODY CONTENT
+
+
+                        SizedBox(
+                          width: double.infinity,
+                          height: 0,
+                          child: CustomPaint(
+                            painter: DashedLinePainter(),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(child: bottomPart)
+                            ],
                           )
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
           ),
         );
-      }
+      },
     );
   }
 }
 
-class CustomTicketShape extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    path.addRRect(
-        RRect.fromRectAndRadius(
-            Rect.fromLTWH(0, 0, size.width, size.height),
-            Radius.circular(8)));
-    path.addOval(
-        Rect.fromCircle(
-            center: Offset(0, size.height*0.85),
-            radius: 15));
-    path.addOval(
-        Rect.fromCircle(
-            center: Offset(size.width, size.height * 0.85),
-            radius: 15));
-    path.fillType = PathFillType.evenOdd;
-    return path;
-  }
 
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    return true;
-  }
 
-}
+
+
