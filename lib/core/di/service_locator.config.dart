@@ -21,6 +21,14 @@ import 'package:metro_ticketing_system_mobile/features/auth/logic/login_cubit.da
     as _i18;
 import 'package:metro_ticketing_system_mobile/features/auth/logic/register_cubit.dart'
     as _i413;
+import 'package:metro_ticketing_system_mobile/features/user/data/user_repository.dart'
+    as _i431;
+import 'package:metro_ticketing_system_mobile/features/user/data/user_service.dart'
+    as _i785;
+import 'package:metro_ticketing_system_mobile/features/user/logic/user_cubit.dart'
+    as _i687;
+import 'package:metro_ticketing_system_mobile/features/view_ticket/data/view_ticket_repository.dart'
+    as _i982;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -31,9 +39,17 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.lazySingleton<_i689.SecureStorage>(() => _i689.SecureStorage());
     gh.lazySingleton<_i1037.AuthRepository>(() => _i1037.AuthRepository());
+    gh.lazySingleton<_i431.UserRepository>(() => _i431.UserRepository());
+    gh.lazySingleton<_i982.ViewTicketRepository>(
+      () => _i982.ViewTicketRepository(),
+    );
+    gh.lazySingleton<_i785.UserService>(
+      () => _i785.UserService(gh<_i431.UserRepository>()),
+    );
     gh.lazySingleton<_i728.AuthService>(
       () => _i728.AuthService(gh<_i1037.AuthRepository>()),
     );
+    gh.factory<_i687.UserCubit>(() => _i687.UserCubit(gh<_i785.UserService>()));
     gh.factory<_i413.RegisterCubit>(
       () => _i413.RegisterCubit(gh<_i728.AuthService>()),
     );
