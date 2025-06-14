@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_color.dart';
 import '../widgets/info_tile.dart';
+import 'package:metro_ticketing_system_mobile/features/student_verification/presentation/screens/verification_form_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -50,6 +51,20 @@ class ProfileScreen extends StatelessWidget {
               showTrailing: true,
               onTap: () {
                 // Manage payment methods
+              },
+            ),
+            InfoTile(
+              icon: Icons.verified_user,
+              title: 'Xác thực sinh viên',
+              subtitle: 'Chưa xác thực',
+              showTrailing: true,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const VerificationFormScreen(),
+                  ),
+                );
               },
             ),
             const Divider(),

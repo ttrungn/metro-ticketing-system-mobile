@@ -21,6 +21,12 @@ import 'package:metro_ticketing_system_mobile/features/auth/logic/login_cubit.da
     as _i18;
 import 'package:metro_ticketing_system_mobile/features/auth/logic/register_cubit.dart'
     as _i413;
+import 'package:metro_ticketing_system_mobile/features/student_verification/data/student_verification_repository.dart'
+as _i1020;
+import 'package:metro_ticketing_system_mobile/features/student_verification/data/student_verification_service.dart'
+as _i1009;
+import 'package:metro_ticketing_system_mobile/features/student_verification/logic/verification_cubit.dart'
+as _i101;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -39,6 +45,21 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i18.LoginCubit>(
       () => _i18.LoginCubit(gh<_i728.AuthService>(), gh<_i689.SecureStorage>()),
+    );
+    gh.lazySingleton<_i1020.StudentVerificationRepository>(
+          () => _i1020.StudentVerificationRepository(
+          gh<_i689.SecureStorage>()
+      ),
+    );
+    gh.lazySingleton<_i1009.StudentVerificationService>(
+          () => _i1009.StudentVerificationService(
+        gh<_i1020.StudentVerificationRepository>(),
+      ),
+    );
+    gh.factory<_i101.VerificationCubit>(
+            () => _i101.VerificationCubit(
+          gh<_i1009.StudentVerificationService>(),
+        ),
     );
     return this;
   }
