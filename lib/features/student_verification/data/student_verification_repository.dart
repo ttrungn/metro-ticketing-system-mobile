@@ -11,17 +11,18 @@ class StudentVerificationRepository {
 
   Future<Map<String, dynamic>> submitVerificationRequest(FormData data) async {
     try {
-      final token = await _secureStorage.readSecureData(key: 'accessToken');
+      // final token = await _secureStorage.readSecureData(key: 'accessToken');
       final response = await ApiClient.dio.post(
         '/user/StudentRequest/',
         data: data,
         options: Options(
             contentType: 'multipart/form-data',
-            headers: {
-            'Authorization': 'Bearer $token',
-          }
+          //   headers: {
+          //   'Authorization': 'Bearer $token',
+          // }
         ),
       );
+
       return response.data;
     } catch (e) {
       throw Exception('Failed to submit verification request: $e');
