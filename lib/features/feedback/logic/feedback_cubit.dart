@@ -26,6 +26,18 @@ class FeedbackCubit extends Cubit<FeedbackState> {
       emit(FeedbackError(e.toString()));
     }
   }
+
+  Future<void> submitFeedback(String content) async {
+    try {
+      emit(FeedbackLoading());
+      // await _service.sendFeedback(content);
+      // await getUserFeedbacks();
+      await Future.delayed(Duration(seconds: 2));
+      emit(FeedbackInitial());
+    } catch (_) {
+      emit(FeedbackError("Gửi phản hồi thất bại"));
+    }
+  }
 }
 
 @immutable
