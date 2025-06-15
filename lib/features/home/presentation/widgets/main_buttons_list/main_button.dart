@@ -1,13 +1,17 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../../../core/common/cubit/loading_cubit.dart';
 import '../../../../../core/constants/app_color.dart';
 
 class MainButton extends StatelessWidget {
   final IconData icon;
   final String text;
+  final Future<void> Function() onPressed;
 
-  const MainButton({super.key, required this.icon, required this.text});
+  const MainButton({super.key, required this.icon, required this.text, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +51,16 @@ class MainButton extends StatelessWidget {
           ),
         ],
       ),
-      onPressed: () {},
+      onPressed: () async{
+        final loadingCubit = context.read<LoadingCubit>();
+        loadingCubit.show();
+        try{
+          await Future.delayed(Duration(milliseconds: 500));
+          await onPressed();
+        } finally {
+          loadingCubit.hide();
+        }
+      },
     );
   }
 }

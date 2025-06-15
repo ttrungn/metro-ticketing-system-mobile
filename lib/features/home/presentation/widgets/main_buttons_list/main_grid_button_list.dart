@@ -1,6 +1,3 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -12,9 +9,12 @@ class MainGridButtonList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return          SliverToBoxAdapter(
+    return SliverToBoxAdapter(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 5,horizontal: kGlobalHomePagePadding),
+        padding: const EdgeInsets.symmetric(
+          vertical: 5,
+          horizontal: kGlobalHomePagePadding,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -36,15 +36,18 @@ class MainGridButtonList extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.fromLTRB(20, 25, 20, 0),
                     child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [ Text('Metro Ticket System',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 30,
-                              color: ConstantAppColor.primary,
-                              fontWeight: FontWeight.w800,
-                            )
-                        ),]
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Metro Ticket System',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 30,
+                            color: ConstantAppColor.primary,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   GridView.count(
@@ -53,21 +56,32 @@ class MainGridButtonList extends StatelessWidget {
                     crossAxisCount: 4,
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.symmetric(vertical: 20,),
+                    padding: EdgeInsets.symmetric(vertical: 20),
                     children: [
                       MainButton(
                         icon: FontAwesomeIcons.ticket,
                         text: 'Mua vé',
+                        onPressed: () async {
+                          await Navigator.pushNamed(context, '/buy-ticket');
+                        },
                       ),
                       MainButton(
                         icon: FontAwesomeIcons.train,
                         text: 'Vé của tôi',
+                        onPressed: () async {
+                          await Navigator.pushNamed(context, '/my-ticket');
+                        },
                       ),
                       MainButton(
                         icon: Icons.feedback_rounded,
                         text: 'Đánh giá',
+                        onPressed: () async {},
                       ),
-                      MainButton(icon: Icons.settings, text: 'Cài đặt'),
+                      MainButton(
+                        icon: Icons.settings,
+                        text: 'Cài đặt',
+                        onPressed: () async {},
+                      ),
                     ],
                   ),
                 ],
@@ -76,7 +90,6 @@ class MainGridButtonList extends StatelessWidget {
           ],
         ),
       ),
-    )
-    ;
+    );
   }
 }
