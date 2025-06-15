@@ -75,7 +75,9 @@ class MainGridButtonList extends StatelessWidget {
                       MainButton(
                         icon: Icons.feedback_rounded,
                         text: 'Đánh giá',
-                        onPressed: () async {},
+                        onPressed: () async {
+                          await Navigator.pushNamed(context, '/feedback');
+                        },
                       ),
                       MainButton(
                         icon: Icons.settings,
