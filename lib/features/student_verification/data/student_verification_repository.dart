@@ -5,21 +5,16 @@ import 'package:metro_ticketing_system_mobile/core/storage/secure_storage.dart';
 
 @lazySingleton
 class StudentVerificationRepository {
-  final SecureStorage _secureStorage;
 
-  StudentVerificationRepository(this._secureStorage);
+  StudentVerificationRepository();
 
   Future<Map<String, dynamic>> submitVerificationRequest(FormData data) async {
     try {
-      // final token = await _secureStorage.readSecureData(key: 'accessToken');
-      final response = await ApiClient.dio.post(
+     final response = await ApiClient.dio.post(
         '/user/StudentRequest/',
         data: data,
         options: Options(
             contentType: 'multipart/form-data',
-          //   headers: {
-          //   'Authorization': 'Bearer $token',
-          // }
         ),
       );
 

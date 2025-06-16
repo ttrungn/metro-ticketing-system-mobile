@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:metro_ticketing_system_mobile/features/user/logic/user_cubit.dart';
 import 'package:metro_ticketing_system_mobile/features/user/presentation/widgets/info_tile.dart';
-
+import 'package:metro_ticketing_system_mobile/features/student_verification/presentation/screens/verification_form_screen.dart';
 class ProfileForm extends StatefulWidget {
   const ProfileForm({super.key});
 
@@ -40,6 +40,20 @@ class _ProfileFormState extends State<ProfileForm> {
                     icon: Icons.school,
                     title: 'Email',
                     subtitle: user.isStudent ?? 'Chưa cập nhật',
+                  ),
+                  InfoTile(
+                    icon: Icons.verified_user,
+                    title: 'Xác thực sinh viên',
+                    subtitle: 'Chưa xác thực',
+                    showTrailing: true,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const VerificationFormScreen(),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
