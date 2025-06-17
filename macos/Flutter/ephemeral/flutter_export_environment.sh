@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/opt/homebrew/Caskroom/flutter/3.29.3/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/trungnguyen/Workspaces/projects/metro_ticketing_system_mobile"
+export "FLUTTER_ROOT=C:\Devlopment\flutter_windows_3.29.0-stable\flutter"
+export "FLUTTER_APPLICATION_PATH=D:\SWD_Metro\metro-ticketing-system-mobile"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=1.0.0"

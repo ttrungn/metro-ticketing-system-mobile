@@ -6,7 +6,7 @@ import 'models/dto/buy_ticket_info.dart';
 
 @lazySingleton
 class BuyTicketService{
-  BuyTicketRepository _repo;
+  final BuyTicketRepository _repo;
   BuyTicketService(this._repo);
 
   Future<List<BuyTicketInfo>> getBuyTickets() async{

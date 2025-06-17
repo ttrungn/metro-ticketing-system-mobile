@@ -9,10 +9,13 @@ class BuyTicketRepository {
   Future<BuyTicketBoxInfoResponse> getBuyTickets() async {
     try{
       var response = await ApiClient.dio.get(
-        "/buy-tickets"
+        "/catalog/Tickets/"
       );
-      return BuyTicketBoxInfoResponse.fromJson(response.data);
+      print(response);
+      print(response.data);
+      return BuyTicketBoxInfoResponse.fromJson(response.data as List<dynamic>);
     }catch(e){
+
       throw("Get Buy Tickets error: $e");
     }
   }
