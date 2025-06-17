@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
 import 'package:metro_ticketing_system_mobile/features/user/logic/user_cubit.dart';
 import 'package:metro_ticketing_system_mobile/features/user/presentation/widgets/info_tile.dart';
 import 'package:metro_ticketing_system_mobile/features/student_verification/presentation/screens/verification_form_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class ProfileForm extends StatefulWidget {
   const ProfileForm({super.key});
 
@@ -38,14 +39,8 @@ class _ProfileFormState extends State<ProfileForm> {
                   ),
                   InfoTile(
                     icon: Icons.school,
-                    title: 'Email',
+                    title: 'Sinh viên',
                     subtitle: user.isStudent ?? 'Chưa cập nhật',
-                  ),
-                  InfoTile(
-                    icon: Icons.verified_user,
-                    title: 'Xác thực sinh viên',
-                    subtitle: 'Chưa xác thực',
-                    showTrailing: true,
                     onTap: () {
                       Navigator.push(
                         context,
@@ -53,6 +48,27 @@ class _ProfileFormState extends State<ProfileForm> {
                           builder: (context) => const VerificationFormScreen(),
                         ),
                       );
+                    },
+                  ),
+                  InfoTile(
+                    icon: Icons.delete,
+                    title: 'Xóa tài khoản',
+                    onTap: () {
+                      // Handle account deletion logic here
+                    },
+                  ),
+                  const Divider(
+                    color: ConstantAppColor.primary,
+                    thickness: 1,
+                    height: 30,
+                  ),
+                  InfoTile(
+                    icon: Icons.logout,
+                    title: 'Đăng xuất',
+                    iconColor: Colors.red,
+                    titleColor: Colors.red,
+                    onTap: () {
+                      // Handle logout logic here
                     },
                   ),
                 ],
