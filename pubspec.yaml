@@ -41,6 +41,7 @@ dependencies:
   flutter_localization: ^0.3.2
   image_picker: ^1.0.4
   font_awesome_flutter: ^10.8.0
+  intl: ^0.19.0
 
   #DI package
   get_it: ^7.6.4

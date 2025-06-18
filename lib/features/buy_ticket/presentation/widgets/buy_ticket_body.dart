@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/intl.dart';
 import 'package:metro_ticketing_system_mobile/core/constants/ticket/buy_ticket_const.dart';
 import 'package:metro_ticketing_system_mobile/core/utils/builder/ticket_builder.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/presentation/widgets/buy_button.dart';
@@ -27,7 +28,6 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
   var routeController = TextEditingController();
   var entryStationController = TextEditingController();
   var exitStationController = TextEditingController();
-
   @override
   void dispose() {
     // TODO: implement dispose
@@ -72,7 +72,7 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
                     bottomContent: Text(
                       ticket.price == 0
                           ? ConstantBuyTicket.oneWayTicketBottomText
-                          : '${ticket.price.toStringAsFixed(0)} đ',
+                          : '${currencyFormatter.format(ticket.price)} đ',
                       style: TextStyle(
                         fontSize: 17,
                         color:

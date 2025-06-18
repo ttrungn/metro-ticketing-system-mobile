@@ -8,9 +8,9 @@ class BuyTicketBoxInfoResponse {
   BuyTicketBoxInfoResponse({required this.buyTickets});
 
 
-  factory BuyTicketBoxInfoResponse.fromJson(Map<String, dynamic> json){
+  factory BuyTicketBoxInfoResponse.fromJson(List<dynamic> json){
     return BuyTicketBoxInfoResponse(buyTickets:
-    (json['buy-tickets'] as List<dynamic>).map((e) => BuyTicketInfo.fromJson(e)).toList()
+    json.map((e) => BuyTicketInfo.fromJson(e)).toList()
     );
   }
 }
