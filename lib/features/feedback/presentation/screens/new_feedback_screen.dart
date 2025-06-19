@@ -58,10 +58,7 @@ class _NewFeedbackScreenState extends State<NewFeedbackScreen> {
       appBar: AppBar(
         title: const Text(
           'Gửi phản hồi',
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         backgroundColor: ConstantAppColor.primary,
       ),

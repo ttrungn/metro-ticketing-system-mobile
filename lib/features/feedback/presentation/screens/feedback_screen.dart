@@ -16,10 +16,7 @@ class FeedbackScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Feedback',
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         backgroundColor: ConstantAppColor.primary,
       ),
