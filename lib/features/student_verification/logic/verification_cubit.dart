@@ -1,37 +1,69 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
+import 'package:metro_ticketing_system_mobile/features/student_verification/data/models/student_verification_request.dart';
+import 'package:metro_ticketing_system_mobile/features/student_verification/data/student_verification_service.dart';
 
+@immutable
+abstract class VerificationState {}
+class VerificationInitial extends VerificationState {}
+
+class VerificationLoading extends VerificationState {}
+
+class VerificationSuccess extends VerificationState {
+  final Map<String, dynamic> data;
+
+  VerificationSuccess(this.data);
+}
+
+class VerificationFailure extends VerificationState {
+  final String message;
+
+  VerificationFailure(this.message);
+}
+
+@injectable
 class VerificationCubit extends Cubit<VerificationState> {
-  VerificationCubit() : super(VerificationInitial());
+  final StudentVerificationService _studentVerificationService;
+  VerificationCubit(this._studentVerificationService) : super(VerificationInitial());
 
   Future<void> submitVerification({
     required String studentCode,
-    required String school,
-    required String fullName,
-    required String dob,
+    required String studentEmail,
+    required String schoolName,
+    required String firstName,
+    required String lastName,
+    // required String fullName,
+    required DateTime dateOfBirth,
     required File studentCardImage,
   }) async {
+    emit(VerificationLoading());
+
     try {
-      emit(VerificationLoading());
+      final request = StudentVerificationRequest(
+        studentCode: studentCode.trim(),
+        studentEmail: studentEmail.trim(),
+        schoolName: schoolName.trim(),
+        firstName: firstName,
+        lastName: lastName,
+        // fullName: fullName,
+        dateOfBirth: dateOfBirth,
+        studentCardImage: studentCardImage,
+      );
+      final responseData = await _studentVerificationService
+          .submitVerificationRequest(request);
 
-      await Future.delayed(const Duration(seconds: 2)); // giả lập API
-      // Gửi dữ liệu lên server tại đây
-
-      emit(VerificationSuccess());
+      if (responseData is Map<String, dynamic>) {
+        emit(VerificationSuccess(responseData as Map<String, dynamic>));
+      } else {
+        throw Exception('Unexpected response from server');
+      }
     } catch (e) {
-      emit(VerificationFailure(error: e.toString()));
+      emit(VerificationFailure('Error: ${e.toString()}'));
     }
   }
 }
 
-// verification_state.dart
-abstract class VerificationState {}
 
-class VerificationInitial extends VerificationState {}
-class VerificationLoading extends VerificationState {}
-class VerificationSuccess extends VerificationState {}
-class VerificationFailure extends VerificationState {
-  final String error;
-  VerificationFailure({required this.error});
-}

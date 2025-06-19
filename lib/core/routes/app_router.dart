@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/presentation/screens/buy_ticket_page.dart';
+import 'package:metro_ticketing_system_mobile/features/feedback/presentation/screens/feedback_screen.dart';
+import 'package:metro_ticketing_system_mobile/features/feedback/presentation/screens/new_feedback_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/view_ticket/presentation/screens/view_ticket_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/presentation/screens/register_screen.dart';
 import '../../features/student_verification/presentation/screens/verification_form_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/user/presentation/screens/profile_screen.dart';
+import '../../features/settings/presentation/screens/settings_screen.dart';
 import '../common/presentation/screens/error_screen.dart';
 import 'app_routes.dart';
 
@@ -43,8 +46,21 @@ class AppRouter {
           settings: settings,
         );
       case AppRoutes.buyTicket:
+        return MaterialPageRoute(builder: (_) => const BuyTicketPage());
+      case AppRoutes.feedback:
         return MaterialPageRoute(
-          builder: (_) => const BuyTicketPage(),
+          builder: (_) => const FeedbackScreen(),
+          settings: settings,
+        );
+      case AppRoutes.newFeedback:
+        return MaterialPageRoute(
+          builder: (_) => const NewFeedbackScreen(),
+          settings: settings,
+        );
+      case AppRoutes.settings:
+        return MaterialPageRoute(
+          builder: (_) => const SettingsScreen(), // Replace with actual SettingsScreen
+          settings: settings,
         );
       default:
         return MaterialPageRoute(
