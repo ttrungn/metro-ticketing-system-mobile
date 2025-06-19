@@ -1,8 +1,7 @@
 import 'dart:convert';
 
 import 'package:injectable/injectable.dart';
-import 'package:metro_ticketing_system_mobile/core/network/api_client.dart';
-
+import 'package:metro_ticketing_system_mobile/core/configs/api_client.dart';
 
 @lazySingleton
 class AuthRepository {
@@ -10,25 +9,19 @@ class AuthRepository {
 
   Future<Map<String, dynamic>> loginUser(Map<String, dynamic> data) async {
     final response = await ApiClient.dio.post(
-      '/auth/login',
+      '/user/auth/login',
       data: jsonEncode(data),
     );
-    if (response.statusCode == 200) {
-      return response.data as Map<String, dynamic>;
-    }
 
-    return response.data?.error?.message;
+    return response.data as Map<String, dynamic>;
   }
 
   Future<Map<String, dynamic>> registerUser(Map<String, dynamic> data) async {
     final response = await ApiClient.dio.post(
-      '/auth/register',
+      '/user/auth/register/customer',
       data: jsonEncode(data),
     );
-    if (response.statusCode == 200) {
-      return response.data as Map<String, dynamic>;
-    }
 
-    return response.data?.error?.message;
+    return response.data as Map<String, dynamic>;
   }
 }
