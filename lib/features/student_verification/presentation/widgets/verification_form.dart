@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
+import 'package:metro_ticketing_system_mobile/features/student_verification/logic/verification_cubit.dart';
 import 'package:metro_ticketing_system_mobile/features/student_verification/presentation/widgets/submit_button.dart';
 
 class VerificationForm extends StatefulWidget {
@@ -15,15 +17,21 @@ class VerificationForm extends StatefulWidget {
 class _VerificationFormState extends State<VerificationForm> {
   final _formKey = GlobalKey<FormState>();
   final _studentCodeController = TextEditingController();
+  final _studentEmailController = TextEditingController();
   final _schoolController = TextEditingController();
-  final _fullNameController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  // final _fullNameController = TextEditingController();
   final _dobController = TextEditingController();
 
   File? _studentCardImage;
 
   final FocusNode _studentCodeFocusNode = FocusNode();
   final FocusNode _schoolFocusNode = FocusNode();
-  final FocusNode _fullNameFocusNode = FocusNode();
+  final FocusNode _firstNameFocusNode = FocusNode();
+  final FocusNode _lastNameFocusNode = FocusNode();
+  // final FocusNode _fullNameFocusNode = FocusNode();
+  final FocusNode _studentEmailFocusNode = FocusNode();
 
   final Color _focusColor = ConstantAppColor.primary;
   final Color _unfocusColor = Colors.grey[400]!;
@@ -33,17 +41,20 @@ class _VerificationFormState extends State<VerificationForm> {
     super.initState();
     _studentCodeFocusNode.addListener(() => setState(() {}));
     _schoolFocusNode.addListener(() => setState(() {}));
-    _fullNameFocusNode.addListener(() => setState(() {}));
+    _firstNameFocusNode.addListener(() => setState(() {}));
+    _lastNameFocusNode.addListener(() => setState(() {}));
+    // _fullNameFocusNode.addListener(() => setState(() {}));
+    _studentEmailFocusNode.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
     _studentCodeFocusNode.dispose();
+    _studentEmailFocusNode.dispose();
     _schoolFocusNode.dispose();
-    _fullNameFocusNode.dispose();
-    _studentCodeController.dispose();
-    _schoolController.dispose();
-    _fullNameController.dispose();
+    _firstNameFocusNode.dispose();
+    _lastNameFocusNode.dispose();
+    // _fullNameController.dispose();
     super.dispose();
   }
 
@@ -73,13 +84,17 @@ class _VerificationFormState extends State<VerificationForm> {
   }
 
 
+  bool _isImagePickerActive = false;
   Future<void> _pickImage() async{
+    if (_isImagePickerActive) return;
+    _isImagePickerActive = true;
     final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (picked != null) {
       setState(() {
         _studentCardImage = File(picked.path);
       });
     }
+    _isImagePickerActive = false;
   }
 
   @override
@@ -92,39 +107,75 @@ class _VerificationFormState extends State<VerificationForm> {
           child: Column(
             children: [
               _buildTextField(
-                  label: "Student Code",
+                  label: "Mã Sinh Viên",
                   controller: _studentCodeController,
                   focusNode: _studentCodeFocusNode,
                   icon: Icons.badge),
               _buildTextField(
-                  label: "School",
+                  label: "Email Học Sinh",
+                  controller: _studentEmailController,
+                  focusNode: _studentEmailFocusNode,
+                  icon: Icons.email),
+              _buildTextField(
+                  label: "Tên Trường Học",
                   controller: _schoolController,
                   focusNode: _schoolFocusNode,
                   icon: Icons.school),
               _buildTextField(
-                  label: "Full Name",
-                  controller: _fullNameController,
-                  focusNode: _fullNameFocusNode,
+                  label: "Họ",
+                  controller: _firstNameController,
+                  focusNode: _firstNameFocusNode,
                   icon: Icons.person),
+              _buildTextField(
+                  label: "Tên",
+                  controller: _lastNameController,
+                  focusNode: _lastNameFocusNode,
+                  icon: Icons.person),
+              // _buildTextField(
+              //     label: "Full Name",
+              //     controller: _fullNameController,
+              //     focusNode: _fullNameFocusNode,
+              //     icon: Icons.person),
               _buildDateField(
-                  "Date of Birth",
+                  "Ngày Sinh",
                   _dobController,
                   focusNode: FocusNode()),
               const SizedBox(height: 12),
               const Align(
                 alignment: Alignment.centerLeft,
-                child: Text("Student Card Image *", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey)),
+                child: Text("Ảnh Thẻ Sinh Viên *", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey)),
               ),
               const SizedBox(height: 8),
               _buildImagePicker(),
               const SizedBox(height: 24),
               SubmitButton(
                 formKey: _formKey,
-                studentCode: _studentCodeController.text,
-                school: _schoolController.text,
-                fullName: _fullNameController.text,
-                dob: _dobController.text,
-                studentCardImage: _studentCardImage,
+                onSubmit: () {
+              if (_formKey.currentState!.validate() && _studentCardImage != null){
+                try{
+                  final dob = DateFormat('dd-MM-yyyy').parse(_dobController.text);
+
+                  context.read<VerificationCubit>().submitVerification(
+                    studentCode: _studentCodeController.text,
+                    schoolName: _schoolController.text,
+                    studentEmail: _studentEmailController.text,
+                    firstName: _firstNameController.text,
+                    lastName: _lastNameController.text,
+                    // fullName: _fullNameController.text,
+                    dateOfBirth: dob,
+                    studentCardImage: _studentCardImage!,
+                  );
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Ngày sinh không hợp lệ')),
+                  );
+                }
+              } else if (_studentCardImage == null) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Upload student card image')),
+                );
+              }
+              },
               ),
             ],
           ),
@@ -147,6 +198,8 @@ class _VerificationFormState extends State<VerificationForm> {
         decoration: InputDecoration(
           labelText: "$label *",
           labelStyle: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w500,
             color: (focusNode?.hasFocus ?? false) ? _focusColor : _unfocusColor,
           ),
           prefixIcon: icon != null
@@ -184,6 +237,8 @@ class _VerificationFormState extends State<VerificationForm> {
         decoration: InputDecoration(
           labelText: "$label *",
           labelStyle: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w500,
             color: (focusNode?.hasFocus ?? false) ? _focusColor : _unfocusColor,
           ),
           prefixIcon: Icon(Icons.calendar_today, color: _getIconColor(focusNode)),

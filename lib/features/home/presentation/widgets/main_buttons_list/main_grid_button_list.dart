@@ -82,7 +82,9 @@ class MainGridButtonList extends StatelessWidget {
                       MainButton(
                         icon: Icons.settings,
                         text: 'Cài đặt',
-                        onPressed: () async {},
+                        onPressed: () async {
+                          Navigator.pushNamed(context, '/settings');
+                        },
                       ),
                     ],
                   ),
