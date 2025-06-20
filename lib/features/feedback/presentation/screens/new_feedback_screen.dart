@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metro_ticketing_system_mobile/core/common/presentation/widgets/text_input_field.dart';
 import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
 import 'package:metro_ticketing_system_mobile/features/feedback/logic/feedback_cubit.dart';
+import 'package:metro_ticketing_system_mobile/features/feedback/logic/feedback_type_cubit.dart';
+
 
 class NewFeedbackScreen extends StatefulWidget {
   const NewFeedbackScreen({super.key});
@@ -32,22 +34,12 @@ class _NewFeedbackScreenState extends State<NewFeedbackScreen> {
       return;
     }
 
-    // Clear lỗi
     setState(() => _errorText = null);
 
     context.read<FeedbackCubit>().submitFeedback(text).then((_) {
       Navigator.pop(context);
     });
   }
-
-  final List<String> _feedbackTypes = ['Góp ý', 'Báo lỗi', 'Tính năng mới'];
-  final List<String> _feedbackLocations = [
-    'Ga A',
-    'Ga B',
-    'Ga C',
-    'Ga D',
-    'Ga E',
-  ];
 
   String? _selectedType;
   String? _selectedLocation;
@@ -66,79 +58,107 @@ class _NewFeedbackScreenState extends State<NewFeedbackScreen> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            DropdownButtonFormField<String>(
-              decoration: InputDecoration(
-                labelText: 'Phản hồi về',
-                prefixIcon: const Icon(
-                  Icons.category,
-                  color: ConstantAppColor.primary,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: ConstantAppColor.primary),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(
-                    color: ConstantAppColor.primary,
-                    width: 2,
-                  ),
-                ),
-              ),
-              value: _selectedType,
-              items:
-                  _feedbackTypes
-                      .map(
-                        (type) =>
-                            DropdownMenuItem(value: type, child: Text(type)),
-                      )
-                      .toList(),
-              onChanged: (value) {
-                setState(() {
-                  _selectedType = value;
-                });
+            BlocBuilder<FeedbackTypeCubit, FeedbackTypeState>(
+              builder: (context, state) {
+                if (state is FeedbackTypeLoading) {
+                  return const CircularProgressIndicator();
+                }
+
+                if (state is FeedbackTypeLoaded) {
+                  final feedbackTypes = state.feedbackTypes;
+                  final stations = state.stations;
+
+                  return Column(
+                    children: [
+                      DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                          labelText: 'Loại phản hồi',
+                          labelStyle: const TextStyle(
+                              color: ConstantAppColor.primary,
+                              fontWeight: FontWeight.bold
+                          ),
+                          prefixIcon: const Icon(
+                              Icons.category,
+                              color: ConstantAppColor.primary
+                          ),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: const BorderSide(
+                              color: ConstantAppColor.primary,
+                              width: 1.5,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: const BorderSide(
+                              color: ConstantAppColor.primary,
+                              width: 2,
+                            ),
+                          ),
+                        ),
+                        value: _selectedType,
+                        items: feedbackTypes.map((type) => DropdownMenuItem(
+                          value: type.id,
+                          child: Text(type.name),
+                        )).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedType = value;
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                          labelText: 'Chọn trạm',
+                          labelStyle: const TextStyle(
+                              color: ConstantAppColor.primary,
+                              fontWeight: FontWeight.bold
+                          ),
+                          prefixIcon: const Icon(
+                              Icons.train,
+                              color: ConstantAppColor.primary
+                          ),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: const BorderSide(
+                              color: ConstantAppColor.primary,
+                              width: 1.5,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: const BorderSide(
+                              color: ConstantAppColor.primary,
+                              width: 2,
+                            ),
+                          ),
+                        ),
+                        value: _selectedLocation,
+                        items: stations.map((station) => DropdownMenuItem(
+                          value: station.id,
+                          child: Text(station.name),
+                        )).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedLocation = value;
+                          });
+                        },
+                      ),
+                    ],
+                  );
+                }
+
+                if (state is FeedbackTypeError) {
+                  return Text('Lỗi: ${state.message}');
+                }
+
+                return const SizedBox.shrink();
               },
             ),
-            const SizedBox(height: 20),
-            DropdownButtonFormField<String>(
-              decoration: InputDecoration(
-                labelText: 'Địa điểm',
-                prefixIcon: const Icon(
-                  Icons.train,
-                  color: ConstantAppColor.primary,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: ConstantAppColor.primary),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(
-                    color: ConstantAppColor.primary,
-                    width: 2,
-                  ),
-                ),
-              ),
-              value: _selectedLocation,
-              items:
-                  _feedbackLocations
-                      .map(
-                        (type) =>
-                            DropdownMenuItem(value: type, child: Text(type)),
-                      )
-                      .toList(),
-              onChanged: (value) {
-                setState(() {
-                  _selectedLocation = value;
-                });
-              },
-            ),
+
             const SizedBox(height: 20),
             TextInputField(
               controller: _controller,

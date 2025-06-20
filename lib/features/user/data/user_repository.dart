@@ -9,4 +9,20 @@ class UserRepository {
     final response = await ApiClient.dio.get('/user/Profiles');
     return response.data["data"] as Map<String, dynamic>;
   }
+
+  Future<List<Map<String, dynamic>>> fetchFeedbackTypes() async {
+    final response = await ApiClient.dio.get('/user/FeedbackTypes');
+    return List<Map<String, dynamic>>.from(response.data["data"]);
+  }
+
+  Future<List<Map<String, dynamic>>> fetchStations() async {
+    final response = await ApiClient.dio.get('/catalog/Stations?page=0&pageSize=100&status=false');
+    final stations = response.data["data"]["stations"] as List;
+    return stations.map((station) {
+      return {
+        "id": station["id"] as String,
+        "name": station["name"] as String,
+      };
+    }).toList();
+  }
 }

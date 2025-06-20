@@ -9,7 +9,7 @@ class AuthRepository {
 
   Future<Map<String, dynamic>> loginUser(Map<String, dynamic> data) async {
     final response = await ApiClient.dio.post(
-      '/user/auth/login',
+      '/user/auth/Customer/login',
       data: jsonEncode(data),
     );
 
