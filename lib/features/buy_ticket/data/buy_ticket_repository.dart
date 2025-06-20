@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:metro_ticketing_system_mobile/core/configs/api_client.dart';
-import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/models/response/buy_ticket_box_info_response.dart';
+import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/models/buy_ticket_box_info_response.dart';
 
 @lazySingleton
 class BuyTicketRepository {

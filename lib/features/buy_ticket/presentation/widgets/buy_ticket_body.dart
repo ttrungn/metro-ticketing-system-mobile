@@ -13,7 +13,7 @@ import 'package:metro_ticketing_system_mobile/features/buy_ticket/presentation/w
 import '../../../../core/common/presentation/modals/dialog_utils.dart';
 import '../../../../core/common/presentation/widgets/ticket_widgets/ticket_box.dart';
 import '../../../../core/constants/app_color.dart';
-import '../../data/models/dto/buy_ticket_info.dart';
+import '../../data/models/buy_ticket_info.dart';
 import '../../logic/buy_ticket_cubit.dart';
 
 class BuyTicketBody extends StatefulWidget {
@@ -92,7 +92,7 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
                         DialogUtils.buildAndShowBuyTicketDialogAction(
                           context: context,
                           ticketDetails:
-                              TicketBuilder.buildBuyTicketDetailItems(ticket),
+                              TicketBuilder.buildMultiUseBuyTicketDetailItems(ticket),
                           bottomPart: BuyButton(),
                         )();
                       }
@@ -115,7 +115,7 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
                     ),
                     onTap: DialogUtils.buildAndShowBuyTicketDialogAction(
                       context: context,
-                      ticketDetails: TicketBuilder.buildBuyTicketDetailItems(
+                      ticketDetails: TicketBuilder.buildMultiUseBuyTicketDetailItems(
                         ticket,
                       ),
                       bottomPart: BuyButton(),
@@ -310,7 +310,11 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
                           ),
                           SizedBox(height: 20),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              DialogUtils.buildAndShowBuyTicketDialogAction(context: context, ticketDetails: TicketBuilder.buildSingleUseBuyTicketDetailItems(state.singleUseTicket),
+                                bottomPart: BuyButton(),
+                              )();
+                            },
                             style: ButtonStyle(
                               shadowColor: WidgetStatePropertyAll(
                                 Colors.black12,

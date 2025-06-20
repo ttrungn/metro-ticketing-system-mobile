@@ -2,7 +2,7 @@
 import 'package:injectable/injectable.dart';
 
 import 'buy_ticket_repository.dart';
-import 'models/dto/buy_ticket_info.dart';
+import 'models/buy_ticket_info.dart';
 
 @lazySingleton
 class BuyTicketService{

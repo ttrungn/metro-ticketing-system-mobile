@@ -4,9 +4,10 @@ import 'dart:core';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/buy_ticket_service.dart';
+import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/models/single_use_buyt_ticket_info.dart';
 
-import '../data/models/dto/buy_ticket_info.dart';
-import '../data/models/response/buy_ticket_box_info_response.dart';
+import '../data/models/buy_ticket_info.dart';
+import '../data/models/buy_ticket_box_info_response.dart';
 
 abstract class BuyTicketState {
 
@@ -26,8 +27,12 @@ final class BuyTicketFetch extends BuyTicketState{
 }
 
 final class BuyTicketSearchRoute extends BuyTicketState{
+  SingleUseTicketInfo singleUseTicket;
 
+  BuyTicketSearchRoute( this.singleUseTicket);
 }
+
+
 
 class BuyTicketCubit extends Cubit<BuyTicketState>{
   final BuyTicketService buyTicketService;
@@ -47,8 +52,18 @@ class BuyTicketCubit extends Cubit<BuyTicketState>{
     emit(BuyTicketLoading());
     await Future.delayed(Duration(milliseconds: 300));
 
-    emit(BuyTicketSearchRoute());
+    emit(BuyTicketSearchRoute(mockSingleUseTicket));
   }
+
+
 }
 
 
+final SingleUseTicketInfo mockSingleUseTicket = SingleUseTicketInfo(
+  id: '0001',
+  name: 'Vé Lượt',
+  price: 15000.0,
+  expireInDay: 10,
+  entryStation: 'Bến Thành',
+  exitStation: 'Suối Tiên',
+);

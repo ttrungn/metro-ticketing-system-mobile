@@ -43,7 +43,10 @@ class ErrorScreen extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: ConstantAppColor.primary,
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 12,
+                  ),
                 ),
                 onPressed: () {
                   Navigator.pushNamed(context, AppRoutes.login);
@@ -55,7 +58,10 @@ class ErrorScreen extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: ConstantAppColor.primary,
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 12,
+                  ),
                 ),
                 onPressed: () {
                   Navigator.pushNamed(context, AppRoutes.home);
@@ -67,13 +73,34 @@ class ErrorScreen extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: ConstantAppColor.primary,
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 12,
+                  ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.studentVerificationForm);
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.studentVerificationForm,
+                  );
                 },
                 child: const Text('Student Verification Form'),
-              )
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ConstantAppColor.primary,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 12,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.feedback);
+                },
+                child: const Text('Feedback Form'),
+              ),
             ],
           ),
         ),

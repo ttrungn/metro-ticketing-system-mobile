@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../dto/buy_ticket_info.dart';
+import 'buy_ticket_info.dart';
 
 class BuyTicketBoxInfoResponse {
   List<BuyTicketInfo> buyTickets;
