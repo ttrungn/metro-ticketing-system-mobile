@@ -18,7 +18,7 @@ class AuthRepository {
 
   Future<Map<String, dynamic>> registerUser(Map<String, dynamic> data) async {
     final response = await ApiClient.dio.post(
-      '/user/auth/register/customer',
+      '/user/auth/Customer/register',
       data: jsonEncode(data),
     );
 
