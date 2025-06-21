@@ -14,36 +14,48 @@ class FeedbackScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Feedback',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+    return BlocProvider(
+      create: (_) => FeedbackCubit(getIt<UserService>())..fetchFeedbacks(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Feedback',
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+          backgroundColor: ConstantAppColor.primary,
         ),
-        backgroundColor: ConstantAppColor.primary,
-      ),
-      body: BlocProvider(
-        create: (_) => FeedbackCubit(getIt<UserService>())..fetchFeedbacks(),
-        child: const FeedbackList(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: ConstantAppColor.primary,
-        child: const Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => MultiBlocProvider(
-                providers: [
-                  BlocProvider(create: (_) => getIt<FeedbackTypeCubit>()..fetchFeedbackTypesAndStations()),
-                  BlocProvider(create: (_) => getIt<FeedbackCubit>()),
-                ],
-                child: const NewFeedbackScreen(),
-              ),
-            ),
-          );
-        },
+        body: const FeedbackList(),
+        floatingActionButton: Builder(
+          builder: (innerContext) => FloatingActionButton(
+            backgroundColor: ConstantAppColor.primary,
+            child: const Icon(Icons.add),
+            onPressed: () async {
+              final result = await Navigator.push(
+                innerContext,
+                MaterialPageRoute(
+                  builder: (context) => MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (_) => FeedbackTypeCubit(getIt<UserService>())
+                          ..fetchFeedbackTypesAndStations(),
+                      ),
+                      BlocProvider.value(
+                        value: innerContext.read<FeedbackCubit>(),
+                      ),
+                    ],
+                    child: const NewFeedbackScreen(),
+                  ),
+                ),
+              );
+
+              if (result == true) {
+                innerContext.read<FeedbackCubit>().fetchFeedbacks();
+              }
+            },
+          ),
+        ),
       ),
     );
   }
+
 }

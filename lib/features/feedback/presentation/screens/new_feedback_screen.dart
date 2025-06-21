@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metro_ticketing_system_mobile/core/common/presentation/widgets/text_input_field.dart';
 import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
+import 'package:metro_ticketing_system_mobile/features/feedback/data/models/feedback_request.dart';
 import 'package:metro_ticketing_system_mobile/features/feedback/logic/feedback_cubit.dart';
 import 'package:metro_ticketing_system_mobile/features/feedback/logic/feedback_type_cubit.dart';
 
@@ -27,6 +28,27 @@ class _NewFeedbackScreenState extends State<NewFeedbackScreen> {
 
   void _submit(BuildContext context) {
     final text = _controller.text.trim();
+
+    if (_selectedType == null) {
+      setState(() {
+        _errorText = null;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Vui lòng chọn loại phản hồi')),
+      );
+      return;
+    }
+
+    if (_selectedLocation == null) {
+      setState(() {
+        _errorText = null;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Vui lòng chọn trạm')),
+      );
+      return;
+    }
+
     if (text.isEmpty) {
       setState(() {
         _errorText = 'Vui lòng nhập nội dung';
@@ -36,16 +58,28 @@ class _NewFeedbackScreenState extends State<NewFeedbackScreen> {
 
     setState(() => _errorText = null);
 
-    context.read<FeedbackCubit>().submitFeedback(text).then((_) {
-      Navigator.pop(context);
+    final request = FeedbackRequest(
+      type: _selectedType!,
+      station: _selectedLocation!,
+      content: text,
+    );
+
+    context.read<FeedbackCubit>().submitFeedback(request).then((_) {
+      Navigator.pop(context, true);
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Gửi phản hồi thất bại: $error')),
+      );
     });
   }
+
 
   String? _selectedType;
   String? _selectedLocation;
 
   @override
   Widget build(BuildContext context) {
+    context.read<FeedbackTypeCubit>();
     return Scaffold(
       appBar: AppBar(
         title: const Text(

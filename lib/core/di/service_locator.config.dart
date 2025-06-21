@@ -56,12 +56,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i992.BuyTicketRepository>(
       () => _i992.BuyTicketRepository(),
     );
+    gh.lazySingleton<_i556.StudentVerificationRepository>(
+      () => _i556.StudentVerificationRepository(),
+    );
     gh.lazySingleton<_i431.UserRepository>(() => _i431.UserRepository());
     gh.lazySingleton<_i982.ViewTicketRepository>(
       () => _i982.ViewTicketRepository(),
-    );
-    gh.lazySingleton<_i556.StudentVerificationRepository>(
-      () => _i556.StudentVerificationRepository(),
     );
     gh.lazySingleton<_i785.UserService>(
       () => _i785.UserService(gh<_i431.UserRepository>()),
@@ -80,10 +80,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i882.FeedbackCubit>(
       () => _i882.FeedbackCubit(gh<_i785.UserService>()),
     );
-    gh.factory<_i687.UserCubit>(() => _i687.UserCubit(gh<_i785.UserService>()));
     gh.factory<_i511.FeedbackTypeCubit>(
       () => _i511.FeedbackTypeCubit(gh<_i785.UserService>()),
     );
+    gh.factory<_i687.UserCubit>(() => _i687.UserCubit(gh<_i785.UserService>()));
     gh.factory<_i157.VerificationCubit>(
       () => _i157.VerificationCubit(gh<_i15.StudentVerificationService>()),
     );

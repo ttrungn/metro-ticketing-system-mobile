@@ -25,7 +25,6 @@ class FeedbackTypeCubit extends Cubit<FeedbackTypeState> {
     }
   }
 
-
 }
 
 @immutable
