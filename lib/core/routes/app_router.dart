@@ -59,7 +59,9 @@ class AppRouter {
         );
       case AppRoutes.settings:
         return MaterialPageRoute(
-          builder: (_) => const SettingsScreen(), // Replace with actual SettingsScreen
+          builder:
+              (_) =>
+                  const SettingsScreen(), // Replace with actual SettingsScreen
           settings: settings,
         );
       default:

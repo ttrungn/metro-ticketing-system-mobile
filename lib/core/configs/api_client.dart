@@ -10,7 +10,7 @@ class ApiClient {
             baseUrl: Env.apiUrl,
             connectTimeout: const Duration(seconds: 60),
             receiveTimeout: const Duration(seconds: 60),
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json', 'Accept': 'application/json',},
           ),
         );
 
