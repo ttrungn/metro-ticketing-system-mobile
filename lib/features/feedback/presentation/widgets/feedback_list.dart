@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
 import 'package:metro_ticketing_system_mobile/features/feedback/data/models/feedback_model.dart';
 import 'package:metro_ticketing_system_mobile/features/feedback/logic/feedback_cubit.dart';
 
-import '../../../../core/constants/app_color.dart';
 
 class FeedbackList extends StatefulWidget {
   const FeedbackList({super.key});
@@ -24,7 +24,7 @@ class _FeedbackListState extends State<FeedbackList> {
         } else if (state is FeedbackLoaded) {
           final List<FeedbackModel> feedbacks = state.feedbacks;
           if (feedbacks.isEmpty) {
-            return const Center(child: Text('Chưa có phản hồi nào.'));
+            return const Center(child: Text('Chưa có phản hồi nào'));
           }
           return ListView.separated(
             padding: const EdgeInsets.all(8),
@@ -46,7 +46,7 @@ class _FeedbackListState extends State<FeedbackList> {
                   ),
                 ),
                 subtitle: Text(
-                  '${feedback.location}: ${feedback.content}',
+                  '${feedback.station}: ${feedback.content}',
                   style: const TextStyle(fontSize: 15),
                 ),
               );
