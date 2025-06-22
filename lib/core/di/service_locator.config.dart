@@ -34,6 +34,11 @@ import 'package:metro_ticketing_system_mobile/features/user/logic/user_cubit.dar
 import 'package:metro_ticketing_system_mobile/features/view_ticket/data/view_ticket_repository.dart'
     as _i982;
 
+import '../../features/feedback/logic/feedback_cubit.dart';
+import '../../features/student_verification/data/student_verification_repository.dart' as _i1020;
+import '../../features/student_verification/data/student_verification_service.dart' as _i1009;
+import '../../features/student_verification/logic/verification_cubit.dart' as _i101;
+
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
   _i174.GetIt init({

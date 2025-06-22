@@ -12,9 +12,6 @@ import '../data/models/buy_ticket_box_info_response.dart';
 abstract class BuyTicketState {
 
 }
-final class BuyTicketInitial extends BuyTicketState{
-
-}
 
 
 final class BuyTicketLoading extends BuyTicketState{
@@ -54,8 +51,6 @@ class BuyTicketCubit extends Cubit<BuyTicketState>{
 
     emit(BuyTicketSearchRoute(mockSingleUseTicket));
   }
-
-
 }
 
 
