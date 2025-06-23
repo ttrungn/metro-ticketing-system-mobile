@@ -34,10 +34,13 @@ import 'package:metro_ticketing_system_mobile/features/user/logic/user_cubit.dar
 import 'package:metro_ticketing_system_mobile/features/view_ticket/data/view_ticket_repository.dart'
     as _i982;
 
-import '../../features/feedback/logic/feedback_cubit.dart';
+import '../../features/feedback/logic/feedback_cubit.dart' as _i882;
+import '../../features/feedback/logic/feedback_type_cubit.dart' as _i511;
 import '../../features/student_verification/data/student_verification_repository.dart' as _i1020;
-import '../../features/student_verification/data/student_verification_service.dart' as _i1009;
+import '../../features/student_verification/data/student_verification_repository.dart' as _i556;
+import '../../features/student_verification/data/student_verification_service.dart' as _i15;
 import '../../features/student_verification/logic/verification_cubit.dart' as _i101;
+import '../../features/student_verification/logic/verification_cubit.dart' as _i157;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -51,7 +54,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i992.BuyTicketRepository>(
       () => _i992.BuyTicketRepository(),
     );
-    gh.lazySingleton<_i556.StudentVerificationRepository>(
+    gh.lazySingleton<_i1020.StudentVerificationRepository>(
       () => _i556.StudentVerificationRepository(),
     );
     gh.lazySingleton<_i431.UserRepository>(() => _i431.UserRepository());
@@ -66,7 +69,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i15.StudentVerificationService>(
       () => _i15.StudentVerificationService(
-        gh<_i556.StudentVerificationRepository>(),
+        gh<_i1020.StudentVerificationRepository>(),
       ),
     );
     gh.lazySingleton<_i728.AuthService>(
@@ -79,7 +82,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i511.FeedbackTypeCubit(gh<_i785.UserService>()),
     );
     gh.factory<_i687.UserCubit>(() => _i687.UserCubit(gh<_i785.UserService>()));
-    gh.factory<_i157.VerificationCubit>(
+    gh.factory<_i101.VerificationCubit>(
       () => _i157.VerificationCubit(gh<_i15.StudentVerificationService>()),
     );
     gh.factory<_i413.RegisterCubit>(

@@ -5,15 +5,19 @@ import '../data/models/route_info.dart';
 import '../data/models/station_info.dart';
 
 final class SearchRouteState {
-  late List<RouteInfo> routes;
-  late List<StationInfo> stations;
+  late List<RouteInfo> routes =[];
+  late List<StationInfo> stations = [];
   late SingleUseTicketInfo? singleUseTicket;
+
+
 }
+
 
 class SearchRouteCubit extends Cubit<SearchRouteState> {
   SearchRouteCubit() : super(SearchRouteState());
 
   void fetchRoutes() {
+    print("fetch Routes");
     var newState = SearchRouteState();
     newState.routes = mockRoutesVN();
     newState.stations = [];
@@ -21,9 +25,11 @@ class SearchRouteCubit extends Cubit<SearchRouteState> {
   }
 
   void fetchStations(String routeId) {
+    print("Fetch Stations");
     var newState = SearchRouteState();
     newState.routes = state.routes;
     newState.stations = mockStationsByRouteVN()[routeId]!;
+    print(newState.stations);
     emit(newState);
   }
 

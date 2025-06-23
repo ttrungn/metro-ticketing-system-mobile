@@ -52,12 +52,11 @@ class CustomDropDown extends StatelessWidget {
                 backgroundColor: WidgetStatePropertyAll(Colors.white),
                 minimumSize: WidgetStatePropertyAll(Size(250, 300)),
               ),
+
               onSelected: (value) {
-                textController.text = value.toString();
-                onChanged(value);
-                fieldState.didChange(value);
+                // fieldState.didChange(value);
                 print(value);
-                // Notify form
+                onChanged(value);
               },
               alignmentOffset: const Offset(-20, 0),
             ),
