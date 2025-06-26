@@ -25,7 +25,10 @@ class BuyTicketPage extends StatelessWidget {
               (_) =>
                   BuyTicketCubit(getIt<BuyTicketService>())..fetchBuyTickets(),
         ),
-        BlocProvider(create: (_) => SearchRouteCubit()..fetchRoutes()),
+        BlocProvider(
+          create:
+              (_) => SearchRouteCubit(getIt<BuyTicketService>())..fetchRoutes(),
+        ),
       ],
 
       child: Scaffold(

@@ -39,17 +39,17 @@ class TicketBuilder{
        },
        {
          'label': 'Ga Đi:',
-         'value':  ticket.entryStation ??  'N/A',
+         'value':  ticket.entryStationName ??  'N/A',
          'isNote': false,
        },
        {
          'label': 'Ga Đến:',
-         'value':  ticket.exitStation ?? 'N/A',
+         'value':  ticket.exitStationName ?? 'N/A',
          'isNote': false,
        },
        {
          'label': 'Hết Hạn:',
-         'value': '${ticket.expireInDay} days after activation',
+         'value': '${ticket.expireInDays} days after activation',
          'isNote': true,
        },
        {

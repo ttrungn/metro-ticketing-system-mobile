@@ -12,19 +12,17 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GlobalLoadingOverlay(
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        body: CustomScrollView(
-          slivers: [
-            CustomAppBar(),
-            MainGridButtonList(),
-            InfoCarousel(),
-            BlogCarousel()
-          ],
-        ),
-        floatingActionButton: PhoneButton(),
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      body: CustomScrollView(
+        slivers: [
+          CustomAppBar(),
+          MainGridButtonList(),
+          InfoCarousel(),
+          BlogCarousel()
+        ],
       ),
+      floatingActionButton: PhoneButton(),
     );
   }
 }

@@ -2,17 +2,21 @@ class SingleUseTicketInfo {
   final String id;
   final String name;
   final double price;
-  final int expireInDay;
-  final String entryStation;
-  final String exitStation;
+  final int expireInDays;
+  final String entryStationId;
+  final String exitStationId;
+   String entryStationName;
+   String exitStationName;
 
   SingleUseTicketInfo({
     required this.id,
     required this.name,
     required this.price,
-    required this.expireInDay,
-    required this.entryStation,
-    required this.exitStation,
+    required this.entryStationId,
+    required this.exitStationId,
+    required this.expireInDays,
+    required this.entryStationName,
+    required this.exitStationName,
   });
 
   factory SingleUseTicketInfo.fromJson(Map<String, dynamic> data) {
@@ -27,9 +31,11 @@ class SingleUseTicketInfo {
       id: data['id']?.toString() ?? '',
       name: data['name']?.toString() ?? '',
       price: parsedPrice,
-      expireInDay: (data['expirationInDay'] as int?) ?? 0,
-      entryStation: data['entryStation']?.toString() ?? 'Unknown',
-      exitStation: data['exitStation']?.toString() ?? 'Unknown',
+      expireInDays: (data['expireInDays'] as int?) ?? 0,
+      exitStationId: data['exitStationId'],
+      entryStationId: data['entryStationId'],
+      entryStationName: data['entryStationName']?.toString() ?? 'Unknown',
+      exitStationName: data['exitStationName']?.toString() ?? 'Unknown',
     );
   }
 
@@ -37,8 +43,9 @@ class SingleUseTicketInfo {
     'id': id,
     'name': name,
     'price': price,
-    'expirationInDay': expireInDay,
-    'entryStation': entryStation,
-    'exitStation': exitStation,
+    'exitStationId' : exitStationId,
+    'entryStationId' : entryStationId,
+    'expirationInDay': expireInDays,
+
   };
 }

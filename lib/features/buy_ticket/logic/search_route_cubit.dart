@@ -1,44 +1,48 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/models/single_use_buyt_ticket_info.dart';
+import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/request/single_use_ticket_request.dart';
 
+import '../data/buy_ticket_service.dart';
 import '../data/models/route_info.dart';
 import '../data/models/station_info.dart';
 
 final class SearchRouteState {
-  late List<RouteInfo> routes =[];
-  late List<StationInfo> stations = [];
-  late SingleUseTicketInfo? singleUseTicket;
+   List<RouteInfo> routes =[];
+   List<StationInfo> stations = [];
 
 
 }
 
 
 class SearchRouteCubit extends Cubit<SearchRouteState> {
-  SearchRouteCubit() : super(SearchRouteState());
+  final BuyTicketService buyTicketService;
 
-  void fetchRoutes() {
+  SearchRouteCubit(this.buyTicketService) : super(SearchRouteState());
+
+  void fetchRoutes() async{
     print("fetch Routes");
     var newState = SearchRouteState();
-    newState.routes = mockRoutesVN();
+    newState.routes = await buyTicketService.getRoutes();
     newState.stations = [];
     emit(newState);
   }
 
-  void fetchStations(String routeId) {
+  void fetchStations(String routeId) async{
     print("Fetch Stations");
     var newState = SearchRouteState();
     newState.routes = state.routes;
-    newState.stations = mockStationsByRouteVN()[routeId]!;
+    newState.stations = await buyTicketService.getStationsByRouteId(routeId);
     print(newState.stations);
     emit(newState);
   }
 
-  void fetchTicket(String routeId, String entryId, String exitId) {
+  Future<SingleUseTicketInfo> fetchTicket(String routeId, String entryId, String exitId) async {
     var newState = SearchRouteState();
     newState.routes = state.routes;
     newState.stations = state.stations;
-    newState.singleUseTicket = mockSingleUseTicketVN();
     emit(newState);
+
+    return  await buyTicketService.getSingleUseTicketInfo(SingleUseTicketRequest(routeId: routeId, entryStationId: entryId, exitStationId: exitId));
   }
 }
 
@@ -91,8 +95,10 @@ SingleUseTicketInfo mockSingleUseTicketVN() {
     id: 'ticket_001',
     name: 'Vé lượt - Bến Thành đến Suối Tiên',
     price: 15000.0,
-    expireInDay: 1,
-    entryStation: 'Bến Thành',
-    exitStation: 'Suối Tiên',
+    expireInDays: 1,
+    entryStationId: '3',
+    exitStationId: '4',
+    entryStationName: 'Bến Thành',
+    exitStationName: 'Suối Tiên',
   );
 }

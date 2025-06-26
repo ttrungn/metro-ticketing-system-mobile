@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:metro_ticketing_system_mobile/core/common/cubit/loading_cubit.dart';
+import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/models/single_use_buyt_ticket_info.dart';
 
 import '../../../../core/common/presentation/modals/dialog_utils.dart';
 import '../../../../core/constants/app_color.dart';
@@ -25,6 +27,9 @@ class _SearchRouteBodyState extends State<SearchRouteBody> {
 
   final exitStationController = TextEditingController();
 
+  String? routeId;
+  String? entryId;
+  String? exitId;
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -116,6 +121,9 @@ class _SearchRouteBodyState extends State<SearchRouteBody> {
                         onChanged: (value){
                           context.read<SearchRouteCubit>().fetchStations(value);
                           setState(() {
+                            routeId = value;
+                            entryId = null;
+                            exitId = null;
                             entryStationController.clear();
                             exitStationController.clear();
                           });
@@ -176,11 +184,10 @@ class _SearchRouteBodyState extends State<SearchRouteBody> {
                                     dropDownList: stations,
                                     customWidth: MediaQuery.of(context).size.width * 0.7,
                                     onChanged: (value) {
-                                      // TODO: handle selection change for entry station
-
+                                      entryId = value;
                                     },
                                     validator: (value) {
-                                      if(entryStationController.text.trim().isEmpty){
+                                      if(entryStationController.text.trim().isEmpty || entryId == null){
                                         return 'Vui lòng chọn ga đến';
                                       }
                                       else if(entryStationController.text.trim() == exitStationController.text.trim()){
@@ -203,11 +210,11 @@ class _SearchRouteBodyState extends State<SearchRouteBody> {
                                     dropDownList: stations,
                                     customWidth: MediaQuery.of(context).size.width * 0.7,
                                     onChanged: (value) {
-
+                                      exitId = value;
                                       // TODO: handle selection change for exit station
                                     },
                                     validator: (value) {
-                                      if(exitStationController.text.trim().isEmpty){
+                                      if(exitStationController.text.trim().isEmpty || exitId == null){
                                         return 'Vui lòng chọn ga đừng';
                                       }
                                       else if(entryStationController.text.trim() == exitStationController.text.trim()){
@@ -225,19 +232,27 @@ class _SearchRouteBodyState extends State<SearchRouteBody> {
                       ),
                       SizedBox(height: 20),
                       TextButton(
-                        onPressed: () {
-                          final selectedRoute = routeController.value.toString().trim();
-                          final entryStation = entryStationController.value.toString().trim();
-                          final exitStation = exitStationController.value.toString().trim();
-                          if(_formKey.currentState!.validate()){
-                            context.read<SearchRouteCubit>().fetchTicket(
-                              selectedRoute,
-                              entryStation,
-                              exitStation,
-                            );
-                            DialogUtils.buildAndShowBuyTicketDialogAction(context: context, ticketDetails: TicketBuilder.buildSingleUseBuyTicketDetailItems(state.singleUseTicket!),
-                              bottomPart: BuyButton(),
-                            )();
+                        onPressed: () async {
+
+                          if(_formKey.currentState!.validate()) {
+                            var loadingState  = context.read<LoadingCubit>();
+                            loadingState.show();
+                            await Future.delayed(Duration(milliseconds: 300));
+                            try{
+                              var singleUseTicketInfo  = await context.read<SearchRouteCubit>().fetchTicket(
+                                routeId!,
+                                entryId!,
+                                exitId!,
+                              );
+                              context.read<LoadingCubit>().hide();
+                              singleUseTicketInfo.entryStationName = entryStationController.text.trim();
+                              singleUseTicketInfo.exitStationName = exitStationController.text.trim();
+                              DialogUtils.buildAndShowBuyTicketDialogAction(context: context, ticketDetails: TicketBuilder.buildSingleUseBuyTicketDetailItems(singleUseTicketInfo),
+                                bottomPart: BuyButton(),
+                              )();
+                            }finally{
+                              loadingState.hide();
+                            }
                           }else {
 
                           }

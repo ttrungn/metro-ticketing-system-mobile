@@ -42,6 +42,7 @@ class BuyTicketCubit extends Cubit<BuyTicketState>{
     List<BuyTicketInfo> sortedList = await buyTicketService.getBuyTickets()..sort(
       (a, b) => a.type.index.compareTo(b.type.index),
     );
+
     emit(BuyTicketFetch(buyTickets: sortedList));
 
   }
@@ -58,7 +59,9 @@ final SingleUseTicketInfo mockSingleUseTicket = SingleUseTicketInfo(
   id: '0001',
   name: 'Vé Lượt',
   price: 15000.0,
-  expireInDay: 10,
-  entryStation: 'Bến Thành',
-  exitStation: 'Suối Tiên',
+  expireInDays: 10,
+  entryStationId: '3',
+  exitStationId: '4',
+  entryStationName: 'Bến Thành',
+  exitStationName: 'Suối Tiên',
 );
