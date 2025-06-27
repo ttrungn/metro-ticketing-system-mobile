@@ -3,14 +3,14 @@
 import 'dart:core';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/buy_ticket_service.dart';
+import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/models/single_use_buyt_ticket_info.dart';
+import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/request/add_to_cart_request.dart';
 
-import '../data/models/dto/buy_ticket_info.dart';
-import '../data/models/response/buy_ticket_box_info_response.dart';
+import '../data/models/buy_ticket_info.dart';
+import '../data/models/buy_ticket_box_info_response.dart';
 
 abstract class BuyTicketState {
-
-}
-final class BuyTicketInitial extends BuyTicketState{
 
 }
 
@@ -25,19 +25,32 @@ final class BuyTicketFetch extends BuyTicketState{
 }
 
 final class BuyTicketSearchRoute extends BuyTicketState{
+  SingleUseTicketInfo singleUseTicket;
+
+  BuyTicketSearchRoute( this.singleUseTicket);
+}
+
+final class BuyTicketSuccess extends BuyTicketState{
+
+}
+final class BuyTicketError extends BuyTicketState{
 
 }
 
+
+
 class BuyTicketCubit extends Cubit<BuyTicketState>{
-  BuyTicketCubit():super(BuyTicketLoading());
+  final BuyTicketService buyTicketService;
+  BuyTicketCubit(this.buyTicketService):super(BuyTicketLoading());
 
   void fetchBuyTickets() async{
     emit(BuyTicketLoading());
 
     //mock api loading
-    await Future.delayed(Duration(milliseconds: 300));
-    List<BuyTicketInfo> sortedList = getMockData().toList()
-      ..sort((a, b) => a.type.index.compareTo(b.type.index));
+    List<BuyTicketInfo> sortedList = await buyTicketService.getBuyTickets()..sort(
+      (a, b) => a.type.index.compareTo(b.type.index),
+    );
+
     emit(BuyTicketFetch(buyTickets: sortedList));
 
   }
@@ -45,57 +58,26 @@ class BuyTicketCubit extends Cubit<BuyTicketState>{
     emit(BuyTicketLoading());
     await Future.delayed(Duration(milliseconds: 300));
 
-    emit(BuyTicketSearchRoute());
+    emit(BuyTicketSearchRoute(mockSingleUseTicket));
+  }
+
+  Future<void> addToCart(AddToCartRequest request) async{
+
+    var response = await buyTicketService.addToCart(request);
+
+    print("BuyTicketCubit constructed: ${this.hashCode}");
+
   }
 }
 
 
-
-
-
-List<BuyTicketInfo> getMockData() {
-  return [
-    BuyTicketInfo(
-      id: 'T001',
-      name: 'Vé 1 chiều',
-      price: 0,
-      expireInDay: 30,
-      activeInDay: 0,
-      type: TicketType.singleUse,
-    ),
-    BuyTicketInfo(
-      id: 'T002',
-      name: 'Vé 1 ngày',
-      price: 40000.0,
-      expireInDay: 30,
-      activeInDay: 1,
-      type: TicketType.multipleUse,
-    ),
-    BuyTicketInfo(
-      id: 'T003',
-      name: 'Vé 3 ngày',
-      price: 90000.0,
-      expireInDay: 90,
-      activeInDay: 3,
-      type: TicketType.multipleUse,
-    ),
-    BuyTicketInfo(
-      id: 'T004',
-      name: 'Vé tháng',
-      price: 300000.0,
-      expireInDay: 180,
-      activeInDay: 30,
-      type: TicketType.multipleUse,
-    ),
-    BuyTicketInfo(
-      id: 'T005',
-      name: 'Vé tháng HSSV',
-      price: 200000.0,
-      expireInDay: 180,
-      activeInDay: 30,
-      type: TicketType.student,
-    ),
-  ];
-}
-
-
+final SingleUseTicketInfo mockSingleUseTicket = SingleUseTicketInfo(
+  id: '0001',
+  name: 'Vé Lượt',
+  price: 15000.0,
+  expireInDays: 10,
+  entryStationId: '3',
+  exitStationId: '4',
+  entryStationName: 'Bến Thành',
+  exitStationName: 'Suối Tiên',
+);

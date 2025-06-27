@@ -5,15 +5,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:metro_ticketing_system_mobile/core/constants/ticket/buy_ticket_const.dart';
 import 'package:metro_ticketing_system_mobile/core/utils/builder/ticket_builder.dart';
+import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/request/add_to_cart_request.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/presentation/widgets/buy_button.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/presentation/widgets/buy_ticket_title_text.dart';
-import 'package:metro_ticketing_system_mobile/features/buy_ticket/presentation/widgets/custom_drop_down.dart';
+import 'package:metro_ticketing_system_mobile/features/buy_ticket/presentation/widgets/search_route_body.dart';
 
 import '../../../../core/common/presentation/modals/dialog_utils.dart';
 import '../../../../core/common/presentation/widgets/ticket_widgets/ticket_box.dart';
 import '../../../../core/constants/app_color.dart';
-import '../../data/models/dto/buy_ticket_info.dart';
+import '../../data/models/buy_ticket_info.dart';
 import '../../logic/buy_ticket_cubit.dart';
+import 'buy_ticket_dialog_bottom_part.dart';
 
 class BuyTicketBody extends StatefulWidget {
   const BuyTicketBody({super.key});
@@ -23,18 +25,12 @@ class BuyTicketBody extends StatefulWidget {
 }
 
 class _BuyTicketBodyState extends State<BuyTicketBody> {
-  IconLabel? selectedIcon;
-  var routeController = TextEditingController();
-  var entryStationController = TextEditingController();
-  var exitStationController = TextEditingController();
-
+  int _currentValue = 1;
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    routeController.dispose();
-    entryStationController.dispose();
-    exitStationController.dispose();
+
   }
 
   @override
@@ -72,7 +68,7 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
                     bottomContent: Text(
                       ticket.price == 0
                           ? ConstantBuyTicket.oneWayTicketBottomText
-                          : '${ticket.price.toStringAsFixed(0)} đ',
+                          : '${currencyFormatter.format(ticket.price)} đ',
                       style: TextStyle(
                         fontSize: 17,
                         color:
@@ -92,8 +88,25 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
                         DialogUtils.buildAndShowBuyTicketDialogAction(
                           context: context,
                           ticketDetails:
-                              TicketBuilder.buildBuyTicketDetailItems(ticket),
-                          bottomPart: BuyButton(),
+                              TicketBuilder.buildMultiUseBuyTicketDetailItems(ticket),
+                          bottomPart:  BuyTicketDialogBottomPart(
+                            currentValue: _currentValue,
+                            onPressed: () async{
+                              print("BUY TICKET");
+                              print("Cubit from context: ${context.read<BuyTicketCubit>().hashCode}");
+
+                              var quantity = _currentValue;
+                              var ticketId = ticket.id;
+                              var request = AddToCartRequest(ticketId: ticketId, quantity: quantity);
+                              await context.read<BuyTicketCubit>().addToCart(request);
+                            },
+                            onChangedQuantity: (value) {
+                              setState(() {
+                                _currentValue = value;
+                              });
+
+                            },
+                          ) ,
                         )();
                       }
                     },
@@ -115,10 +128,25 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
                     ),
                     onTap: DialogUtils.buildAndShowBuyTicketDialogAction(
                       context: context,
-                      ticketDetails: TicketBuilder.buildBuyTicketDetailItems(
+                      ticketDetails: TicketBuilder.buildMultiUseBuyTicketDetailItems(
                         ticket,
                       ),
-                      bottomPart: BuyButton(),
+                      bottomPart:  BuyTicketDialogBottomPart(
+                        currentValue: _currentValue,
+                        onPressed: () async{
+                          print("BUY TICKET");
+                          var quantity = _currentValue;
+                          var ticketId = ticket.id;
+
+                          var request = AddToCartRequest(ticketId: ticketId, quantity: quantity);
+                          await context.read<BuyTicketCubit>().addToCart(request);
+                        },
+                        onChangedQuantity: (value) {
+                          setState(() {
+                            _currentValue = value;
+                          });
+                        },
+                      ) ,
                     ),
                   ),
                 ),
@@ -126,223 +154,7 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
               ],
             );
           } else if (state is BuyTicketSearchRoute) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                ListTile(
-                  leading: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back_sharp,
-                      size: 30,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {
-                      context.read<BuyTicketCubit>().fetchBuyTickets();
-                    },
-                  ),
-                  title: Text(
-                    ConstantBuyTicket.searchRouteTicket,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                      fontSize: 30,
-                      color: ConstantAppColor.primary,
-                    ),
-                  ),
-                ),
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    final boxSizeWidth = constraints.maxWidth * 0.9;
-
-                    return Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 30,
-                      ),
-                      margin: EdgeInsets.all(30),
-                      width: boxSizeWidth,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            offset: Offset(-4, -4),
-                            color: Colors.black12,
-                            blurRadius: 5,
-                          ),
-                          BoxShadow(
-                            offset: Offset(4, 4),
-                            color: Colors.black12,
-                            blurRadius: 5,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                      ),
-                      child: Column(
-                        children: [
-                          CustomDropDown(
-                            textController: routeController,
-                            icon: Icon(
-                              Icons.train,
-                              size: 30,
-                              color: ConstantAppColor.primary,
-                            ),
-                            labelText: Text(
-                              'Tuyến',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            dropDownList: [
-                              DropdownMenuEntry(value: "haha", label: "haha"),
-                              DropdownMenuEntry(value: "hehe", label: "hehe"),
-                              DropdownMenuEntry(
-                                value: "hihi",
-                                label: "Trieu Zee",
-                              ),
-                            ],
-                            customWidth:
-                                MediaQuery.of(context).size.width * 0.9,
-                            onChanged: (value){
-
-                            },
-                          ),
-                          SizedBox(height: 20),
-                          IntrinsicHeight(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Left Icon Column with vertical stroke
-                                Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Icon(
-                                      Icons.pin_drop_outlined,
-                                      color: ConstantAppColor.primary,
-                                      size: 30,
-                                    ),
-                                    Container(
-                                      width: 2,
-                                      height: 40,
-                                      // adjust spacing between dropdowns
-                                      color:
-                                          ConstantAppColor
-                                              .primary, // stroke color
-                                    ),
-                                    Icon(
-                                      Icons.pin_drop_outlined,
-                                      color: ConstantAppColor.primary,
-                                      size: 30,
-                                    ),
-                                  ],
-                                ),
-
-                                SizedBox(width: 8),
-
-                                // Right Column for Dropdowns
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      CustomDropDown(
-                                        textController: entryStationController,
-                                        labelText: Text(
-                                          'Ga Đến',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                        dropDownList: [
-                                          DropdownMenuEntry(
-                                            value: "haha",
-                                            label: "haha",
-                                          ),
-                                          DropdownMenuEntry(
-                                            value: "hehe",
-                                            label: "hehe",
-                                          ),
-                                          DropdownMenuEntry(
-                                            value: "hihi",
-                                            label: "Trieu Zee",
-                                          ),
-                                        ],
-                                        customWidth: MediaQuery.of(context).size.width * 0.7,
-                                        onChanged: (value) {
-                                          // TODO: handle selection change for entry station
-                                        },
-                                      )
-                                      ,
-                                      SizedBox(height: 30),
-                                      CustomDropDown(
-                                        textController: exitStationController,
-                                        labelText: Text(
-                                          'Ga Dừng',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                        dropDownList: [
-                                          DropdownMenuEntry(
-                                            value: "haha",
-                                            label: "haha",
-                                          ),
-                                          DropdownMenuEntry(
-                                            value: "hehe",
-                                            label: "hehe",
-                                          ),
-                                          DropdownMenuEntry(
-                                            value: "hihi",
-                                            label: "Trieu Zee",
-                                          ),
-                                        ],
-                                        customWidth: MediaQuery.of(context).size.width * 0.7,
-                                        onChanged: (value) {
-                                          // TODO: handle selection change for exit station
-                                        },
-                                      )
-                                      ,
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          TextButton(
-                            onPressed: () {},
-                            style: ButtonStyle(
-                              shadowColor: WidgetStatePropertyAll(
-                                Colors.black12,
-                              ),
-                              backgroundColor: WidgetStatePropertyAll(
-                                ConstantAppColor.primary,
-                              ),
-                              overlayColor: WidgetStatePropertyAll(
-                                Colors.white.withAlpha(25),
-                              ),
-                              shape: WidgetStatePropertyAll(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                              ),
-                            ),
-                            child: Text(
-                              " Mua Liền! ",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                color: Colors.white,
-                                fontSize: 25,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ],
-            );
+            return SearchRouteBody();
           } else {
             return const Center(child: Text("No tickets available"));
           }
@@ -351,6 +163,8 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
     );
   }
 }
+
+
 
 typedef IconEntry = DropdownMenuEntry<IconLabel>;
 

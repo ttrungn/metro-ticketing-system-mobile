@@ -54,12 +54,10 @@ class MainButton extends StatelessWidget {
       onPressed: () async{
         final loadingCubit = context.read<LoadingCubit>();
         loadingCubit.show();
-        try{
-          await Future.delayed(Duration(milliseconds: 500));
-          await onPressed();
-        } finally {
-          loadingCubit.hide();
-        }
+        await Future.delayed(Duration(milliseconds: 500));
+        loadingCubit.hide();
+
+        await onPressed();
       },
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 import '../../../../features/buy_ticket/presentation/widgets/buy_button.dart';
 import '../../../../features/buy_ticket/presentation/widgets/ticket_dialog_content.dart';
@@ -54,15 +55,9 @@ class DialogUtils {
                           ),
                         ),
 
-                        childBuilder(), // <-- DYNAMIC BODY CONTENT
+                        childBuilder(),
+                        // <-- DYNAMIC BODY CONTENT
 
-                        SizedBox(
-                          width: double.infinity,
-                          height: 0,
-                          child: CustomPaint(
-                            painter: DashedLinePainter(),
-                          ),
-                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
                           child: Row(
@@ -90,7 +85,7 @@ class DialogUtils {
         context,
         childBuilder: () => TicketDialogContent(
           ticketDetails: ticketDetails,
-        ), bottomPart: BuyButton(),
+        ), bottomPart: bottomPart!,
       );
     };
   }

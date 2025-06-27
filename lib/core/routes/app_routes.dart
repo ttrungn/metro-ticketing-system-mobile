@@ -13,6 +13,8 @@ abstract class AppRoutes {
 
   static const buyTicket = '/buy-ticket';
 
+  static const cart = '/cart';
+
   // Secondary Screens - Auxiliary Screens
   static const profile = '/profile';
 

@@ -5,6 +5,7 @@ import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
 import 'package:metro_ticketing_system_mobile/core/routes/app_router.dart';
 import 'package:metro_ticketing_system_mobile/core/routes/app_routes.dart';
 
+import 'core/common/presentation/widgets/global_loading_overlay.dart';
 import 'core/di/service_locator.dart';
 
 void main() async {
@@ -17,8 +18,10 @@ void main() async {
     ),
   );
 }
+final navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
+
   const MyApp({super.key});
 
   @override
@@ -26,6 +29,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Metro Ticketing System',
       debugShowCheckedModeBanner: false,
+      navigatorKey: navigatorKey,
       theme: ThemeData(
         scaffoldBackgroundColor: ConstantAppColor.primaryLight,
         colorScheme: ColorScheme.light(
@@ -39,6 +43,9 @@ class MyApp extends StatelessWidget {
 
       initialRoute: AppRoutes.login,
       onGenerateRoute: AppRouter.onGenerateRoute,
+
+
+
     );
   }
 }

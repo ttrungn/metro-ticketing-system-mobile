@@ -1,8 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoadingCubit extends Cubit<bool> {
-  LoadingCubit() : super(false);
+final class LoadingState{
+  final bool isLoading;
 
-  void show() => emit(true);
-  void hide() => emit(false);
+  const LoadingState({required this.isLoading});
+}
+
+
+class LoadingCubit extends Cubit<LoadingState> {
+  LoadingCubit() : super(LoadingState(isLoading: false));
+
+  void show() => emit(LoadingState(isLoading: true));
+  void hide() => emit(LoadingState(isLoading: false));
 }
