@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:metro_ticketing_system_mobile/core/constants/ticket/buy_ticket_const.dart';
 import 'package:metro_ticketing_system_mobile/core/utils/builder/ticket_builder.dart';
+import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/request/add_to_cart_request.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/presentation/widgets/buy_button.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/presentation/widgets/buy_ticket_title_text.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/presentation/widgets/search_route_body.dart';
@@ -14,6 +15,7 @@ import '../../../../core/common/presentation/widgets/ticket_widgets/ticket_box.d
 import '../../../../core/constants/app_color.dart';
 import '../../data/models/buy_ticket_info.dart';
 import '../../logic/buy_ticket_cubit.dart';
+import 'buy_ticket_dialog_bottom_part.dart';
 
 class BuyTicketBody extends StatefulWidget {
   const BuyTicketBody({super.key});
@@ -23,8 +25,7 @@ class BuyTicketBody extends StatefulWidget {
 }
 
 class _BuyTicketBodyState extends State<BuyTicketBody> {
-  IconLabel? selectedIcon;
-
+  int _currentValue = 1;
   @override
   void dispose() {
     // TODO: implement dispose
@@ -88,7 +89,24 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
                           context: context,
                           ticketDetails:
                               TicketBuilder.buildMultiUseBuyTicketDetailItems(ticket),
-                          bottomPart: BuyButton(),
+                          bottomPart:  BuyTicketDialogBottomPart(
+                            currentValue: _currentValue,
+                            onPressed: () async{
+                              print("BUY TICKET");
+                              print("Cubit from context: ${context.read<BuyTicketCubit>().hashCode}");
+
+                              var quantity = _currentValue;
+                              var ticketId = ticket.id;
+                              var request = AddToCartRequest(ticketId: ticketId, quantity: quantity);
+                              await context.read<BuyTicketCubit>().addToCart(request);
+                            },
+                            onChangedQuantity: (value) {
+                              setState(() {
+                                _currentValue = value;
+                              });
+
+                            },
+                          ) ,
                         )();
                       }
                     },
@@ -113,7 +131,22 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
                       ticketDetails: TicketBuilder.buildMultiUseBuyTicketDetailItems(
                         ticket,
                       ),
-                      bottomPart: BuyButton(),
+                      bottomPart:  BuyTicketDialogBottomPart(
+                        currentValue: _currentValue,
+                        onPressed: () async{
+                          print("BUY TICKET");
+                          var quantity = _currentValue;
+                          var ticketId = ticket.id;
+
+                          var request = AddToCartRequest(ticketId: ticketId, quantity: quantity);
+                          await context.read<BuyTicketCubit>().addToCart(request);
+                        },
+                        onChangedQuantity: (value) {
+                          setState(() {
+                            _currentValue = value;
+                          });
+                        },
+                      ) ,
                     ),
                   ),
                 ),
@@ -130,6 +163,8 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
     );
   }
 }
+
+
 
 typedef IconEntry = DropdownMenuEntry<IconLabel>;
 

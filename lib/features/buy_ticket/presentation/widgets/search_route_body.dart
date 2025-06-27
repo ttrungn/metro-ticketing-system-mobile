@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metro_ticketing_system_mobile/core/common/cubit/loading_cubit.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/models/single_use_buyt_ticket_info.dart';
+import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/request/add_to_cart_request.dart';
+import 'package:metro_ticketing_system_mobile/features/buy_ticket/presentation/widgets/buy_ticket_dialog_bottom_part.dart';
+import 'package:numberpicker/numberpicker.dart';
 
+import '../../../../core/common/presentation/modals/dashed_line_painter.dart';
 import '../../../../core/common/presentation/modals/dialog_utils.dart';
 import '../../../../core/constants/app_color.dart';
 import '../../../../core/constants/ticket/buy_ticket_const.dart';
@@ -26,7 +30,7 @@ class _SearchRouteBodyState extends State<SearchRouteBody> {
   final entryStationController = TextEditingController();
 
   final exitStationController = TextEditingController();
-
+  int _currentValue = 1;
   String? routeId;
   String? entryId;
   String? exitId;
@@ -248,8 +252,22 @@ class _SearchRouteBodyState extends State<SearchRouteBody> {
                               singleUseTicketInfo.entryStationName = entryStationController.text.trim();
                               singleUseTicketInfo.exitStationName = exitStationController.text.trim();
                               DialogUtils.buildAndShowBuyTicketDialogAction(context: context, ticketDetails: TicketBuilder.buildSingleUseBuyTicketDetailItems(singleUseTicketInfo),
-                                bottomPart: BuyButton(),
-                              )();
+                                bottomPart: BuyTicketDialogBottomPart(
+                                  currentValue: _currentValue,
+                                  onPressed: () async{
+                                    var quantity = _currentValue;
+                                    var ticketId = singleUseTicketInfo.id;
+
+                                    var request = AddToCartRequest(ticketId: ticketId, quantity: quantity,entryStationId: entryId,destinationStationId: exitId,routeId: routeId);
+                                    await context.read<BuyTicketCubit>().addToCart(request);
+                                  },
+                                  onChangedQuantity: (value) {
+                                    setState(() {
+                                      _currentValue = value;
+                                    });
+
+                                  },
+                                ) )();
                             }finally{
                               loadingState.hide();
                             }
@@ -282,6 +300,8 @@ class _SearchRouteBodyState extends State<SearchRouteBody> {
                           ),
                         ),
                       ),
+
+
                     ],
                   ),
                 );
@@ -293,3 +313,4 @@ class _SearchRouteBodyState extends State<SearchRouteBody> {
     );
   }
 }
+

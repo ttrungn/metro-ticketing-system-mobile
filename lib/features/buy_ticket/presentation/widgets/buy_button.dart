@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import '../../../../core/constants/app_color.dart';
 
 class BuyButton extends StatelessWidget {
-  const BuyButton({super.key});
+  final VoidCallback onPressed;
+
+  const BuyButton({required this.onPressed,super.key});
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {
-
-      },
+      onPressed: onPressed,
       style: ButtonStyle(
           overlayColor: WidgetStatePropertyAll(Colors.white.withAlpha(25)),
           backgroundColor: WidgetStatePropertyAll(ConstantAppColor.primary),

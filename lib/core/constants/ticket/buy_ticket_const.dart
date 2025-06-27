@@ -14,7 +14,7 @@ class ConstantBuyTicket {
 
 
 class ConstantTicketDialog{
-  static const double buyHeight = 0.25;
+  static const double buyHeight = 0.2;
   static const double buyWidth = 0.85;
 
   static const double infoHeight = 0.35;

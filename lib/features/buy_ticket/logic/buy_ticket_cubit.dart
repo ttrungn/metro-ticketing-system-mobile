@@ -5,6 +5,7 @@ import 'dart:core';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/buy_ticket_service.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/models/single_use_buyt_ticket_info.dart';
+import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/request/add_to_cart_request.dart';
 
 import '../data/models/buy_ticket_info.dart';
 import '../data/models/buy_ticket_box_info_response.dart';
@@ -29,6 +30,13 @@ final class BuyTicketSearchRoute extends BuyTicketState{
   BuyTicketSearchRoute( this.singleUseTicket);
 }
 
+final class BuyTicketSuccess extends BuyTicketState{
+
+}
+final class BuyTicketError extends BuyTicketState{
+
+}
+
 
 
 class BuyTicketCubit extends Cubit<BuyTicketState>{
@@ -51,6 +59,14 @@ class BuyTicketCubit extends Cubit<BuyTicketState>{
     await Future.delayed(Duration(milliseconds: 300));
 
     emit(BuyTicketSearchRoute(mockSingleUseTicket));
+  }
+
+  Future<void> addToCart(AddToCartRequest request) async{
+
+    var response = await buyTicketService.addToCart(request);
+
+    print("BuyTicketCubit constructed: ${this.hashCode}");
+
   }
 }
 

@@ -7,6 +7,7 @@ import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/models/bu
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/models/routes_response.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/models/single_use_buyt_ticket_info.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/models/stations_response.dart';
+import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/request/add_to_cart_request.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/request/single_use_ticket_request.dart';
 
 @lazySingleton
@@ -29,7 +30,6 @@ class BuyTicketRepository {
       var response = await ApiClient.dio.get(
         "/catalog/Routes/single-use-route",
       );
-      print(response.data);
       return RoutesResponse.fromJson(response.data['data'] as List<dynamic>);
     } catch (e) {
       throw ("Get Routes error: $e");
@@ -41,7 +41,6 @@ class BuyTicketRepository {
       var response = await ApiClient.dio.get(
         "/catalog/Stations/single-use-station/$routeId",
       );
-      print(response.data);
       return StationsResponse.fromJson(response.data);
     } catch (e) {
       throw ("Get Stations By RouteId error: $e");
@@ -53,16 +52,30 @@ class BuyTicketRepository {
   ) async {
 
     try {
-      print("HEHEHE" + jsonEncode(request.toJson()));
       var response = await ApiClient.dio.post(
         "/catalog/Tickets/single-use-ticket-info",
 
         data: request.toJson(),
       );
-      print(response.data);
       return SingleUseTicketInfo.fromJson(response.data['data']);
     } catch (e) {
       throw ("Get Single Use Ticket Info error: $e");
+    }
+  }
+
+  Future<bool> addToCart(AddToCartRequest request) async{
+    try{
+      var response = await ApiClient.dio.post(
+        "/order/Cart/",
+        data: request.toJson(),
+      );
+      print(response.data);
+      return response.statusCode == 200;
+    }catch(e){
+
+      throw ("Add To Cart error: $e");
+    }finally{
+      return false;
     }
   }
 }

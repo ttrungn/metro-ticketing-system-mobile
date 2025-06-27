@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:metro_ticketing_system_mobile/core/common/presentation/widgets/global_loading_overlay.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/presentation/screens/buy_ticket_page.dart';
+import 'package:metro_ticketing_system_mobile/features/cart/presentation/screens/cart_page.dart';
 import 'package:metro_ticketing_system_mobile/features/feedback/presentation/screens/feedback_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/feedback/presentation/screens/new_feedback_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/view_ticket/presentation/screens/view_ticket_screen.dart';
@@ -13,6 +15,19 @@ import '../common/presentation/screens/error_screen.dart';
 import 'app_routes.dart';
 
 class AppRouter {
+  static bool shouldShowCartButton(String? route) {
+    const noCartRoutes = [
+      AppRoutes.login,
+      AppRoutes.cart,
+      AppRoutes.profile,
+      AppRoutes.feedback,
+      AppRoutes.register,
+      AppRoutes.newFeedback,
+      AppRoutes.studentVerificationForm,
+    ];
+    return !noCartRoutes.contains(route);
+  }
+
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.login:
@@ -20,55 +35,98 @@ class AppRouter {
           builder: (_) => const LoginScreen(),
           settings: settings,
         );
+
       case AppRoutes.register:
         return MaterialPageRoute(
-          builder: (_) => const RegisterScreen(),
+          builder: (_) => GlobalLoadingOverlay(
+            showCartButton: shouldShowCartButton(settings.name),
+            child: const RegisterScreen(),
+          ),
           settings: settings,
         );
+
       case AppRoutes.home:
         return MaterialPageRoute(
-          builder: (_) => const HomeScreen(),
+          builder: (_) => GlobalLoadingOverlay(
+            showCartButton: shouldShowCartButton(settings.name),
+            child: const HomeScreen(),
+          ),
           settings: settings,
         );
+
       case AppRoutes.studentVerificationForm:
         return MaterialPageRoute(
-          builder: (_) => const VerificationFormScreen(),
+          builder: (_) => GlobalLoadingOverlay(
+            showCartButton: shouldShowCartButton(settings.name),
+            child: const VerificationFormScreen(),
+          ),
           settings: settings,
         );
+
       case AppRoutes.profile:
         return MaterialPageRoute(
-          builder: (_) => const ProfileScreen(),
+          builder: (_) => const ProfileScreen(), // no cart overlay needed
           settings: settings,
         );
+
       case AppRoutes.myTicket:
         return MaterialPageRoute(
-          builder: (_) => const ViewTicketScreen(),
+          builder: (_) => GlobalLoadingOverlay(
+            showCartButton: shouldShowCartButton(settings.name),
+            child: const ViewTicketScreen(),
+          ),
           settings: settings,
         );
+
       case AppRoutes.buyTicket:
-        return MaterialPageRoute(builder: (_) => const BuyTicketPage());
+        return MaterialPageRoute(
+          builder: (_) => GlobalLoadingOverlay(
+            showCartButton: shouldShowCartButton(settings.name),
+            child: const BuyTicketPage(),
+          ),
+          settings: settings,
+        );
+
       case AppRoutes.feedback:
         return MaterialPageRoute(
-          builder: (_) => const FeedbackScreen(),
+          builder: (_) => GlobalLoadingOverlay(
+            showCartButton: shouldShowCartButton(settings.name),
+            child: const FeedbackScreen(),
+          ),
           settings: settings,
         );
+
       case AppRoutes.newFeedback:
         return MaterialPageRoute(
-          builder: (_) => const NewFeedbackScreen(),
+          builder: (_) => GlobalLoadingOverlay(
+            showCartButton: shouldShowCartButton(settings.name),
+            child: const NewFeedbackScreen(),
+          ),
           settings: settings,
         );
+
       case AppRoutes.settings:
         return MaterialPageRoute(
-          builder:
-              (_) =>
-                  const SettingsScreen(), // Replace with actual SettingsScreen
+          builder: (_) => GlobalLoadingOverlay(
+            showCartButton: shouldShowCartButton(settings.name),
+            child: const SettingsScreen(),
+          ),
           settings: settings,
         );
+
+      case AppRoutes.cart:
+        return MaterialPageRoute(
+          builder: (_) => const CartPage(),
+          settings: settings,
+        );
+
       default:
         return MaterialPageRoute(
-          builder: (_) => const ErrorScreen(),
+          builder: (_) => GlobalLoadingOverlay(
+            showCartButton: false,
+            child: const ErrorScreen(),
+          ),
           settings: settings,
         );
     }
-  }
-}
+  }}

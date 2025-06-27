@@ -18,8 +18,10 @@ void main() async {
     ),
   );
 }
+final navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
+
   const MyApp({super.key});
 
   @override
@@ -27,6 +29,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Metro Ticketing System',
       debugShowCheckedModeBanner: false,
+      navigatorKey: navigatorKey,
       theme: ThemeData(
         scaffoldBackgroundColor: ConstantAppColor.primaryLight,
         colorScheme: ColorScheme.light(
@@ -41,9 +44,8 @@ class MyApp extends StatelessWidget {
       initialRoute: AppRoutes.login,
       onGenerateRoute: AppRouter.onGenerateRoute,
 
-      builder: (context, child) {
-        return GlobalLoadingOverlay(child: child!);
-      },
+
+
     );
   }
 }
