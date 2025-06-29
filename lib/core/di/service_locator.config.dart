@@ -41,6 +41,9 @@ import '../../features/student_verification/data/student_verification_repository
 import '../../features/student_verification/data/student_verification_service.dart' as _i15;
 import '../../features/student_verification/logic/verification_cubit.dart' as _i101;
 import '../../features/student_verification/logic/verification_cubit.dart' as _i157;
+import '../../features/cart/data/cart_repository.dart' as _iCartRepo;
+import '../../features/cart/data/cart_service.dart' as _iCartService;
+import '../../features/cart/logic/cart_cubit.dart' as _iCartCubit;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -61,6 +64,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i982.ViewTicketRepository>(
       () => _i982.ViewTicketRepository(),
     );
+    gh.lazySingleton<_iCartRepo.CartRepository>(
+      () => _iCartRepo.CartRepository(),
+    );
     gh.lazySingleton<_i785.UserService>(
       () => _i785.UserService(gh<_i431.UserRepository>()),
     );
@@ -74,6 +80,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i728.AuthService>(
       () => _i728.AuthService(gh<_i1037.AuthRepository>()),
+    );
+    gh.lazySingleton<_iCartService.CartService>(
+      () => _iCartService.CartService(gh<_iCartRepo.CartRepository>()),
     );
     gh.factory<_i882.FeedbackCubit>(
       () => _i882.FeedbackCubit(gh<_i785.UserService>()),
@@ -90,6 +99,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i18.LoginCubit>(
       () => _i18.LoginCubit(gh<_i728.AuthService>(), gh<_i689.SecureStorage>()),
+    );
+    gh.factory<_iCartCubit.CartCubit>(
+      () => _iCartCubit.CartCubit(),
     );
     return this;
   }
