@@ -21,3 +21,7 @@ class ConstantTicketDialog{
 }
 
 var currencyFormatter = NumberFormat.currency(locale:'vi_VN',symbol:'',decimalDigits:0);
+
+
+const MOMO_PAYMENT_API = "";
+
