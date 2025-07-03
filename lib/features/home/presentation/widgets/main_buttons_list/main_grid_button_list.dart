@@ -26,8 +26,7 @@ class MainGridButtonList extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                     color: ConstantAppColor.primary,
-                    blurRadius: 5,
-                    offset: Offset(2, 4),
+                    offset: Offset(2, 2),
                   ),
                 ],
               ),

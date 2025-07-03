@@ -70,12 +70,12 @@ class BuyTicketRepository {
         data: request.toJson(),
       );
       print(response.data);
-      return response.statusCode == 200;
+
+      return (response.data['data']['isStudent']) as bool;
     }catch(e){
 
       throw ("Add To Cart error: $e");
     }finally{
-      return false;
     }
   }
 }

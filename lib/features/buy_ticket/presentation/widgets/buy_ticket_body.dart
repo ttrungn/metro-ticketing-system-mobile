@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:metro_ticketing_system_mobile/core/common/presentation/modals/payment_result_dialog.dart';
 import 'package:metro_ticketing_system_mobile/core/constants/ticket/buy_ticket_const.dart';
 import 'package:metro_ticketing_system_mobile/core/utils/builder/ticket_builder.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/request/add_to_cart_request.dart';
@@ -99,6 +100,12 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
                               var ticketId = ticket.id;
                               var request = AddToCartRequest(ticketId: ticketId, quantity: quantity);
                               await context.read<BuyTicketCubit>().addToCart(request);
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return PaymentResultDialog(isSuccess: true);
+                                },
+                              );
                             },
                             onChangedQuantity: (value) {
                               setState(() {
@@ -139,7 +146,14 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
                           var ticketId = ticket.id;
 
                           var request = AddToCartRequest(ticketId: ticketId, quantity: quantity);
-                          await context.read<BuyTicketCubit>().addToCart(request);
+                          var isSuccess= await context.read<BuyTicketCubit>().addToCart(request);
+
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return PaymentResultDialog(isSuccess:isSuccess);
+                            },
+                          );
                         },
                         onChangedQuantity: (value) {
                           setState(() {

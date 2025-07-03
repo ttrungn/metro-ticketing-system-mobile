@@ -48,6 +48,23 @@ class CartRepository {
     }
   }
 
+
+  Future<String> startPayment(double amount) async{
+    try{
+      var response = await ApiClient.dio.post(
+        "/order/Payment/momo/create",
+        data : {
+          "amount" : amount,
+          "orderDetails": [{}],
+        }
+      );
+      print(response.data);
+
+      return response.data["data"]["deeplink"];
+    }catch(e){
+      throw("Error: $e");
+    }
+  }
 }
 
 

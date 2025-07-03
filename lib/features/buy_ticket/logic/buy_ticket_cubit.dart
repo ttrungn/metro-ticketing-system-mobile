@@ -61,12 +61,9 @@ class BuyTicketCubit extends Cubit<BuyTicketState>{
     emit(BuyTicketSearchRoute(mockSingleUseTicket));
   }
 
-  Future<void> addToCart(AddToCartRequest request) async{
-
-    var response = await buyTicketService.addToCart(request);
-
-    print("BuyTicketCubit constructed: ${this.hashCode}");
-
+  Future<bool> addToCart(AddToCartRequest request) async{
+   var isStudent=  await buyTicketService.addToCart(request);
+   return isStudent;
   }
 }
 

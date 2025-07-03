@@ -14,6 +14,8 @@ abstract class AppRoutes {
   static const buyTicket = '/buy-ticket';
 
   static const cart = '/cart';
+  
+  static const momoReturn = '/payment-result';
 
   // Secondary Screens - Auxiliary Screens
   static const profile = '/profile';
