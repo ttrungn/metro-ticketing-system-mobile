@@ -17,9 +17,9 @@ class AddToCartRequest {
     return {
       'ticketId': ticketId,
       'quantity': quantity,
-      'entryStationId': entryStationId,
-      'destinationStationId': destinationStationId,
-      'routeId': routeId,
+      'entryStationId': entryStationId ?? "",
+      'destinationStationId': destinationStationId ?? "",
+      'routeId': routeId ?? "",
     };
   }
 

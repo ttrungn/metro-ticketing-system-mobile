@@ -8,6 +8,7 @@ import 'package:numberpicker/numberpicker.dart';
 
 import '../../../../core/common/presentation/modals/dashed_line_painter.dart';
 import '../../../../core/common/presentation/modals/dialog_utils.dart';
+import '../../../../core/common/presentation/modals/payment_result_dialog.dart';
 import '../../../../core/constants/app_color.dart';
 import '../../../../core/constants/ticket/buy_ticket_const.dart';
 import '../../../../core/utils/builder/ticket_builder.dart';
@@ -260,6 +261,12 @@ class _SearchRouteBodyState extends State<SearchRouteBody> {
 
                                     var request = AddToCartRequest(ticketId: ticketId, quantity: quantity,entryStationId: entryId,destinationStationId: exitId,routeId: routeId);
                                     await context.read<BuyTicketCubit>().addToCart(request);
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return PaymentResultDialog(isSuccess: true);
+                                      },
+                                    );
                                   },
                                   onChangedQuantity: (value) {
                                     setState(() {

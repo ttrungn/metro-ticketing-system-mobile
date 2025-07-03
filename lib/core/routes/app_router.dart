@@ -7,6 +7,7 @@ import 'package:metro_ticketing_system_mobile/features/feedback/presentation/scr
 import 'package:metro_ticketing_system_mobile/features/feedback/presentation/screens/new_feedback_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/view_ticket/presentation/screens/view_ticket_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/presentation/screens/register_screen.dart';
+import '../../features/cart/presentation/screens/payment_result_screen.dart';
 import '../../features/student_verification/presentation/screens/verification_form_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/user/presentation/screens/profile_screen.dart';
@@ -119,6 +120,20 @@ class AppRouter {
           builder: (_) => const CartPage(),
           settings: settings,
         );
+      case AppRoutes.momoReturn:
+        final args = settings.arguments as Map<String, dynamic>?;
+
+        final orderId = args?['orderId'];
+        final resultCode = args?['resultCode'];
+
+        return MaterialPageRoute(
+          builder: (_) => PaymentResultScreen(
+            orderId: orderId,
+            resultCode: resultCode,
+          ),
+          settings: settings,
+        );
+
 
       default:
         return MaterialPageRoute(

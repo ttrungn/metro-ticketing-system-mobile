@@ -21,11 +21,15 @@ class CartLoaded extends CartState {
   CartLoaded({required this.items, required this.totalPrice});
 }
 
+
 class CartError extends CartState {
   final String message;
 
   CartError({required this.message});
 }
+
+
+
 
 class CartCubit extends Cubit<CartState> {
   final CartService cartService;
@@ -106,4 +110,7 @@ class CartCubit extends Cubit<CartState> {
     await super.close();
   }
 
+  void startPayment(double amount) async{
+    await cartService.startPayment(amount);
+  }
 }
