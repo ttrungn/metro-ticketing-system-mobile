@@ -235,14 +235,14 @@ class _CartPageState extends State<CartPage> {
 
                   return TextButton(
                     style: ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(ConstantAppColor.primary),
+                      backgroundColor: WidgetStatePropertyAll(selectedMethod != null?ConstantAppColor.primary : Colors.grey),
                       shape: WidgetStatePropertyAll(
                         RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
                       ),
                     ),
-                    onPressed: () {
-                      // TODO: thêm xử lý thanh toán tại đây
-                    },
+                    onPressed: selectedMethod != null? (){
+                    context.read<CartCubit>().startPayment(total);
+                  }: null,
                     child: Text(
                       "Thanh toán ${currencyFormatter.format(total)}đ",
                       style: TextStyle(fontSize: 20, color: Colors.white),
