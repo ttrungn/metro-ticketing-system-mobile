@@ -1,28 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
+import 'package:metro_ticketing_system_mobile/core/utils/dialogs.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/logic/login_cubit.dart';
 
-class LoginButton extends StatelessWidget {
-  final String email;
-  final String password;
+import '../../../../core/routes/app_routes.dart';
 
-  const LoginButton({super.key, required this.email, required this.password});
+class LoginButton extends StatelessWidget {
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+  final bool Function() onValidationRequired;
+
+  const LoginButton({
+    super.key,
+    required this.emailController,
+    required this.passwordController,
+    required this.onValidationRequired,
+  });
+
+  List<Widget> _buildDialogActionButtons(BuildContext context) {
+    return [
+      TextButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: Text("Đóng"),
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) async {
-        if (state is LoginFailure) {
-          ScaffoldMessenger.of(
+        if (state is LoginSuccess) {
+          Navigator.pushNamed(context, AppRoutes.home);
+        } else if (state is LoginFailure) {
+          showCustomDialog(
             context,
-          ).showSnackBar(SnackBar(content: Text(state.error)));
-        }
-
-        if (state is LoginFinished) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(const SnackBar(content: Text("Login successful!")));
+            Icons.error,
+            Colors.red,
+            "Thất bại",
+            state.message,
+            _buildDialogActionButtons(context),
+          );
         }
       },
       builder: (context, state) {
@@ -41,9 +62,17 @@ class LoginButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            onPressed: () => context.read<LoginCubit>().login(email, password),
+            onPressed: () {
+              // Validate all fields before attempting login
+              if (onValidationRequired()) {
+                context.read<LoginCubit>().login(
+                  emailController.text,
+                  passwordController.text,
+                );
+              }
+            },
             child: const Text(
-              "Login",
+              "Đăng Nhập",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),

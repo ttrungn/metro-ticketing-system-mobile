@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
@@ -12,40 +13,52 @@ class LoginInitial extends LoginState {}
 
 class LoginLoading extends LoginState {}
 
-class LoginFinished extends LoginState {
+class LoginSuccess extends LoginState {
   final Map<String, dynamic> data;
 
-  LoginFinished(this.data);
+  LoginSuccess(this.data);
 }
 
 class LoginFailure extends LoginState {
-  final String error;
+  final String message;
 
-  LoginFailure(this.error);
+  LoginFailure(this.message);
 }
-
 
 @injectable
 class LoginCubit extends Cubit<LoginState> {
   final AuthService _authService;
-  LoginCubit(this._authService) : super(LoginInitial());
+  final SecureStorage _secureStorage;
+
+  LoginCubit(this._authService, this._secureStorage) : super(LoginInitial());
 
   Future<void> login(String email, String password) async {
     emit(LoginLoading());
+
     try {
-      final response = await _authService.loginUser(
-        LoginRequest(email: email, password: password),
+      final response = await  _authService.loginUser(
+        LoginRequest(email: email.trim(), password: password),
       );
 
-      if (response['accessToken'] != null) {
-        await SecureStorage().writeSecureData(
-          key: 'accessToken',
-          value: response['accessToken'],
-        );
-      }
-      emit(LoginFinished(response));
-    } catch (_) {
-      emit(LoginFailure("Cannot login right now, please try again later!"));
+      await _secureStorage.writeSecureData(
+        key: 'accessToken',
+        value: response['token'],
+      );
+
+      emit(LoginSuccess(response));
+    } on DioException catch (e) {
+      emit(
+        LoginFailure(
+          e.response?.data['message'] ??
+              'Đã xảy ra lỗi không xác định. Vui lòng thử lại sau.',
+        ),
+      );
+    } catch (e) {
+      emit(LoginFailure('Đã xảy ra lỗi không xác định. Vui lòng thử lại sau.'));
     }
+  }
+
+  void resetState() {
+    emit(LoginInitial());
   }
 }
