@@ -6,12 +6,20 @@ import 'dart:io';
 
 class SubmitButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
-  final VoidCallback onSubmit;
+  final String studentCode;
+  final String school;
+  final String fullName;
+  final String dob;
+  final File? studentCardImage;
 
   const SubmitButton({
     super.key,
     required this.formKey,
-    required this.onSubmit,
+    required this.studentCode,
+    required this.school,
+    required this.fullName,
+    required this.dob,
+    required this.studentCardImage,
   });
 
   @override
@@ -20,7 +28,7 @@ class SubmitButton extends StatelessWidget {
       listener: (context, state) {
         if (state is VerificationFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
+            SnackBar(content: Text(state.error)),
           );
         }
 
@@ -45,7 +53,21 @@ class SubmitButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            onPressed: onSubmit,
+            onPressed: () {
+              if (formKey.currentState!.validate() && studentCardImage != null) {
+                context.read<VerificationCubit>().submitVerification(
+                  studentCode: studentCode,
+                  school: school,
+                  fullName: fullName,
+                  dob: dob,
+                  studentCardImage: studentCardImage!,
+                );
+              } else if (studentCardImage == null) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Upload student card image')),
+                );
+              }
+            },
             child: const Text(
               "Submit Form",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),

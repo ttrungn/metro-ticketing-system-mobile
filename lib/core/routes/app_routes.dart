@@ -1,3 +1,4 @@
+
 //TODO DEFINE ROUTE AND WIDGET HERE => USE NAVIGATOR.PUSHNAMED
 
 abstract class AppRoutes {
@@ -7,21 +8,15 @@ abstract class AppRoutes {
   static const register = '/register';
 
   // Main screen - Core Feature
-  static const home = '/home';
+  static const home= '/home';
 
-  static const myTicket = '/my-ticket';
 
-  static const buyTicket = '/buy-ticket';
 
-  // Secondary Screens - Auxiliary Screens
+  // Secondary Screens - Auxiliary Screen
   static const profile = '/profile';
 
   static const settings = '/settings';
 
   // Student Verification Form Screen
   static const studentVerificationForm = '/student-verification-form';
-
-  // Feedback Screen
-  static const feedback = '/feedback';
-  static const newFeedback = '/new-feedback';
 }
