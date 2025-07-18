@@ -68,7 +68,7 @@ class _VerificationFormState extends State<VerificationForm> {
       try {
         initialDate = DateFormat('dd-MM-yyyy').parse(controller.text);
       } catch (_) {
-        initialDate = DateTime(2000); // fallback nếu lỗi parse
+        initialDate = DateTime(2000);
       }
     }
     final picked = await showDatePicker(
@@ -112,10 +112,21 @@ class _VerificationFormState extends State<VerificationForm> {
                   focusNode: _studentCodeFocusNode,
                   icon: Icons.badge),
               _buildTextField(
-                  label: "Email Học Sinh",
-                  controller: _studentEmailController,
-                  focusNode: _studentEmailFocusNode,
-                  icon: Icons.email),
+                label: "Email Học Sinh",
+                controller: _studentEmailController,
+                focusNode: _studentEmailFocusNode,
+                icon: Icons.email,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Vui lòng nhập Email Học Sinh';
+                  }
+                  final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                  if (!emailRegex.hasMatch(value)) {
+                    return 'Email không hợp lệ';
+                  }
+                  return null;
+                },
+              ),
               _buildTextField(
                   label: "Tên Trường Học",
                   controller: _schoolController,
@@ -131,11 +142,6 @@ class _VerificationFormState extends State<VerificationForm> {
                   controller: _lastNameController,
                   focusNode: _lastNameFocusNode,
                   icon: Icons.person),
-              // _buildTextField(
-              //     label: "Full Name",
-              //     controller: _fullNameController,
-              //     focusNode: _fullNameFocusNode,
-              //     icon: Icons.person),
               _buildDateField(
                   "Ngày Sinh",
                   _dobController,
@@ -189,6 +195,7 @@ class _VerificationFormState extends State<VerificationForm> {
     required TextEditingController controller,
     FocusNode? focusNode,
     IconData? icon,
+    String? Function(String?)? validator,
   }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 25),
@@ -219,7 +226,7 @@ class _VerificationFormState extends State<VerificationForm> {
           ),
           contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
         ),
-        validator: (value) =>
+        validator: validator ?? (value) =>
         value == null || value.isEmpty ? 'Please input $label' : null,
       ),
     );

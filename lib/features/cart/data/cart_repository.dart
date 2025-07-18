@@ -33,11 +33,11 @@ class CartRepository {
     }
   }
 
-  Future<bool> updateCart(String ticketId, int quantity) async {
+  Future<bool> updateCart(String cartId, int quantity) async {
     try {
       var response = await ApiClient.dio.put("/order/Cart",
         data: {
-          "id": ticketId,
+          "id": cartId,
           "quantity": quantity,
         },
       );

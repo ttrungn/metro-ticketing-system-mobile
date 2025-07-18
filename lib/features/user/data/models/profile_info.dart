@@ -11,7 +11,7 @@ class ProfileInfo {
 
   factory ProfileInfo.fromJson(Map<String, dynamic> data) {
     return ProfileInfo(
-      name: data['name']['firstName'] + ' ' + data['name']['lastName'],
+      name: data['fullName']['firstName'] + ' ' + data['fullName']['lastName'],
       email: data['email'],
       isStudent: data['isStudent'] ? 'Đã xác nhận' : 'Chưa xác nhận',
     );
