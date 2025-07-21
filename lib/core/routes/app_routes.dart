@@ -28,4 +28,8 @@ abstract class AppRoutes {
   // Feedback Screen
   static const feedback = '/feedback';
   static const newFeedback = '/new-feedback';
+
+  //Scanner Screen
+  static const scannerToUsed = '/scanner';
+  static const scannerToExit = '/scannerExit';
 }

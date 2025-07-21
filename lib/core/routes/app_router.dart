@@ -8,11 +8,13 @@ import 'package:metro_ticketing_system_mobile/features/feedback/presentation/scr
 import 'package:metro_ticketing_system_mobile/features/view_ticket/presentation/screens/view_ticket_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/presentation/screens/register_screen.dart';
 import '../../features/cart/presentation/screens/payment_result_screen.dart';
+import '../../features/scan_qr_code/presentation/screens/scan_qr_code_exit_screen.dart';
 import '../../features/student_verification/presentation/screens/verification_form_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/user/presentation/screens/profile_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
 import '../common/presentation/screens/error_screen.dart';
+import '../../features/scan_qr_code/presentation/screens/scan_qr_code_screen.dart';
 import 'app_routes.dart';
 
 class AppRouter {
@@ -25,6 +27,8 @@ class AppRouter {
       AppRoutes.register,
       AppRoutes.newFeedback,
       AppRoutes.studentVerificationForm,
+      AppRoutes.scannerToUsed,
+      AppRoutes.scannerToExit,
     ];
     return !noCartRoutes.contains(route);
   }
@@ -133,8 +137,22 @@ class AppRouter {
           ),
           settings: settings,
         );
-
-
+      case AppRoutes.scannerToUsed:
+        return MaterialPageRoute(
+          builder: (_) => GlobalLoadingOverlay(
+            showCartButton: shouldShowCartButton(settings.name),
+            child: const ScanQRCodeScreen(),
+          ),
+          settings: settings,
+        );
+      case AppRoutes.scannerToExit:
+        return MaterialPageRoute(
+          builder: (_) => GlobalLoadingOverlay(
+            showCartButton: shouldShowCartButton(settings.name),
+            child: const ScanQRCodeExitScreen(),
+          ),
+          settings: settings,
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => GlobalLoadingOverlay(
