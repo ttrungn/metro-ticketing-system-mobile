@@ -86,17 +86,20 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i6.QRService>(
       () => _i6.QRService(gh<_i1023.QRRepository>()),
     );
-    gh.lazySingleton<_i645.CartInfo>(
-      () => _i645.CartInfo(
-        id: gh<String>(),
-        ticketName: gh<String>(),
-        entryStationName: gh<String>(),
-        exitStationName: gh<String>(),
-        routeName: gh<String>(),
-        quantity: gh<int>(),
-        price: gh<double>(),
-      ),
-    );
+    // gh.lazySingleton<_i645.CartInfo>(
+    //   () => _i645.CartInfo(
+    //     id: gh<String>(),
+    //     ticketName: gh<String>(),
+    //     entryStationName: gh<String>(),
+    //     exitStationName: gh<String>(),
+    //     routeName: gh<String>(),
+    //     quantity: gh<int>(),
+    //     price: gh<double>(),
+    //     ticketId: gh<String>(),
+    //     entryStationId: gh<String>(),
+    //     exitStationId: gh<String>(),
+    //   ),
+    // );
     gh.lazySingleton<_i249.ViewTicketService>(
       () => _i249.ViewTicketService(gh<_i982.ViewTicketRepository>()),
     );

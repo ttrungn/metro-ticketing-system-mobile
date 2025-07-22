@@ -25,8 +25,8 @@ class CartService {
     return await _repo.updateCart(cartId, quantity);
   }
 
-  Future<void> startPayment(double amount) async {
-    var momoDeeplink = await _repo.startPayment(amount);
+  Future<void> startPayment(double amount, List<CartInfo> cartItems) async {
+    var momoDeeplink = await _repo.startPayment(amount, cartItems);
     await launchMoMoDeeplink(momoDeeplink);
   }
 

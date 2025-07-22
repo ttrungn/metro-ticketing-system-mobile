@@ -110,7 +110,7 @@ class CartCubit extends Cubit<CartState> {
     await super.close();
   }
 
-  void startPayment(double amount) async{
-    await cartService.startPayment(amount);
+  void startPayment(double amount, List<CartInfo> cartItems) async{
+    await cartService.startPayment(amount, cartItems);
   }
 }

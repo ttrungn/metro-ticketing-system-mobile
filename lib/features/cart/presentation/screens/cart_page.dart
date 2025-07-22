@@ -229,8 +229,10 @@ class _CartPageState extends State<CartPage> {
               child: BlocBuilder<CartCubit, CartState>(
                 builder: (context, state) {
                   double total = 0;
+                  List<CartInfo> cartItems = [];
                   if (state is CartLoaded) {
                     total = state.totalPrice;
+                    cartItems = state.items;
                   }
 
                   return TextButton(
@@ -241,7 +243,7 @@ class _CartPageState extends State<CartPage> {
                       ),
                     ),
                     onPressed: selectedMethod != null? (){
-                    context.read<CartCubit>().startPayment(total);
+                    context.read<CartCubit>().startPayment(total, cartItems);
                   }: null,
                     child: Text(
                       "Thanh toán ${currencyFormatter.format(total)}đ",
