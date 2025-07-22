@@ -33,11 +33,11 @@ class CartRepository {
     }
   }
 
-  Future<bool> updateCart(String ticketId, int quantity) async {
+  Future<bool> updateCart(String cartId, int quantity) async {
     try {
       var response = await ApiClient.dio.put("/order/Cart",
         data: {
-          "id": ticketId,
+          "id": cartId,
           "quantity": quantity,
         },
       );
@@ -49,13 +49,29 @@ class CartRepository {
   }
 
 
-  Future<String> startPayment(double amount) async{
+  Future<String> startPayment(double amount, List<CartInfo> cartItems) async{
     try{
+
+      List<Map<String, dynamic>> orderDetails = cartItems.map((item) {
+        var orderDetail = {
+          "ticketId": item.ticketId,
+          "boughtPrice": item.price,
+        };
+        if (item.entryStationId.isNotEmpty) {
+          orderDetail["entryStationId"] = item.entryStationId;
+        }
+        if (item.exitStationId.isNotEmpty) {
+          orderDetail["destinationStationId"] = item.exitStationId;
+        }
+
+        return orderDetail;
+      }).toList();
+
       var response = await ApiClient.dio.post(
         "/order/Payment/momo/create",
         data : {
           "amount" : amount,
-          "orderDetails": [{}],
+          "orderDetails": orderDetails,
         }
       );
       print(response.data);

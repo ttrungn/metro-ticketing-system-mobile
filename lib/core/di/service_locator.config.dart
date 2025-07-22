@@ -25,6 +25,26 @@ import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/buy_ticke
     as _i992;
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/buy_ticket_service.dart'
     as _i409;
+import 'package:metro_ticketing_system_mobile/features/cart/data/cart_repository.dart'
+    as _i309;
+import 'package:metro_ticketing_system_mobile/features/cart/data/cart_service.dart'
+    as _i153;
+import 'package:metro_ticketing_system_mobile/features/cart/data/model/cart_info.dart'
+    as _i645;
+import 'package:metro_ticketing_system_mobile/features/feedback/logic/feedback_cubit.dart'
+    as _i882;
+import 'package:metro_ticketing_system_mobile/features/feedback/logic/feedback_type_cubit.dart'
+    as _i511;
+import 'package:metro_ticketing_system_mobile/features/scan_qr_code/data/qr_repository.dart'
+    as _i1023;
+import 'package:metro_ticketing_system_mobile/features/scan_qr_code/data/qr_service.dart'
+    as _i6;
+import 'package:metro_ticketing_system_mobile/features/student_verification/data/student_verification_repository.dart'
+    as _i556;
+import 'package:metro_ticketing_system_mobile/features/student_verification/data/student_verification_service.dart'
+    as _i15;
+import 'package:metro_ticketing_system_mobile/features/student_verification/logic/verification_cubit.dart'
+    as _i157;
 import 'package:metro_ticketing_system_mobile/features/user/data/user_repository.dart'
     as _i431;
 import 'package:metro_ticketing_system_mobile/features/user/data/user_service.dart'
@@ -33,17 +53,8 @@ import 'package:metro_ticketing_system_mobile/features/user/logic/user_cubit.dar
     as _i687;
 import 'package:metro_ticketing_system_mobile/features/view_ticket/data/view_ticket_repository.dart'
     as _i982;
-
-import '../../features/feedback/logic/feedback_cubit.dart' as _i882;
-import '../../features/feedback/logic/feedback_type_cubit.dart' as _i511;
-import '../../features/student_verification/data/student_verification_repository.dart' as _i1020;
-import '../../features/student_verification/data/student_verification_repository.dart' as _i556;
-import '../../features/student_verification/data/student_verification_service.dart' as _i15;
-import '../../features/student_verification/logic/verification_cubit.dart' as _i101;
-import '../../features/student_verification/logic/verification_cubit.dart' as _i157;
-import '../../features/cart/data/cart_repository.dart' as _iCartRepo;
-import '../../features/cart/data/cart_service.dart' as _iCartService;
-import '../../features/cart/logic/cart_cubit.dart' as _iCartCubit;
+import 'package:metro_ticketing_system_mobile/features/view_ticket/data/view_ticket_service.dart'
+    as _i249;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -57,15 +68,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i992.BuyTicketRepository>(
       () => _i992.BuyTicketRepository(),
     );
-    gh.lazySingleton<_i1020.StudentVerificationRepository>(
+    gh.lazySingleton<_i309.CartRepository>(() => _i309.CartRepository());
+    gh.lazySingleton<_i1023.QRRepository>(() => _i1023.QRRepository());
+    gh.lazySingleton<_i556.StudentVerificationRepository>(
       () => _i556.StudentVerificationRepository(),
     );
     gh.lazySingleton<_i431.UserRepository>(() => _i431.UserRepository());
     gh.lazySingleton<_i982.ViewTicketRepository>(
       () => _i982.ViewTicketRepository(),
-    );
-    gh.lazySingleton<_iCartRepo.CartRepository>(
-      () => _iCartRepo.CartRepository(),
     );
     gh.lazySingleton<_i785.UserService>(
       () => _i785.UserService(gh<_i431.UserRepository>()),
@@ -73,16 +83,36 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i409.BuyTicketService>(
       () => _i409.BuyTicketService(gh<_i992.BuyTicketRepository>()),
     );
+    gh.lazySingleton<_i6.QRService>(
+      () => _i6.QRService(gh<_i1023.QRRepository>()),
+    );
+    // gh.lazySingleton<_i645.CartInfo>(
+    //   () => _i645.CartInfo(
+    //     id: gh<String>(),
+    //     ticketName: gh<String>(),
+    //     entryStationName: gh<String>(),
+    //     exitStationName: gh<String>(),
+    //     routeName: gh<String>(),
+    //     quantity: gh<int>(),
+    //     price: gh<double>(),
+    //     ticketId: gh<String>(),
+    //     entryStationId: gh<String>(),
+    //     exitStationId: gh<String>(),
+    //   ),
+    // );
+    gh.lazySingleton<_i249.ViewTicketService>(
+      () => _i249.ViewTicketService(gh<_i982.ViewTicketRepository>()),
+    );
     gh.lazySingleton<_i15.StudentVerificationService>(
       () => _i15.StudentVerificationService(
-        gh<_i1020.StudentVerificationRepository>(),
+        gh<_i556.StudentVerificationRepository>(),
       ),
     );
     gh.lazySingleton<_i728.AuthService>(
       () => _i728.AuthService(gh<_i1037.AuthRepository>()),
     );
-    gh.lazySingleton<_iCartService.CartService>(
-      () => _iCartService.CartService(gh<_iCartRepo.CartRepository>()),
+    gh.lazySingleton<_i153.CartService>(
+      () => _i153.CartService(gh<_i309.CartRepository>()),
     );
     gh.factory<_i882.FeedbackCubit>(
       () => _i882.FeedbackCubit(gh<_i785.UserService>()),
@@ -91,7 +121,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i511.FeedbackTypeCubit(gh<_i785.UserService>()),
     );
     gh.factory<_i687.UserCubit>(() => _i687.UserCubit(gh<_i785.UserService>()));
-    gh.factory<_i101.VerificationCubit>(
+    gh.factory<_i157.VerificationCubit>(
       () => _i157.VerificationCubit(gh<_i15.StudentVerificationService>()),
     );
     gh.factory<_i413.RegisterCubit>(
@@ -99,9 +129,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i18.LoginCubit>(
       () => _i18.LoginCubit(gh<_i728.AuthService>(), gh<_i689.SecureStorage>()),
-    );
-    gh.factory<_iCartCubit.CartCubit>(
-      () => _iCartCubit.CartCubit(),
     );
     return this;
   }

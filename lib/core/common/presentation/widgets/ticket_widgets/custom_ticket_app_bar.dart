@@ -4,8 +4,17 @@ import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
 class CustomTicketAppBar extends StatelessWidget {
   final String title;
   final Widget? leftWidget;
+  final IconData? leadingIcon;
+  final VoidCallback? onLeadingPressed;
 
-  const CustomTicketAppBar({super.key, required this.title, this.leftWidget});
+  const CustomTicketAppBar({
+    super.key,
+    required this.title,
+    this.leftWidget,
+    this.leadingIcon,
+    this.onLeadingPressed,
+  });
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +40,9 @@ class CustomTicketAppBar extends StatelessWidget {
                 Positioned(
                   left: 0,
                   child: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
+                    onPressed: onLeadingPressed ?? () => Navigator.of(context).pop(),
                     icon: Icon(
-                      Icons.home_outlined,
+                      leadingIcon ?? Icons.home_outlined,
                       color: ConstantAppColor.primaryLight,
                       size: 40,
                     ),

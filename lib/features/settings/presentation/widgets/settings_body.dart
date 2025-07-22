@@ -56,7 +56,7 @@ class SettingsBody extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.info, color: ConstantAppColor.primary),
                 title: Text('Phiên bản ứng dụng', style: TextStyle(fontSize: 20)),
-                subtitle: Text('1.3.23', style: TextStyle(fontSize: 17, color: ConstantAppColor.primary)),
+                subtitle: Text('0.0.12', style: TextStyle(fontSize: 17, color: ConstantAppColor.primary)),
                 onTap: () {
                   // Handle onTap action
                 },
