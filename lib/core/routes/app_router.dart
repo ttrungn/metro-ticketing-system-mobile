@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:metro_ticketing_system_mobile/core/common/presentation/widgets/global_loading_overlay.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/presentation/screens/buy_ticket_page.dart';
+import 'package:metro_ticketing_system_mobile/features/cart/data/cart_service.dart';
+import 'package:metro_ticketing_system_mobile/features/cart/data/model/payment_result.dart';
 import 'package:metro_ticketing_system_mobile/features/cart/presentation/screens/cart_page.dart';
 import 'package:metro_ticketing_system_mobile/features/feedback/presentation/screens/feedback_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/feedback/presentation/screens/new_feedback_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/view_ticket/presentation/screens/view_ticket_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/presentation/screens/register_screen.dart';
+import '../../features/cart/data/model/momo_payment_query.dart';
 import '../../features/cart/presentation/screens/payment_result_screen.dart';
 import '../../features/scan_qr_code/presentation/screens/scan_qr_code_exit_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/bus/presentation/screen/view_bus_page.dart';
@@ -16,6 +19,7 @@ import '../../features/user/presentation/screens/profile_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
 import '../common/presentation/screens/error_screen.dart';
 import '../../features/scan_qr_code/presentation/screens/scan_qr_code_screen.dart';
+import '../di/service_locator.dart';
 import 'app_routes.dart';
 
 class AppRouter {
@@ -134,17 +138,14 @@ class AppRouter {
           settings: settings,
         );
       case AppRoutes.momoReturn:
-        final args = settings.arguments as Map<String, dynamic>?;
-
-        final orderId = args?['orderId'];
-        final resultCode = args?['resultCode'];
+        final args = settings.arguments as PaymentResult;
 
         return MaterialPageRoute(
-          builder:
-              (_) =>
-                  PaymentResultScreen(orderId: orderId, resultCode: resultCode),
+          builder: (_) => PaymentResultScreen(
+              result: args),
           settings: settings,
         );
+
       case AppRoutes.scannerToUsed:
         return MaterialPageRoute(
           builder:
