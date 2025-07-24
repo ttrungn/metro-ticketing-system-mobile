@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
+import 'package:metro_ticketing_system_mobile/core/routes/app_routes.dart';
 
 class CustomTicketAppBar extends StatelessWidget {
   final String title;
@@ -40,7 +41,7 @@ class CustomTicketAppBar extends StatelessWidget {
                 Positioned(
                   left: 0,
                   child: IconButton(
-                    onPressed: onLeadingPressed ?? () => Navigator.of(context).pop(),
+                    onPressed: onLeadingPressed ?? () => Navigator.pushNamed(context, AppRoutes.home),
                     icon: Icon(
                       leadingIcon ?? Icons.home_outlined,
                       color: ConstantAppColor.primaryLight,
