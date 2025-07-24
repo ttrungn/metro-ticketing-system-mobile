@@ -9,9 +9,9 @@ class CartInfo {
   final String id;
   final String ticketId;
   final String ticketName;
-  final String entryStationId;
+  final String? entryStationId;
   final String entryStationName;
-  final String exitStationId;
+  final String? exitStationId;
   final String exitStationName;
   final String routeName;
   final int quantity;
@@ -21,9 +21,9 @@ class CartInfo {
     required this.id,
     required this.ticketId,
     required this.ticketName,
-    required this.entryStationId,
+    this.entryStationId,
     required this.entryStationName,
-    required this.exitStationId,
+    this.exitStationId,
     required this.exitStationName,
     required this.routeName,
     required this.quantity,
@@ -35,9 +35,9 @@ class CartInfo {
       id: json['cartId']?.toString() ?? '',
       ticketId: json['ticketId']?.toString() ?? '',
       ticketName: json['ticketName']?.toString() ?? '',
-      entryStationId: json['entryStationId']?.toString() ?? '',
+      entryStationId: json['entryStationId']?.toString(),
       entryStationName: json['entryStationName']?.toString() ?? '',
-      exitStationId: json['destinationStationId']?.toString() ?? '',
+      exitStationId: json['destinationStationId']?.toString(),
       exitStationName: json['destinationStationName']?.toString() ?? '',
       routeName: json['route']?.toString() ?? '',
       quantity: json['quantity'] ?? 0,

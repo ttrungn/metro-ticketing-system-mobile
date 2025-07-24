@@ -56,12 +56,14 @@ class CartRepository {
         var orderDetail = {
           "ticketId": item.ticketId,
           "boughtPrice": item.price,
+          "entryStationId": null,
+          "destinationStationId": null,
         };
-        if (item.entryStationId.isNotEmpty) {
-          orderDetail["entryStationId"] = item.entryStationId;
+        if (item.entryStationId != null && item.entryStationId!.isNotEmpty) {
+          orderDetail["entryStationId"] = item.entryStationId!;
         }
-        if (item.exitStationId.isNotEmpty) {
-          orderDetail["destinationStationId"] = item.exitStationId;
+        if (item.exitStationId != null && item.exitStationId!.isNotEmpty) {
+          orderDetail["destinationStationId"] = item.exitStationId!;
         }
 
         return orderDetail;

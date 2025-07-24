@@ -49,6 +49,7 @@ class _ProfileFormState extends State<ProfileForm> {
                         ),
                       );
                     },
+                    showTrailing: true,
                   ),
                   const Divider(
                     color: ConstantAppColor.primary,
