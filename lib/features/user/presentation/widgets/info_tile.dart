@@ -26,23 +26,60 @@ class InfoTile extends StatelessWidget {
     final Color effectiveColor = iconColor ?? ConstantAppColor.primary;
     final Color effectiveTitleColor = titleColor ?? ConstantAppColor.primary;
 
-    return ListTile(
-      leading: Icon(icon, color: effectiveColor, size: 40),
-      title: Text(
-        title,
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: effectiveTitleColor,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          child: Row(
+            children: [
+              Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: effectiveColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(icon, color: effectiveColor, size: 24),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: effectiveTitleColor,
+                      ),
+                    ),
+                    if (subtitle != null && subtitle!.isNotEmpty) ...[
+                      const SizedBox(height: 4),
+                      Text(
+                        subtitle!,
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey[700],
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              if (showTrailing)
+                Icon(
+                  Icons.arrow_forward_ios,
+                  size: 16,
+                  color: Colors.grey[400],
+                ),
+            ],
+          ),
         ),
       ),
-      subtitle:
-          (subtitle == null || subtitle!.isEmpty)
-              ? null
-              : Text(subtitle!, style: const TextStyle(fontSize: 16)),
-      trailing:
-          showTrailing ? const Icon(Icons.arrow_forward_ios, size: 16) : null,
-      onTap: onTap,
     );
   }
 }
