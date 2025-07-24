@@ -85,6 +85,13 @@ class MainGridButtonList extends StatelessWidget {
                           Navigator.pushNamed(context, '/settings');
                         },
                       ),
+                      MainButton(
+                        icon: Icons.directions_bus,
+                        text: 'Bus',
+                        onPressed: () async {
+                          Navigator.pushNamed(context, '/view-bus');
+                        },
+                      ),
                     ],
                   ),
                 ],

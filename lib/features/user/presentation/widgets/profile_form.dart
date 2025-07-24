@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
+import 'package:metro_ticketing_system_mobile/core/storage/secure_storage.dart';
+import 'package:metro_ticketing_system_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/user/logic/user_cubit.dart';
 import 'package:metro_ticketing_system_mobile/features/user/presentation/widgets/info_tile.dart';
 import 'package:metro_ticketing_system_mobile/features/student_verification/presentation/screens/verification_form_screen.dart';
@@ -41,16 +43,19 @@ class _ProfileFormState extends State<ProfileForm> {
                     icon: Icons.school,
                     title: 'Sinh viên',
                     subtitle: user.isStudent ?? 'Chưa cập nhật',
-                    onTap: () {
+                    showTrailing: true,
+                    onTap: user.isStudent != false
+                        ? () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const VerificationFormScreen(),
                         ),
                       );
-                    },
-                    showTrailing: true,
+                    }
+                    : null,
                   ),
+
                   const Divider(
                     color: ConstantAppColor.primary,
                     thickness: 1,
@@ -61,8 +66,14 @@ class _ProfileFormState extends State<ProfileForm> {
                     title: 'Đăng xuất',
                     iconColor: Colors.red,
                     titleColor: Colors.red,
-                    onTap: () {
-                      // Handle logout logic here
+                    onTap: () async {
+                      await SecureStorage().deleteSecureData(key: 'accessToken');
+
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => const LoginScreen()),
+                            (route) => false,
+                      );
                     },
                   ),
                 ],

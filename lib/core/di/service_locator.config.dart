@@ -21,6 +21,12 @@ import 'package:metro_ticketing_system_mobile/features/auth/logic/login_cubit.da
     as _i18;
 import 'package:metro_ticketing_system_mobile/features/auth/logic/register_cubit.dart'
     as _i413;
+import 'package:metro_ticketing_system_mobile/features/bus/data/bus_repository.dart'
+    as _i187;
+import 'package:metro_ticketing_system_mobile/features/bus/data/bus_service.dart'
+    as _i452;
+import 'package:metro_ticketing_system_mobile/features/bus/logic/bus_cubit.dart'
+    as _i856;
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/buy_ticket_repository.dart'
     as _i992;
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/buy_ticket_service.dart'
@@ -65,6 +71,7 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.lazySingleton<_i689.SecureStorage>(() => _i689.SecureStorage());
     gh.lazySingleton<_i1037.AuthRepository>(() => _i1037.AuthRepository());
+    gh.lazySingleton<_i187.BusRepository>(() => _i187.BusRepository());
     gh.lazySingleton<_i992.BuyTicketRepository>(
       () => _i992.BuyTicketRepository(),
     );
@@ -86,20 +93,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i6.QRService>(
       () => _i6.QRService(gh<_i1023.QRRepository>()),
     );
-    // gh.lazySingleton<_i645.CartInfo>(
-    //   () => _i645.CartInfo(
-    //     id: gh<String>(),
-    //     ticketName: gh<String>(),
-    //     entryStationName: gh<String>(),
-    //     exitStationName: gh<String>(),
-    //     routeName: gh<String>(),
-    //     quantity: gh<int>(),
-    //     price: gh<double>(),
-    //     ticketId: gh<String>(),
-    //     entryStationId: gh<String>(),
-    //     exitStationId: gh<String>(),
-    //   ),
-    // );
     gh.lazySingleton<_i249.ViewTicketService>(
       () => _i249.ViewTicketService(gh<_i982.ViewTicketRepository>()),
     );
@@ -114,6 +107,23 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i153.CartService>(
       () => _i153.CartService(gh<_i309.CartRepository>()),
     );
+    gh.lazySingleton<_i645.CartInfo>(
+      () => _i645.CartInfo(
+        id: gh<String>(),
+        ticketId: gh<String>(),
+        ticketName: gh<String>(),
+        entryStationId: gh<String>(),
+        entryStationName: gh<String>(),
+        exitStationId: gh<String>(),
+        exitStationName: gh<String>(),
+        routeName: gh<String>(),
+        quantity: gh<int>(),
+        price: gh<double>(),
+      ),
+    );
+    gh.lazySingleton<_i452.BusService>(
+      () => _i452.BusService(gh<_i187.BusRepository>()),
+    );
     gh.factory<_i882.FeedbackCubit>(
       () => _i882.FeedbackCubit(gh<_i785.UserService>()),
     );
@@ -124,6 +134,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i157.VerificationCubit>(
       () => _i157.VerificationCubit(gh<_i15.StudentVerificationService>()),
     );
+    gh.factory<_i856.BusCubit>(() => _i856.BusCubit(gh<_i452.BusService>()));
     gh.factory<_i413.RegisterCubit>(
       () => _i413.RegisterCubit(gh<_i728.AuthService>()),
     );

@@ -133,6 +133,22 @@ class ErrorScreen extends StatelessWidget {
                 },
                 child: const Text('Quét Ra'),
               ),
+              const SizedBox(height: 20),
+
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ConstantAppColor.primary,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 12,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.viewBus);
+                },
+                child: const Text('Xem Bus'),
+              ),
             ],
           ),
         ),

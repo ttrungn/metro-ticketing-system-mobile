@@ -2,19 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:metro_ticketing_system_mobile/core/common/presentation/widgets/global_loading_overlay.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/presentation/screens/buy_ticket_page.dart';
+import 'package:metro_ticketing_system_mobile/features/cart/data/cart_service.dart';
+import 'package:metro_ticketing_system_mobile/features/cart/data/model/payment_result.dart';
 import 'package:metro_ticketing_system_mobile/features/cart/presentation/screens/cart_page.dart';
 import 'package:metro_ticketing_system_mobile/features/feedback/presentation/screens/feedback_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/feedback/presentation/screens/new_feedback_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/view_ticket/presentation/screens/view_ticket_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/presentation/screens/register_screen.dart';
+import '../../features/cart/data/model/momo_payment_query.dart';
 import '../../features/cart/presentation/screens/payment_result_screen.dart';
 import '../../features/scan_qr_code/presentation/screens/scan_qr_code_exit_screen.dart';
+import 'package:metro_ticketing_system_mobile/features/bus/presentation/screen/view_bus_page.dart';
 import '../../features/student_verification/presentation/screens/verification_form_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/user/presentation/screens/profile_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
 import '../common/presentation/screens/error_screen.dart';
 import '../../features/scan_qr_code/presentation/screens/scan_qr_code_screen.dart';
+import '../di/service_locator.dart';
 import 'app_routes.dart';
 
 class AppRouter {
@@ -43,28 +48,31 @@ class AppRouter {
 
       case AppRoutes.register:
         return MaterialPageRoute(
-          builder: (_) => GlobalLoadingOverlay(
-            showCartButton: shouldShowCartButton(settings.name),
-            child: const RegisterScreen(),
-          ),
+          builder:
+              (_) => GlobalLoadingOverlay(
+                showCartButton: shouldShowCartButton(settings.name),
+                child: const RegisterScreen(),
+              ),
           settings: settings,
         );
 
       case AppRoutes.home:
         return MaterialPageRoute(
-          builder: (_) => GlobalLoadingOverlay(
-            showCartButton: shouldShowCartButton(settings.name),
-            child: const HomeScreen(),
-          ),
+          builder:
+              (_) => GlobalLoadingOverlay(
+                showCartButton: shouldShowCartButton(settings.name),
+                child: const HomeScreen(),
+              ),
           settings: settings,
         );
 
       case AppRoutes.studentVerificationForm:
         return MaterialPageRoute(
-          builder: (_) => GlobalLoadingOverlay(
-            showCartButton: shouldShowCartButton(settings.name),
-            child: const VerificationFormScreen(),
-          ),
+          builder:
+              (_) => GlobalLoadingOverlay(
+                showCartButton: shouldShowCartButton(settings.name),
+                child: const VerificationFormScreen(),
+              ),
           settings: settings,
         );
 
@@ -76,46 +84,51 @@ class AppRouter {
 
       case AppRoutes.myTicket:
         return MaterialPageRoute(
-          builder: (_) => GlobalLoadingOverlay(
-            showCartButton: shouldShowCartButton(settings.name),
-            child: const ViewTicketScreen(),
-          ),
+          builder:
+              (_) => GlobalLoadingOverlay(
+                showCartButton: shouldShowCartButton(settings.name),
+                child: const ViewTicketScreen(),
+              ),
           settings: settings,
         );
 
       case AppRoutes.buyTicket:
         return MaterialPageRoute(
-          builder: (_) => GlobalLoadingOverlay(
-            showCartButton: shouldShowCartButton(settings.name),
-            child: const BuyTicketPage(),
-          ),
+          builder:
+              (_) => GlobalLoadingOverlay(
+                showCartButton: shouldShowCartButton(settings.name),
+                child: const BuyTicketPage(),
+              ),
           settings: settings,
         );
 
       case AppRoutes.feedback:
         return MaterialPageRoute(
-          builder: (_) => GlobalLoadingOverlay(
-            showCartButton: shouldShowCartButton(settings.name),
-            child: const FeedbackScreen(),
-          ),
+          builder:
+              (_) => GlobalLoadingOverlay(
+                showCartButton: shouldShowCartButton(settings.name),
+                child: const FeedbackScreen(),
+              ),
           settings: settings,
         );
 
       case AppRoutes.newFeedback:
         return MaterialPageRoute(
-          builder: (_) => GlobalLoadingOverlay(
-            showCartButton: shouldShowCartButton(settings.name),
-            child: const NewFeedbackScreen(),
-          ),
+          builder:
+              (_) => GlobalLoadingOverlay(
+                showCartButton: shouldShowCartButton(settings.name),
+                child: const NewFeedbackScreen(),
+              ),
           settings: settings,
         );
 
       case AppRoutes.settings:
         return MaterialPageRoute(
-          builder: (_) => GlobalLoadingOverlay(
-            showCartButton: shouldShowCartButton(settings.name),
-            child: const SettingsScreen(),
-          ),
+          builder:
+              (_) => GlobalLoadingOverlay(
+                showCartButton: shouldShowCartButton(settings.name),
+                child: const SettingsScreen(),
+              ),
           settings: settings,
         );
 
@@ -125,41 +138,50 @@ class AppRouter {
           settings: settings,
         );
       case AppRoutes.momoReturn:
-        final args = settings.arguments as Map<String, dynamic>?;
-
-        final orderId = args?['orderId'];
-        final resultCode = args?['resultCode'];
+        final args = settings.arguments as PaymentResult;
 
         return MaterialPageRoute(
           builder: (_) => PaymentResultScreen(
-            orderId: orderId,
-            resultCode: resultCode,
-          ),
+              result: args),
           settings: settings,
         );
+
       case AppRoutes.scannerToUsed:
         return MaterialPageRoute(
-          builder: (_) => GlobalLoadingOverlay(
-            showCartButton: shouldShowCartButton(settings.name),
-            child: const ScanQRCodeScreen(),
-          ),
+          builder:
+              (_) => GlobalLoadingOverlay(
+                showCartButton: shouldShowCartButton(settings.name),
+                child: const ScanQRCodeScreen(),
+              ),
           settings: settings,
         );
       case AppRoutes.scannerToExit:
         return MaterialPageRoute(
-          builder: (_) => GlobalLoadingOverlay(
-            showCartButton: shouldShowCartButton(settings.name),
-            child: const ScanQRCodeExitScreen(),
-          ),
+          builder:
+              (_) => GlobalLoadingOverlay(
+                showCartButton: shouldShowCartButton(settings.name),
+                child: const ScanQRCodeExitScreen(),
+              ),
+          settings: settings,
+        );
+      case AppRoutes.viewBus:
+        return MaterialPageRoute(
+          builder:
+              (_) => GlobalLoadingOverlay(
+                showCartButton: shouldShowCartButton(settings.name),
+                child: const ViewBusPage(),
+              ),
           settings: settings,
         );
       default:
         return MaterialPageRoute(
-          builder: (_) => GlobalLoadingOverlay(
-            showCartButton: false,
-            child: const ErrorScreen(),
-          ),
+          builder:
+              (_) => GlobalLoadingOverlay(
+                showCartButton: false,
+                child: const ErrorScreen(),
+              ),
           settings: settings,
         );
     }
-  }}
+  }
+}
