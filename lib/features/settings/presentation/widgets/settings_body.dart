@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:metro_ticketing_system_mobile/core/common/presentation/screens/error_screen.dart';
 import '../../presentation/screens/access_permissions_screen.dart';
 import '../../presentation/screens/notification_settings_screen.dart';
 import '../../../../core/constants/app_color.dart';
@@ -61,7 +62,7 @@ class SettingsBody extends StatelessWidget {
                   // Handle onTap action
                 },
               ),
-              SizedBox(height: 16)
+              SizedBox(height: 16),
             ],
           ),
         ),
