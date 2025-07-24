@@ -6,6 +6,7 @@ import 'package:metro_ticketing_system_mobile/features/cart/logic/payment_cubit.
 import '../../data/model/momo_payment_query.dart';
 import '../../data/model/payment_result.dart';
 
+
 class PaymentResultScreen extends StatelessWidget {
   final PaymentResult result;
 
@@ -23,48 +24,60 @@ class PaymentResultScreen extends StatelessWidget {
         ? 'THANH TOÁN ${result.ticketCount} VÉ THÀNH CÔNG'
         : 'THANH TOÁN THẤT BẠI';
 
-    return Scaffold(
-      backgroundColor: ConstantAppColor.primaryLight,
-      appBar: AppBar(
-        backgroundColor: ConstantAppColor.primary,
-        title: const Text(
-          'Payment Result',
-          style: TextStyle(color: Colors.white),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacementNamed(context, AppRoutes.home);
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: ConstantAppColor.primaryLight,
+        appBar: AppBar(
+          backgroundColor: ConstantAppColor.primary,
+          title: const Text(
+            'Payment Result',
+            style: TextStyle(color: Colors.white),
+          ),
+          iconTheme: const IconThemeData(color: Colors.white),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, AppRoutes.home);
+            },
+          ),
         ),
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 100, color: color),
-              const SizedBox(height: 20),
-              Text(
-                message,
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: color,
-                ),
-              ),
-              const SizedBox(height: 30),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ConstantAppColor.primary,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 12,
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, size: 100, color: color),
+                const SizedBox(height: 20),
+                Text(
+                  message,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: color,
                   ),
                 ),
-                onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.myTicket);
-                },
-                child: const Text('Back'),
-              ),
-            ],
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ConstantAppColor.primary,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32,
+                      vertical: 12,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, AppRoutes.home);
+                  },
+                  child: const Text('Back'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
