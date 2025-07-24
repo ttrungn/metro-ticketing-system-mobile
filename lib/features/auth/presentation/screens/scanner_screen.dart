@@ -80,21 +80,29 @@ class ScannerScreen extends StatelessWidget {
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Quét Mã QR',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
+    return WillPopScope(
+        onWillPop: () async {
+          _handleBack(context);
+          return false;
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => _handleBack(context),
+            ),
+            title: const Text(
+              'Quét Mã QR',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            centerTitle: true,
+            backgroundColor: Colors.white,
+            elevation: 0,
           ),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
       body: Container(
         color: Colors.grey[100],
         child: Column(
@@ -132,6 +140,7 @@ class ScannerScreen extends StatelessWidget {
           ],
         ),
       ),
+        ),
     );
   }
 }

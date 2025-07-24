@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../constants/app_color.dart';
 import 'leading_ticket_icon.dart';
 
 class TicketBox extends StatelessWidget {
@@ -21,23 +20,34 @@ class TicketBox extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.all(Radius.circular(20)),
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-          padding: const EdgeInsets.all(14),
-          height: 90,
-          width: MediaQuery.of(context).size.width,
+          margin: const EdgeInsets.symmetric(
+            horizontal: 4,
+            vertical: 6,
+          ), // Reduced horizontal margin for full width
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 16,
+          ), // Increased padding for better content spacing
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-            boxShadow: [BoxShadow(offset: Offset(2, 2), color: Colors.black12)],
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                offset: const Offset(0, 2),
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 8,
+                spreadRadius: 0,
+              ),
+            ],
           ),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(flex: 1, child: LeadingTicketIcon()),
-              SizedBox(width: 10),
+              const LeadingTicketIcon(),
+              const SizedBox(width: 16), // Increased spacing
               Expanded(
-                flex: 5,
                 child: TicketInformation(
                   ticketName: ticketName,
                   bottomContent: bottomContent,
@@ -64,64 +74,28 @@ class TicketInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Text(
-                ticketName,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-              ),
-            ),
-            SizedBox(width: 5),
-            Expanded(
-              flex: 2,
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.centerRight,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: ConstantAppColor.primaryLight,
-                    // your custom background color
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.link_off,
-                        size: 12,
-                        color: Colors.blueAccent, // your primary icon color
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        'Not connected',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.blueAccent, // your primary text color
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
+        // Ticket name with full display
+        Text(
+          ticketName,
+          overflow: TextOverflow.visible,
+          maxLines: null, // Allow unlimited lines
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+            height: 1.3,
+          ),
         ),
-       Row(
-         children: [
-           bottomContent
-         ],
-       )
+        const SizedBox(height: 8),
+        // Bottom content with full display
+        DefaultTextStyle(
+          style: const TextStyle(fontSize: 13, color: Colors.grey, height: 1.2),
+          child: bottomContent,
+        ),
       ],
     );
   }
