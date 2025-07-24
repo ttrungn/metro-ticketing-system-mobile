@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:metro_ticketing_system_mobile/core/common/presentation/screens/error_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/scan_qr_code/data/qr_service.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:metro_ticketing_system_mobile/features/scan_qr_code/data/qr_repository.dart';
@@ -100,7 +101,9 @@ class ScanQRCodeScreenState extends State<ScanQRCodeScreen> {
             child: Text("Quét lại", style: TextStyle(color: Colors.blue)),
           ),
           TextButton(
-            onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
+            onPressed: () => Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => const ErrorScreen()),
+            ),
             child: Text("Xong", style: TextStyle(color: Colors.green)),
           ),
         ],

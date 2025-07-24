@@ -74,6 +74,7 @@ class TicketExpiredInfoView extends StatelessWidget {
                 expireDate: expireDate,
                 ticketType: ticketType,
                 ticketName: ticketName,
+                isExpired: true,
               ),
             ),
           ],

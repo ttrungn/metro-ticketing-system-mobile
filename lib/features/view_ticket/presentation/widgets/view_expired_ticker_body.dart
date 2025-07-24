@@ -48,7 +48,7 @@ class ViewExpiredTicketBody extends StatelessWidget {
                       ticketName:
                       _ticketRouteText(ticket),
                       bottomContent: Text(
-                        'HSD: $formattedDate',
+                        'Đã Sử Dụng: $formattedDate',
                         style: const TextStyle(
                           fontSize: 17,
                           color: ConstantAppColor.primary,

@@ -41,7 +41,7 @@ dependencies:
   flutter_localization: ^0.3.2
   image_picker: ^1.0.4
   font_awesome_flutter: ^10.8.0
-  intl: ^0.19.0
+  intl: ^0.20.2
   flutter_spinkit: ^5.2.1
   numberpicker: ^2.1.2
   debounce_throttle: ^2.0.0

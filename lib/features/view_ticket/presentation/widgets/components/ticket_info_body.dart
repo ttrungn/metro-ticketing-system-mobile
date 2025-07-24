@@ -10,6 +10,7 @@ class TicketInfoBody extends StatelessWidget {
   final DateTime? expireDate;
   final int ticketType;
   final String ticketName;
+  final bool isExpired;
 
   const TicketInfoBody({
     super.key,
@@ -21,6 +22,7 @@ class TicketInfoBody extends StatelessWidget {
     required this.expireDate,
     required this.ticketType,
     required this.ticketName,
+    this.isExpired = false,
   });
 
   String _statusText(int status) {
@@ -80,7 +82,7 @@ class TicketInfoBody extends StatelessWidget {
         ),
         _infoRow(
           Icons.event,
-          'HSD:',
+          isExpired ? 'Đã sử dụng:' : 'HSD:',
           _formatDateTime(expireDate),
         ),
         _infoRow(
@@ -91,7 +93,6 @@ class TicketInfoBody extends StatelessWidget {
               : 'Vé sử dụng nhiều lần. Hãy chú ý HSD!',
           color: Colors.red,
         ),
-        _infoRow(Icons.qr_code, 'Mã vé:', ticketId),
       ],
     );
   }

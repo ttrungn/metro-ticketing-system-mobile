@@ -77,7 +77,8 @@ class ViewTicketBody extends StatelessWidget {
                                     '${activateDate.day.toString().padLeft(2, '0')}/'
                                     '${activateDate.month.toString().padLeft(2, '0')}/'
                                     '${activateDate.year}'
-                                : 'N/A'; // Or h
+                                : 'N/A';
+
                         final String formattedExpiredAtDate =
                         expireDate != null
                             ? '${expireDate.hour.toString().padLeft(2, '0')}:'
@@ -86,9 +87,11 @@ class ViewTicketBody extends StatelessWidget {
                             '${expireDate.month.toString().padLeft(2, '0')}/'
                             '${expireDate.year}'
                             : 'N/A';
+                        final bool isActivated = activateDate != null && activateDate.isBefore(DateTime.now());
+                        final String activationText = isActivated ? 'Đã Kích hoạt: $formattedActivateDate' : 'Tự động kích hoạt: $formattedActivateDate';
                         final String bottomText = isInUseSelected
                             ? 'HSD: $formattedExpiredAtDate'
-                            : 'Tự động kích hoạt: $formattedActivateDate';
+                            : activationText;
 
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 12),
