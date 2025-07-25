@@ -1,6 +1,3 @@
-import 'dart:async';
-
-import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metro_ticketing_system_mobile/core/common/cubit/loading_cubit.dart';
@@ -10,7 +7,6 @@ import 'package:metro_ticketing_system_mobile/core/routes/app_routes.dart';
 import 'package:metro_ticketing_system_mobile/core/routes/link_handler.dart';
 import 'package:metro_ticketing_system_mobile/features/cart/logic/payment_cubit.dart';
 
-import 'core/common/presentation/widgets/global_loading_overlay.dart';
 import 'core/di/service_locator.dart';
 
 void main() async {
