@@ -175,8 +175,8 @@ class ViewTicketBody extends StatelessWidget {
     final ticketName = ticket.ticketName;
     final entryStation = ticket.entryStationName ?? '';
     final exitStation = ticket.destinationStationName ?? '';
-    final DateTime? activateDate = ticket.activateDate;
-    final DateTime? expireDate = ticket.expireDate;
+    final DateTime? activateDate = ticket.activateDate.toLocal();
+    final DateTime? expireDate = ticket.expireDate.toLocal();
     final int status = ticket.status ?? 0;
     final int ticketType = ticket.ticketType;
 
