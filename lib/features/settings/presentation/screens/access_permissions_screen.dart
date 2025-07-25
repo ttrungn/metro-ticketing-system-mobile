@@ -17,7 +17,13 @@ class AccessPermissionsScreen extends StatelessWidget {
       backgroundColor: ConstantAppColor.primary,
       body: Column(
         children: [
-          CustomTicketAppBar(title: screenTitle),
+          CustomTicketAppBar(
+            title: screenTitle,
+            leadingIcon: Icons.arrow_back,
+            onLeadingPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           AccessPermissionsBody()
           ,
         ],

@@ -6,84 +6,139 @@ import 'package:metro_ticketing_system_mobile/features/view_ticket/logic/view_ti
 class TicketTogglePanel extends StatelessWidget {
   const TicketTogglePanel({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(30),
-        border: Border.all(width: 1, color: Colors.black12),
+        borderRadius: BorderRadius.circular(25),
+        border: Border.all(
+          width: 1.5,
+          color: ConstantAppColor.primary.withOpacity(0.2),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            offset: const Offset(0, 2),
+            blurRadius: 8,
+          ),
+        ],
       ),
-      child: BlocBuilder<ViewTicketCubit,ViewTicketState>(builder: (context, state) {
-        bool isInUseSelected = false;
-        if (state is ViewTicketUnused){
-          isInUseSelected = false;
-        } else if (state is ViewTicketInUse){
-          isInUseSelected = true;
-        }
-        return Row(
-          children: [
-            Expanded(
-              child: GestureDetector(
-                onTap: (){
-                  if (state is ViewTicketUnused){
-                    context.read<ViewTicketCubit>().toggleUsedBtn();
-                  }
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  decoration: BoxDecoration(
-                    color: isInUseSelected ? ConstantAppColor.primary : Colors.transparent,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Đang sử dụng',
-                      style: TextStyle(
-                        color: isInUseSelected ? Colors.white : Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+      child: BlocBuilder<ViewTicketCubit, ViewTicketState>(
+        builder: (context, state) {
+          final isInUseSelected =
+              context.read<ViewTicketCubit>().isInUseSelected;
+
+          return Row(
+            children: [
+              // Đang sử dụng
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    if (!isInUseSelected) {
+                      context.read<ViewTicketCubit>().toggleUsedBtn();
+                    }
+                  },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeInOut,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    decoration: BoxDecoration(
+                      color:
+                          isInUseSelected
+                              ? ConstantAppColor.primary
+                              : Colors.transparent,
+                      borderRadius: BorderRadius.circular(21),
+                      boxShadow:
+                          isInUseSelected
+                              ? [
+                                BoxShadow(
+                                  color: ConstantAppColor.primary.withOpacity(
+                                    0.3,
+                                  ),
+                                  offset: const Offset(0, 2),
+                                  blurRadius: 6,
+                                ),
+                              ]
+                              : null,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Đang sử dụng',
+                        style: TextStyle(
+                          color:
+                              isInUseSelected
+                                  ? Colors.white
+                                  : ConstantAppColor.textSecondary,
+                          fontWeight:
+                              isInUseSelected
+                                  ? FontWeight.w600
+                                  : FontWeight.w500,
+                          fontSize: 15,
+                          letterSpacing: 0.3,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Expanded(
-              child: GestureDetector(
-                onTap: (){
-                  if(state is ViewTicketInUse){
-                    context.read<ViewTicketCubit>().toggleUnusedBtn();
-                  }
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  decoration: BoxDecoration(
-                    color: isInUseSelected ? Colors.transparent : ConstantAppColor.primary,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Chưa Sử dụng',
-                      style: TextStyle(
-                        color:  isInUseSelected ? Colors.black : Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+              // Chưa sử dụng
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    if (isInUseSelected) {
+                      context.read<ViewTicketCubit>().toggleUnusedBtn();
+                    }
+                  },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeInOut,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    decoration: BoxDecoration(
+                      color:
+                          !isInUseSelected
+                              ? ConstantAppColor.primary
+                              : Colors.transparent,
+                      borderRadius: BorderRadius.circular(21),
+                      boxShadow:
+                          !isInUseSelected
+                              ? [
+                                BoxShadow(
+                                  color: ConstantAppColor.primary.withOpacity(
+                                    0.3,
+                                  ),
+                                  offset: const Offset(0, 2),
+                                  blurRadius: 6,
+                                ),
+                              ]
+                              : null,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Chưa sử dụng',
+                        style: TextStyle(
+                          color:
+                              !isInUseSelected
+                                  ? Colors.white
+                                  : ConstantAppColor.textSecondary,
+                          fontWeight:
+                              !isInUseSelected
+                                  ? FontWeight.w600
+                                  : FontWeight.w500,
+                          fontSize: 15,
+                          letterSpacing: 0.3,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        );
-      }, ),
+            ],
+          );
+        },
+      ),
     );
   }
 }
-
-
-

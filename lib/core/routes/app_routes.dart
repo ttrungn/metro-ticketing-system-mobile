@@ -14,7 +14,7 @@ abstract class AppRoutes {
   static const buyTicket = '/buy-ticket';
 
   static const cart = '/cart';
-  
+
   static const momoReturn = '/payment-result';
 
   // Secondary Screens - Auxiliary Screens
@@ -28,4 +28,9 @@ abstract class AppRoutes {
   // Feedback Screen
   static const feedback = '/feedback';
   static const newFeedback = '/new-feedback';
+
+  //Scanner Screen
+  static const scannerToUsed = '/scanner';
+  static const scannerToExit = '/scannerExit';
+  static const viewBus = '/view-bus';
 }

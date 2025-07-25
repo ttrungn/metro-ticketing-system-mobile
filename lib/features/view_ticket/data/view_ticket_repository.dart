@@ -9,19 +9,13 @@ class ViewTicketRepository {
 
 
   Future<TicketBoxInfoListResponse> getListTicketByUserId({Map<String,dynamic>? queryParams}) async{
-
     try {
-      final response = await ApiClient.dio.get(
-        '/user-tickets',
-        queryParameters: queryParams, //status : used, unused, expire
-      );
-
+      final response = await ApiClient.dio.get("/order/Orders", queryParameters: queryParams);
+      final data = response.data;
       return TicketBoxInfoListResponse.fromJson(response.data);
     } on Exception catch (e) {
       throw Exception("Failed to load tickets: $e");
     }
-
-
-
   }
+
 }

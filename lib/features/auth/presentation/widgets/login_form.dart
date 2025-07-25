@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:metro_ticketing_system_mobile/core/common/presentation/widgets/text_input_field.dart';
 import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
+import 'package:metro_ticketing_system_mobile/features/auth/presentation/screens/scanner_screen.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/presentation/widgets/login_button.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/presentation/widgets/login_google_button.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/presentation/screens/register_screen.dart';
@@ -164,6 +165,33 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
+  Widget _buildScannerNavigationButton() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text(
+          "Scanner vé của bạn? ",
+          style: TextStyle(color: Colors.grey, fontSize: 16),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ScannerScreen()),
+            );
+          },
+          child: Text(
+            'Scanner',
+            style: TextStyle(
+              color: ConstantAppColor.primary,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -209,14 +237,12 @@ class _LoginFormState extends State<LoginForm> {
                   onValidationRequired: _validateAllFields,
                 ),
                 const SizedBox(height: 24),
-                _buildSeparator(),
-                const SizedBox(height: 24),
-                LoginGoogleButton(),
               ],
             ),
           ),
           const SizedBox(height: 24),
           _buildRegisterNavigationButton(),
+          _buildScannerNavigationButton(),
         ],
       ),
     );

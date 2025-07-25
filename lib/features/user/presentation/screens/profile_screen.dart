@@ -12,13 +12,28 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Thông tin tài khoản'),
-        backgroundColor: ConstantAppColor.primary,
+        title: const Text(
+          'Thông tin tài khoản',
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: BlocProvider(
-        create: (_) => UserCubit(getIt<UserService>())..getUserInfo(),
-        child: const ProfileForm(),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [ConstantAppColor.primary, ConstantAppColor.primaryLight],
+          ),
+        ),
+        child: BlocProvider(
+          create: (_) => UserCubit(getIt<UserService>())..getUserInfo(),
+          child: const ProfileForm(),
+        ),
       ),
     );
   }

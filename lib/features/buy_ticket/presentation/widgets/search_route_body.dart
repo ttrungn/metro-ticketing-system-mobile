@@ -51,7 +51,6 @@ class _SearchRouteBodyState extends State<SearchRouteBody> {
         }
         if(state.stations.isNotEmpty){
           stations = state.stations.map((e) => DropdownMenuEntry(value: e.id, label: e.name)).toList();
-          print(stations);
         }
 
 

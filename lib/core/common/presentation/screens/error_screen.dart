@@ -68,7 +68,41 @@ class ErrorScreen extends StatelessWidget {
                 },
                 child: const Text('Home'),
               ),
+              // const SizedBox(height: 20),
+              // ElevatedButton(
+              //   style: ElevatedButton.styleFrom(
+              //     backgroundColor: ConstantAppColor.primary,
+              //     foregroundColor: Colors.white,
+              //     padding: const EdgeInsets.symmetric(
+              //       horizontal: 32,
+              //       vertical: 12,
+              //     ),
+              //   ),
+              //   onPressed: () {
+              //     Navigator.pushNamed(
+              //       context,
+              //       AppRoutes.studentVerificationForm,
+              //     );
+              //   },
+              //   child: const Text('Student Verification Form'),
+              // ),
+              // const SizedBox(height: 20),
+              // ElevatedButton(
+              //   style: ElevatedButton.styleFrom(
+              //     backgroundColor: ConstantAppColor.primary,
+              //     foregroundColor: Colors.white,
+              //     padding: const EdgeInsets.symmetric(
+              //       horizontal: 32,
+              //       vertical: 12,
+              //     ),
+              //   ),
+              //   onPressed: () {
+              //     Navigator.pushNamed(context, AppRoutes.feedback);
+              //   },
+              //   child: const Text('Feedback Form'),
+              // ),
               const SizedBox(height: 20),
+
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: ConstantAppColor.primary,
@@ -79,14 +113,12 @@ class ErrorScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    AppRoutes.studentVerificationForm,
-                  );
+                  Navigator.pushNamed(context, AppRoutes.scannerToUsed);
                 },
-                child: const Text('Student Verification Form'),
+                child: const Text('Quét Vào'),
               ),
               const SizedBox(height: 20),
+
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: ConstantAppColor.primary,
@@ -97,9 +129,25 @@ class ErrorScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, AppRoutes.feedback);
+                  Navigator.pushNamed(context, AppRoutes.scannerToExit);
                 },
-                child: const Text('Feedback Form'),
+                child: const Text('Quét Ra'),
+              ),
+              const SizedBox(height: 20),
+
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ConstantAppColor.primary,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 12,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.viewBus);
+                },
+                child: const Text('Xem Bus'),
               ),
             ],
           ),
