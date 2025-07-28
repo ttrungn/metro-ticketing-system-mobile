@@ -27,10 +27,10 @@ class DeepLinkService {
     required GlobalKey<NavigatorState> navigatorKey,
     AppLinks? appLinks,
   }) : _navigatorKey = navigatorKey,
-        _appLinks = appLinks ?? AppLinks();
+       _appLinks = appLinks ?? AppLinks();
 
   /// Initialize deep link handling
-  Future<void> initialize() async{
+  Future<void> initialize() async {
     await _handleInitialLink();
     _listenToIncomingLinks();
   }
@@ -78,7 +78,10 @@ class DeepLinkService {
   }
 
   /// Navigate to the specified route
-  void _navigateToRoute(String routeName, Map<String, String> queryParameters) async {
+  void _navigateToRoute(
+    String routeName,
+    Map<String, String> queryParameters,
+  ) async {
     final navigator = _navigatorKey.currentState;
     if (navigator == null) return _handleError('Navigator not available');
 
@@ -87,10 +90,7 @@ class DeepLinkService {
         final query = PaymentQuery.fromQueryParameters(queryParameters);
         final result = await getIt<CartService>().confirmPayment(query);
 
-        navigator.pushNamed(
-          AppRoutes.momoReturn,
-          arguments: result,
-        );
+        navigator.pushNamed(AppRoutes.momoReturn, arguments: result);
       } catch (e) {
         print("Deep link confirm payment error: $e");
         navigator.pushNamed('/error');
@@ -99,7 +99,6 @@ class DeepLinkService {
       navigator.pushNamed(routeName, arguments: queryParameters);
     }
   }
-
 
   /// Handle unknown/unsupported routes
   void _handleUnknownRoute(Uri uri) {

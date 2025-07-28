@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class PaymentResultDialog extends StatelessWidget {
   final bool isSuccess;
 
-   PaymentResultDialog({super.key,required this.isSuccess});
+  const PaymentResultDialog({super.key, required this.isSuccess});
 
   @override
   Widget build(BuildContext context) {
-    return  AlertDialog(
+    return AlertDialog(
       title: Row(
         children: [
           Icon(
@@ -18,7 +18,9 @@ class PaymentResultDialog extends StatelessWidget {
           Text(isSuccess ? 'Thành công' : 'Thất bại'),
         ],
       ),
-      content: Text(isSuccess? "Mua vé Thành Công": "Bạn không thể mua vé này!"),
+      content: Text(
+        isSuccess ? "Mua vé Thành Công" : "Bạn không thể mua vé này!",
+      ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),

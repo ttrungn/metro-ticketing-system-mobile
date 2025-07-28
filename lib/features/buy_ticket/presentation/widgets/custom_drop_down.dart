@@ -40,11 +40,17 @@ class CustomDropDown extends StatelessWidget {
               dropdownMenuEntries: dropDownList,
               inputDecorationTheme: InputDecorationTheme(
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 2, color: ConstantAppColor.primary),
+                  borderSide: BorderSide(
+                    width: 2,
+                    color: ConstantAppColor.primary,
+                  ),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 3, color: ConstantAppColor.primary),
+                  borderSide: BorderSide(
+                    width: 3,
+                    color: ConstantAppColor.primary,
+                  ),
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),

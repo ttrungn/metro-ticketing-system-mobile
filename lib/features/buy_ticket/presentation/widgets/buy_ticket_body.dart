@@ -7,7 +7,6 @@ import 'package:metro_ticketing_system_mobile/core/common/presentation/modals/pa
 import 'package:metro_ticketing_system_mobile/core/constants/ticket/buy_ticket_const.dart';
 import 'package:metro_ticketing_system_mobile/core/utils/builder/ticket_builder.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/request/add_to_cart_request.dart';
-import 'package:metro_ticketing_system_mobile/features/buy_ticket/presentation/widgets/buy_button.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/presentation/widgets/buy_ticket_title_text.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/presentation/widgets/search_route_body.dart';
 
@@ -31,7 +30,6 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-
   }
 
   @override
@@ -89,17 +87,26 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
                         DialogUtils.buildAndShowBuyTicketDialogAction(
                           context: context,
                           ticketDetails:
-                              TicketBuilder.buildMultiUseBuyTicketDetailItems(ticket),
-                          bottomPart:  BuyTicketDialogBottomPart(
+                              TicketBuilder.buildMultiUseBuyTicketDetailItems(
+                                ticket,
+                              ),
+                          bottomPart: BuyTicketDialogBottomPart(
                             currentValue: _currentValue,
-                            onPressed: () async{
+                            onPressed: () async {
                               print("BUY TICKET");
-                              print("Cubit from context: ${context.read<BuyTicketCubit>().hashCode}");
+                              print(
+                                "Cubit from context: ${context.read<BuyTicketCubit>().hashCode}",
+                              );
 
                               var quantity = _currentValue;
                               var ticketId = ticket.id;
-                              var request = AddToCartRequest(ticketId: ticketId, quantity: quantity);
-                              await context.read<BuyTicketCubit>().addToCart(request);
+                              var request = AddToCartRequest(
+                                ticketId: ticketId,
+                                quantity: quantity,
+                              );
+                              await context.read<BuyTicketCubit>().addToCart(
+                                request,
+                              );
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
@@ -111,9 +118,8 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
                               setState(() {
                                 _currentValue = value;
                               });
-
                             },
-                          ) ,
+                          ),
                         )();
                       }
                     },
@@ -135,23 +141,29 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
                     ),
                     onTap: DialogUtils.buildAndShowBuyTicketDialogAction(
                       context: context,
-                      ticketDetails: TicketBuilder.buildMultiUseBuyTicketDetailItems(
-                        ticket,
-                      ),
-                      bottomPart:  BuyTicketDialogBottomPart(
+                      ticketDetails:
+                          TicketBuilder.buildMultiUseBuyTicketDetailItems(
+                            ticket,
+                          ),
+                      bottomPart: BuyTicketDialogBottomPart(
                         currentValue: _currentValue,
-                        onPressed: () async{
+                        onPressed: () async {
                           print("BUY TICKET");
                           var quantity = _currentValue;
                           var ticketId = ticket.id;
 
-                          var request = AddToCartRequest(ticketId: ticketId, quantity: quantity);
-                          var isSuccess= await context.read<BuyTicketCubit>().addToCart(request);
+                          var request = AddToCartRequest(
+                            ticketId: ticketId,
+                            quantity: quantity,
+                          );
+                          var isSuccess = await context
+                              .read<BuyTicketCubit>()
+                              .addToCart(request);
 
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return PaymentResultDialog(isSuccess:isSuccess);
+                              return PaymentResultDialog(isSuccess: isSuccess);
                             },
                           );
                         },
@@ -160,7 +172,7 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
                             _currentValue = value;
                           });
                         },
-                      ) ,
+                      ),
                     ),
                   ),
                 ),
@@ -177,8 +189,6 @@ class _BuyTicketBodyState extends State<BuyTicketBody> {
     );
   }
 }
-
-
 
 typedef IconEntry = DropdownMenuEntry<IconLabel>;
 

@@ -21,24 +21,24 @@ class PaymentResultCubit extends Cubit<PaymentState> {
 
       await Future.delayed(Duration(seconds: 2));
 
-
       PaymentResult result = await _processPaymentQuery(query);
 
       emit(FetchPayment(paymentResult: result));
     } catch (e) {
-      emit(FetchPayment(
-        paymentResult: PaymentResult(
-          isConfirm: false,
-          ticketCount: 0,
-          message: 'THANH TOÁN THẤT BẠI',
+      emit(
+        FetchPayment(
+          paymentResult: PaymentResult(
+            isConfirm: false,
+            ticketCount: 0,
+            message: 'THANH TOÁN THẤT BẠI',
+          ),
         ),
-      ));
+      );
     }
   }
 
   Future<PaymentResult> _processPaymentQuery(PaymentQuery query) async {
-
-    bool isSuccess = query.orderId?.contains('success') ?? true;
+    bool isSuccess = query.orderId.contains('success') ?? true;
 
     if (isSuccess) {
       return PaymentResult(

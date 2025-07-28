@@ -1,6 +1,3 @@
-import 'dart:async';
-
-import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metro_ticketing_system_mobile/core/common/cubit/loading_cubit.dart';
@@ -10,7 +7,6 @@ import 'package:metro_ticketing_system_mobile/core/routes/app_routes.dart';
 import 'package:metro_ticketing_system_mobile/core/routes/link_handler.dart';
 import 'package:metro_ticketing_system_mobile/features/cart/logic/payment_cubit.dart';
 
-import 'core/common/presentation/widgets/global_loading_overlay.dart';
 import 'core/di/service_locator.dart';
 
 void main() async {
@@ -18,17 +14,18 @@ void main() async {
   await configureDependencies();
   runApp(
     MultiBlocProvider(
-      providers: [BlocProvider(create: (_) => LoadingCubit()),
+      providers: [
+        BlocProvider(create: (_) => LoadingCubit()),
         BlocProvider(create: (_) => PaymentResultCubit()),
       ],
       child: const MyApp(),
     ),
   );
 }
+
 final navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatefulWidget {
-
   const MyApp({super.key});
 
   @override
@@ -36,8 +33,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-  final DeepLinkService _deepLinkService =   DeepLinkService(navigatorKey: navigatorKey);
+  final DeepLinkService _deepLinkService = DeepLinkService(
+    navigatorKey: navigatorKey,
+  );
   @override
   void initState() {
     // TODO: implement initState
@@ -50,9 +48,9 @@ class _MyAppState extends State<MyApp> {
     _deepLinkService.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: 'Metro Ticketing System',
       debugShowCheckedModeBanner: false,
@@ -70,9 +68,6 @@ class _MyAppState extends State<MyApp> {
 
       initialRoute: AppRoutes.login,
       onGenerateRoute: AppRouter.onGenerateRoute,
-
-
-
     );
   }
 }

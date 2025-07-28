@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:metro_ticketing_system_mobile/core/common/presentation/modals/dialog_utils.dart';
 import 'package:metro_ticketing_system_mobile/core/common/presentation/widgets/ticket_widgets/custom_ticket_app_bar.dart';
-import 'package:metro_ticketing_system_mobile/core/common/presentation/widgets/ticket_widgets/ticket_box.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/buy_ticket_service.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/logic/buy_ticket_cubit.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/logic/search_route_cubit.dart';

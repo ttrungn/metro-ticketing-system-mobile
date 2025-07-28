@@ -175,8 +175,8 @@ class ViewTicketBody extends StatelessWidget {
     final ticketName = ticket.ticketName;
     final entryStation = ticket.entryStationName ?? '';
     final exitStation = ticket.destinationStationName ?? '';
-    final DateTime? activateDate = ticket.activateDate;
-    final DateTime? expireDate = ticket.expireDate;
+    final DateTime activateDate = ticket.activateDate;
+    final DateTime expireDate = ticket.expireDate;
     final int status = ticket.status ?? 0;
     final int ticketType = ticket.ticketType;
 
@@ -184,8 +184,7 @@ class ViewTicketBody extends StatelessWidget {
     final String formattedActivateDate = _formatDateTime(activateDate);
     final String formattedExpiredAtDate = _formatDateTime(expireDate);
 
-    final bool isActivated =
-        activateDate != null && activateDate.isBefore(DateTime.now());
+    final bool isActivated = activateDate.isBefore(DateTime.now());
     final String activationText =
         isActivated
             ? 'Đã kích hoạt: $formattedActivateDate'

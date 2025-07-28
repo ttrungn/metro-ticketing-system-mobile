@@ -26,7 +26,6 @@ class TicketExpiredInfoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
@@ -82,6 +81,7 @@ class TicketExpiredInfoView extends StatelessWidget {
       ),
     );
   }
+
   String _ticketRouteText() {
     if (entryStationName == null || destinationStationName == null) {
       return ticketName;

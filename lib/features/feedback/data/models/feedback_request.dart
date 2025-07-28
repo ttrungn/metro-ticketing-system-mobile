@@ -10,11 +10,6 @@ class FeedbackRequest {
   });
 
   Map<String, dynamic> toJson() {
-    return {
-      'feedbackTypeId': type,
-      'content': content,
-      'stationId': station,
-    };
+    return {'feedbackTypeId': type, 'content': content, 'stationId': station};
   }
-
 }

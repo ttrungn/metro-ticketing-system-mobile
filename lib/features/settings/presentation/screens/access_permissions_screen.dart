@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:metro_ticketing_system_mobile/core/common/presentation/modals/dialog_utils.dart';
 import 'package:metro_ticketing_system_mobile/core/common/presentation/widgets/ticket_widgets/custom_ticket_app_bar.dart';
 import 'package:metro_ticketing_system_mobile/features/settings/presentation/widgets/access_permissions_body.dart';
 
@@ -24,8 +22,7 @@ class AccessPermissionsScreen extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
-          AccessPermissionsBody()
-          ,
+          AccessPermissionsBody(),
         ],
       ),
     );

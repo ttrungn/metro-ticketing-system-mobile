@@ -34,10 +34,7 @@ class MetroInfoCard extends StatelessWidget {
                 children: const [
                   Text(
                     'GO!METRO với đa dạng hình thức đi tàu',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                   SizedBox(height: 4),
                   Text(

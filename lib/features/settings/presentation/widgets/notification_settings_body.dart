@@ -5,7 +5,8 @@ class NotificationSettingsBody extends StatefulWidget {
   const NotificationSettingsBody({super.key});
 
   @override
-  _NotificationSettingsBodyState createState() => _NotificationSettingsBodyState();
+  _NotificationSettingsBodyState createState() =>
+      _NotificationSettingsBodyState();
 }
 
 class _NotificationSettingsBodyState extends State<NotificationSettingsBody> {
@@ -40,8 +41,7 @@ class _NotificationSettingsBodyState extends State<NotificationSettingsBody> {
               ListTile(
                 title: Text('Ứng dụng chưa được bật nhận thông báo'),
                 trailing: TextButton(
-                  onPressed: () {
-                  },
+                  onPressed: () {},
                   child: Text('Mở cài đặt'),
                 ),
               ),

@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:metro_ticketing_system_mobile/core/configs/api_client.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/models/buy_ticket_box_info_response.dart';
@@ -50,7 +47,6 @@ class BuyTicketRepository {
   Future<SingleUseTicketInfo> getSingleUseTicketInfo(
     SingleUseTicketRequest request,
   ) async {
-
     try {
       var response = await ApiClient.dio.post(
         "/catalog/Tickets/single-use-ticket-info",
@@ -63,8 +59,8 @@ class BuyTicketRepository {
     }
   }
 
-  Future<bool> addToCart(AddToCartRequest request) async{
-    try{
+  Future<bool> addToCart(AddToCartRequest request) async {
+    try {
       var response = await ApiClient.dio.post(
         "/order/Cart/",
         data: request.toJson(),
@@ -72,10 +68,8 @@ class BuyTicketRepository {
       print(response.data);
 
       return (response.data['data']['isStudent']) as bool;
-    }catch(e){
-
+    } catch (e) {
       throw ("Add To Cart error: $e");
-    }finally{
-    }
+    } finally {}
   }
 }

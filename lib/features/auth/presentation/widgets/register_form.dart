@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:metro_ticketing_system_mobile/core/common/presentation/widgets/text_input_field.dart';
 import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
 import 'package:metro_ticketing_system_mobile/features/auth/presentation/widgets/register_button.dart';
-import 'package:metro_ticketing_system_mobile/features/auth/presentation/widgets/login_google_button.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});

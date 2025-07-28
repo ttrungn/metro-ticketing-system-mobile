@@ -9,18 +9,15 @@ class InfoCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: kGlobalHomePagePadding , vertical: 30),
+        padding: EdgeInsets.symmetric(
+          horizontal: kGlobalHomePagePadding,
+          vertical: 30,
+        ),
         height: 300,
         child: CarouselView(
           itemExtent: 300,
           shrinkExtent: 300.0,
-          children: [
-            MetroInfoCard(
-
-            ),
-            MetroInfoCard(),
-            MetroInfoCard()
-          ],
+          children: [MetroInfoCard(), MetroInfoCard(), MetroInfoCard()],
         ),
       ),
     );

@@ -5,8 +5,8 @@ class SingleUseTicketInfo {
   final int expireInDays;
   final String entryStationId;
   final String exitStationId;
-   String entryStationName;
-   String exitStationName;
+  String entryStationName;
+  String exitStationName;
 
   SingleUseTicketInfo({
     required this.id,
@@ -43,9 +43,8 @@ class SingleUseTicketInfo {
     'id': id,
     'name': name,
     'price': price,
-    'exitStationId' : exitStationId,
-    'entryStationId' : entryStationId,
+    'exitStationId': exitStationId,
+    'entryStationId': entryStationId,
     'expirationInDay': expireInDays,
-
   };
 }

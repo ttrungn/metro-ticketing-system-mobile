@@ -14,7 +14,10 @@ class CustomAppBar extends StatelessWidget {
       elevation: 0,
       flexibleSpace: LayoutBuilder(
         builder: (context, constraints) {
-          double opacity = (1 - ((constraints.maxHeight - kToolbarHeight) / (250 - kToolbarHeight))).clamp(0.0, 1.0);
+          double opacity = (1 -
+                  ((constraints.maxHeight - kToolbarHeight) /
+                      (250 - kToolbarHeight)))
+              .clamp(0.0, 1.0);
           if (opacity > 0.5) {
             opacity = 1.0;
           }
@@ -45,9 +48,7 @@ class CustomAppBar extends StatelessWidget {
           );
         },
       ),
-      actions: [
-        ProfileButton(),
-      ],
+      actions: [ProfileButton()],
     );
   }
 }

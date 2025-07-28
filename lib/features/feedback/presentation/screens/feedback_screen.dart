@@ -8,7 +8,6 @@ import 'package:metro_ticketing_system_mobile/features/feedback/presentation/scr
 import 'package:metro_ticketing_system_mobile/features/feedback/presentation/widgets/feedback_list.dart';
 import 'package:metro_ticketing_system_mobile/features/user/data/user_service.dart';
 
-
 class FeedbackScreen extends StatelessWidget {
   const FeedbackScreen({super.key});
 
@@ -26,36 +25,39 @@ class FeedbackScreen extends StatelessWidget {
         ),
         body: const FeedbackList(),
         floatingActionButton: Builder(
-          builder: (innerContext) => FloatingActionButton(
-            backgroundColor: ConstantAppColor.primary,
-            child: const Icon(Icons.add),
-            onPressed: () async {
-              final result = await Navigator.push(
-                innerContext,
-                MaterialPageRoute(
-                  builder: (context) => MultiBlocProvider(
-                    providers: [
-                      BlocProvider(
-                        create: (_) => FeedbackTypeCubit(getIt<UserService>())
-                          ..fetchFeedbackTypesAndStations(),
-                      ),
-                      BlocProvider.value(
-                        value: innerContext.read<FeedbackCubit>(),
-                      ),
-                    ],
-                    child: const NewFeedbackScreen(),
-                  ),
-                ),
-              );
+          builder:
+              (innerContext) => FloatingActionButton(
+                backgroundColor: ConstantAppColor.primary,
+                child: const Icon(Icons.add),
+                onPressed: () async {
+                  final result = await Navigator.push(
+                    innerContext,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => MultiBlocProvider(
+                            providers: [
+                              BlocProvider(
+                                create:
+                                    (_) =>
+                                        FeedbackTypeCubit(getIt<UserService>())
+                                          ..fetchFeedbackTypesAndStations(),
+                              ),
+                              BlocProvider.value(
+                                value: innerContext.read<FeedbackCubit>(),
+                              ),
+                            ],
+                            child: const NewFeedbackScreen(),
+                          ),
+                    ),
+                  );
 
-              if (result == true) {
-                innerContext.read<FeedbackCubit>().fetchFeedbacks();
-              }
-            },
-          ),
+                  if (result == true) {
+                    innerContext.read<FeedbackCubit>().fetchFeedbacks();
+                  }
+                },
+              ),
         ),
       ),
     );
   }
-
 }

@@ -2,20 +2,13 @@ import '../../../domain/entities/bus.dart';
 
 class BusModel extends Bus {
   BusModel({
-    required String id,
-    required String code,
-    required String stationId,
-    required String stationName,
-    required String destinationName,
-    required DateTime createdAt,
-  }) : super(
-         id: id,
-         code: code,
-         stationId: stationId,
-         stationName: stationName,
-         destinationName: destinationName,
-         createdAt: createdAt,
-       );
+    required super.id,
+    required super.code,
+    required super.stationId,
+    required super.stationName,
+    required super.destinationName,
+    required super.createdAt,
+  });
 
   factory BusModel.fromJson(Map<String, dynamic> json) {
     return BusModel(

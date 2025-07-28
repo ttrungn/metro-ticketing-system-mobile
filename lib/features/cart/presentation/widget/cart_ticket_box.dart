@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
 import 'package:metro_ticketing_system_mobile/core/common/presentation/widgets/ticket_widgets/leading_ticket_icon.dart';
 
 class CartTicketBox extends StatelessWidget {
@@ -89,13 +88,10 @@ class TicketInformation extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.close, color: Colors.red),
               onPressed: onRemove,
-            )
+            ),
           ],
         ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: bottomContent,
-        )
+        Align(alignment: Alignment.centerRight, child: bottomContent),
       ],
     );
   }

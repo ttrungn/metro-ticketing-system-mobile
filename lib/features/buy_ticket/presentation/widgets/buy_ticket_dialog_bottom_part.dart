@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/common/presentation/modals/dashed_line_painter.dart';
@@ -9,45 +8,41 @@ class BuyTicketDialogBottomPart extends StatefulWidget {
   final int currentValue;
   final ValueChanged onChangedQuantity;
   final VoidCallback onPressed;
-  const BuyTicketDialogBottomPart({required this.onPressed,required this.onChangedQuantity, required this.currentValue,super.key});
+  const BuyTicketDialogBottomPart({
+    required this.onPressed,
+    required this.onChangedQuantity,
+    required this.currentValue,
+    super.key,
+  });
 
   @override
-  State<BuyTicketDialogBottomPart> createState() => _BuyTicketDialogBottomPartState();
+  State<BuyTicketDialogBottomPart> createState() =>
+      _BuyTicketDialogBottomPartState();
 }
 
 class _BuyTicketDialogBottomPartState extends State<BuyTicketDialogBottomPart> {
   @override
   Widget build(BuildContext context) {
-    return   Column(
+    return Column(
       children: [
         CustomStepper(
           value: widget.currentValue,
           minValue: 1,
           maxValue: 100,
           onChanged: widget.onChangedQuantity,
-
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 15.0),
           child: SizedBox(
             width: double.infinity,
-            child: CustomPaint(
-              painter: DashedLinePainter(),
-            ),
+            child: CustomPaint(painter: DashedLinePainter()),
           ),
         ),
-        BuyButton(
-          onPressed: widget.onPressed,
-        ),
+        BuyButton(onPressed: widget.onPressed),
       ],
-    )
-    ;
+    );
   }
 }
-
-
-
-
 
 class CustomStepper extends StatefulWidget {
   final int value;
@@ -75,11 +70,10 @@ class _CustomStepperState extends State<CustomStepper> {
     // TODO: implement initState
     super.initState();
     _value = widget.value;
-
   }
 
-  void _increase(){
-    if(_value < widget.maxValue){
+  void _increase() {
+    if (_value < widget.maxValue) {
       setState(() {
         _value++;
       });
@@ -87,8 +81,8 @@ class _CustomStepperState extends State<CustomStepper> {
     }
   }
 
-  void _decrease(){
-    if(_value > widget.minValue){
+  void _decrease() {
+    if (_value > widget.minValue) {
       setState(() {
         _value--;
       });

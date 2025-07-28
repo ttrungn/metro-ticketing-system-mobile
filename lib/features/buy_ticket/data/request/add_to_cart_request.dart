@@ -8,9 +8,9 @@ class AddToCartRequest {
   AddToCartRequest({
     required this.ticketId,
     required this.quantity,
-     this.entryStationId,
-     this.destinationStationId,
-     this.routeId,
+    this.entryStationId,
+    this.destinationStationId,
+    this.routeId,
   });
 
   Map<String, dynamic> toJson() {

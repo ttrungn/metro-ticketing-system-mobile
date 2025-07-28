@@ -1,7 +1,3 @@
-
-
-
-
 import 'package:intl/intl.dart';
 
 class ConstantBuyTicket {
@@ -12,16 +8,17 @@ class ConstantBuyTicket {
   static const String searchRouteTicket = "Bà con chọn tuyến ii";
 }
 
-
-class ConstantTicketDialog{
+class ConstantTicketDialog {
   static const double buyHeight = 0.2;
   static const double buyWidth = 0.85;
 
   static const double infoHeight = 0.35;
 }
 
-var currencyFormatter = NumberFormat.currency(locale:'vi_VN',symbol:'',decimalDigits:0);
-
+var currencyFormatter = NumberFormat.currency(
+  locale: 'vi_VN',
+  symbol: '',
+  decimalDigits: 0,
+);
 
 const MOMO_PAYMENT_API = "";
-

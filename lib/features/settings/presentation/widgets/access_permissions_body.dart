@@ -26,7 +26,9 @@ class _AccessPermissionsBodyState extends State<AccessPermissionsBody> {
             children: [
               ListTile(
                 title: Text('Camera'),
-                subtitle: Text('Ung dụng cần quyền truy cập camera để chụp ảnh gửi phản ánh, vui lòng cấp quyền cho ứng dụng'),
+                subtitle: Text(
+                  'Ung dụng cần quyền truy cập camera để chụp ảnh gửi phản ánh, vui lòng cấp quyền cho ứng dụng',
+                ),
                 trailing: Switch(
                   value: _isCameraEnabled,
                   onChanged: (bool value) {
@@ -39,7 +41,9 @@ class _AccessPermissionsBodyState extends State<AccessPermissionsBody> {
               SizedBox(height: 16),
               ListTile(
                 title: Text('Vị trí'),
-                subtitle: Text('Ứng dụng cần quyền truy cập vị trí của điện thoại để lấy dữ liệu thời tiết, bản đồ chính xác hơn. vui lòng cấp quyền cho ứng dụng'),
+                subtitle: Text(
+                  'Ứng dụng cần quyền truy cập vị trí của điện thoại để lấy dữ liệu thời tiết, bản đồ chính xác hơn. vui lòng cấp quyền cho ứng dụng',
+                ),
                 trailing: Switch(
                   value: _islocationEnabled,
                   onChanged: (bool value) {

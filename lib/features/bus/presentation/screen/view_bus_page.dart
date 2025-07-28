@@ -7,7 +7,7 @@ import 'package:metro_ticketing_system_mobile/features/bus/logic/bus_cubit.dart'
 import 'package:metro_ticketing_system_mobile/features/bus/presentation/widgets/bus_tile.dart';
 
 class ViewBusPage extends StatefulWidget {
-  const ViewBusPage({Key? key}) : super(key: key);
+  const ViewBusPage({super.key});
 
   @override
   State<ViewBusPage> createState() => _ViewBusPageState();

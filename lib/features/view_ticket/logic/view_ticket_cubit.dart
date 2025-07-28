@@ -1,26 +1,27 @@
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metro_ticketing_system_mobile/features/view_ticket/data/models/response/ticket_box_info_list_response.dart';
 import '../data/view_ticket_service.dart';
-abstract class ViewTicketState{}
+
+abstract class ViewTicketState {}
 
 class ViewTicketInitial extends ViewTicketState {}
 
 class ViewTicketLoading extends ViewTicketState {}
 
-class ViewTicketUnused extends ViewTicketState{
+class ViewTicketUnused extends ViewTicketState {
   List<TicketBoxInfo>? unusedTickets;
 
   ViewTicketUnused({required this.unusedTickets});
 }
 
-class ViewTicketInUse extends ViewTicketState{
+class ViewTicketInUse extends ViewTicketState {
   List<TicketBoxInfo>? usedTickets;
-  ViewTicketInUse({required  this.usedTickets});
+  ViewTicketInUse({required this.usedTickets});
 }
-class ViewTicketExpire extends ViewTicketState{
+
+class ViewTicketExpire extends ViewTicketState {
   List<TicketBoxInfo>? expiredTickets;
-  ViewTicketExpire({required  this.expiredTickets});
+  ViewTicketExpire({required this.expiredTickets});
 }
 
 class ViewTicketError extends ViewTicketState {
@@ -29,7 +30,7 @@ class ViewTicketError extends ViewTicketState {
   ViewTicketError({required this.message});
 }
 
-class ViewTicketCubit extends Cubit<ViewTicketState>{
+class ViewTicketCubit extends Cubit<ViewTicketState> {
   final ViewTicketService _ticketService;
   bool isInUseSelected = true;
 
@@ -66,6 +67,7 @@ class ViewTicketCubit extends Cubit<ViewTicketState>{
       emit(ViewTicketError(message: e.toString()));
     }
   }
+
   Future<void> getExpiredTickets() async {
     emit(ViewTicketLoading());
 

@@ -1,9 +1,7 @@
-
 import 'package:injectable/injectable.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/models/route_info.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/models/single_use_buyt_ticket_info.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/models/station_info.dart';
-import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/models/stations_response.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/request/add_to_cart_request.dart';
 import 'package:metro_ticketing_system_mobile/features/buy_ticket/data/request/single_use_ticket_request.dart';
 
@@ -32,7 +30,8 @@ class BuyTicketService {
   }
 
   Future<SingleUseTicketInfo> getSingleUseTicketInfo(
-      SingleUseTicketRequest request) async {
+    SingleUseTicketRequest request,
+  ) async {
     var response = await _repo.getSingleUseTicketInfo(request);
     return response;
   }
