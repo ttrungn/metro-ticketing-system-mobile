@@ -16,8 +16,12 @@ class TicketDialogContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: contentWidth ?? MediaQuery.of(context).size.width * ConstantTicketDialog.buyWidth,
-      height: contentHeight ?? MediaQuery.of(context).size.height * ConstantTicketDialog.buyHeight,
+      width:
+          contentWidth ??
+          MediaQuery.of(context).size.width * ConstantTicketDialog.buyWidth,
+      height:
+          contentHeight ??
+          MediaQuery.of(context).size.height * ConstantTicketDialog.buyHeight,
       child: ListView.builder(
         padding: EdgeInsets.zero,
         physics: const NeverScrollableScrollPhysics(),
@@ -49,9 +53,11 @@ class TicketDialogContent extends StatelessWidget {
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: 16,
-                      color: detail['isNote'] ? Colors.red : Colors.black.withAlpha(150),
-                      fontWeight: FontWeight.w600
-
+                      color:
+                          detail['isNote']
+                              ? Colors.red
+                              : Colors.black.withAlpha(150),
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),

@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
-
 class StudentVerificationRequest {
   final String studentCode;
   final String studentEmail;
@@ -24,7 +23,7 @@ class StudentVerificationRequest {
     this.studentCardImage,
   });
 
-FormData toFormData() {
+  FormData toFormData() {
     final formData = FormData.fromMap({
       'studentCode': studentCode,
       'studentEmail': studentEmail,
@@ -39,7 +38,10 @@ FormData toFormData() {
       formData.files.add(
         MapEntry(
           'studentCardImage',
-          MultipartFile.fromFileSync(studentCardImage!.path, filename: 'student_card.jpg'),
+          MultipartFile.fromFileSync(
+            studentCardImage!.path,
+            filename: 'student_card.jpg',
+          ),
         ),
       );
     }

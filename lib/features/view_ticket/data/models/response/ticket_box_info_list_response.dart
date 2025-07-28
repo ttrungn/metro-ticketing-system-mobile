@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 class TicketBoxInfoListResponse {
   List<TicketBoxInfo> tickets;
 
@@ -7,8 +5,10 @@ class TicketBoxInfoListResponse {
 
   factory TicketBoxInfoListResponse.fromJson(Map<String, dynamic> json) {
     return TicketBoxInfoListResponse(
-      tickets: (json['data'] as List<dynamic>)
-          .map((e)=> TicketBoxInfo.fromJson(e)).toList()
+      tickets:
+          (json['data'] as List<dynamic>)
+              .map((e) => TicketBoxInfo.fromJson(e))
+              .toList(),
     );
   }
 }
@@ -36,8 +36,7 @@ class TicketBoxInfo {
     required this.ticketType,
   });
 
-
-  factory TicketBoxInfo.fromJson(Map<String, dynamic> json){
+  factory TicketBoxInfo.fromJson(Map<String, dynamic> json) {
     return TicketBoxInfo(
       id: json['id'],
       ticketId: json['ticketId'],

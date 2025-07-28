@@ -37,8 +37,8 @@ class ViewExpiredTicketBody extends StatelessWidget {
     final ticketName = ticket.ticketName;
     final entryStation = ticket.entryStationName ?? '';
     final exitStation = ticket.destinationStationName ?? '';
-    final DateTime? activateDate = ticket.activateDate;
-    final DateTime? expireDate = ticket.expireDate;
+    final DateTime activateDate = ticket.activateDate;
+    final DateTime expireDate = ticket.expireDate;
     final int status = ticket.status ?? 2; // Status 2 for expired
     final int ticketType = ticket.ticketType;
 

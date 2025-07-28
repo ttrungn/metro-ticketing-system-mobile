@@ -8,13 +8,16 @@ import '../../../../core/di/service_locator.dart';
 import '../../data/view_ticket_service.dart';
 
 const screenTitle = "Vé đã hết hạn";
+
 class ViewExpiredTicketScreen extends StatelessWidget {
   const ViewExpiredTicketScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ViewTicketCubit(getIt<ViewTicketService>())..getExpiredTickets(),
+      create:
+          (_) =>
+              ViewTicketCubit(getIt<ViewTicketService>())..getExpiredTickets(),
       child: Scaffold(
         backgroundColor: ConstantAppColor.primary,
         body: Column(
@@ -33,4 +36,3 @@ class ViewExpiredTicketScreen extends StatelessWidget {
     );
   }
 }
-

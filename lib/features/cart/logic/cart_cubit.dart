@@ -6,8 +6,6 @@ import 'package:metro_ticketing_system_mobile/features/cart/data/cart_repository
 import 'package:metro_ticketing_system_mobile/features/cart/data/model/cart_info.dart';
 import 'package:metro_ticketing_system_mobile/features/cart/data/cart_service.dart';
 
-
-
 abstract class CartState {}
 
 class CartInitial extends CartState {}
@@ -21,29 +19,28 @@ class CartLoaded extends CartState {
   CartLoaded({required this.items, required this.totalPrice});
 }
 
-
 class CartError extends CartState {
   final String message;
 
   CartError({required this.message});
 }
 
-
-
-
 class CartCubit extends Cubit<CartState> {
   final CartService cartService;
   final Map<String, Debouncer<int>> _quantityDebouncers = {};
 
   CartCubit()
-      : cartService = CartService(CartRepository()),
-        super(CartInitial());
+    : cartService = CartService(CartRepository()),
+      super(CartInitial());
 
   Future<void> loadCart() async {
     emit(CartLoading());
     try {
       final items = await cartService.getCartItems();
-      final total = items.fold<double>(0, (sum, item) => sum + item.price * item.quantity);
+      final total = items.fold<double>(
+        0,
+        (sum, item) => sum + item.price * item.quantity,
+      );
       emit(CartLoaded(items: items, totalPrice: total));
     } catch (e) {
       emit(CartError(message: e.toString()));
@@ -58,28 +55,32 @@ class CartCubit extends Cubit<CartState> {
       emit(CartError(message: e.toString()));
     }
   }
+
   void increaseQuantity(CartInfo item) {
     updateQuantity(item, item.quantity + 1);
   }
 
   void decreaseQuantity(CartInfo item) {
-      if(item.quantity > 1)
-        updateQuantity(item, item.quantity - 1);
+    if (item.quantity > 1) {
+      updateQuantity(item, item.quantity - 1);
+    }
   }
 
   void updateQuantity(CartInfo item, int newQuantity) {
     if (state is CartLoaded) {
       final currentState = state as CartLoaded;
 
-      final updatedItems = currentState.items.map((e) {
-        if (e.id == item.id) {
-          return e.copyWith(quantity: newQuantity);
-        }
-        return e;
-      }).toList();
+      final updatedItems =
+          currentState.items.map((e) {
+            if (e.id == item.id) {
+              return e.copyWith(quantity: newQuantity);
+            }
+            return e;
+          }).toList();
 
       final newTotal = updatedItems.fold<double>(
-        0, (sum, item) => sum + item.price * item.quantity,
+        0,
+        (sum, item) => sum + item.price * item.quantity,
       );
 
       emit(CartLoaded(items: updatedItems, totalPrice: newTotal));
@@ -103,14 +104,13 @@ class CartCubit extends Cubit<CartState> {
     }
   }
 
-
   @override
   Future<void> close() async {
     _quantityDebouncers.clear();
     await super.close();
   }
 
-  void startPayment(double amount, List<CartInfo> cartItems) async{
+  void startPayment(double amount, List<CartInfo> cartItems) async {
     await cartService.startPayment(amount, cartItems);
   }
 }

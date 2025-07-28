@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,7 +10,12 @@ class MainButton extends StatelessWidget {
   final String text;
   final Future<void> Function() onPressed;
 
-  const MainButton({super.key, required this.icon, required this.text, required this.onPressed});
+  const MainButton({
+    super.key,
+    required this.icon,
+    required this.text,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +36,7 @@ class MainButton extends StatelessWidget {
               ),
 
               child: Center(
-                child: FaIcon(
-                  icon,
-                  color: ConstantAppColor.primary,
-                  size: 30,
-                ),
+                child: FaIcon(icon, color: ConstantAppColor.primary, size: 30),
               ),
             ),
           ),
@@ -51,7 +51,7 @@ class MainButton extends StatelessWidget {
           ),
         ],
       ),
-      onPressed: () async{
+      onPressed: () async {
         final loadingCubit = context.read<LoadingCubit>();
         loadingCubit.show();
         await Future.delayed(Duration(milliseconds: 500));

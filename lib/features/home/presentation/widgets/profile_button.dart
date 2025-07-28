@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_color.dart';
@@ -13,7 +11,7 @@ class ProfileButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: ElevatedButton(
-        onPressed: (){
+        onPressed: () {
           Navigator.pushNamed(context, AppRoutes.profile);
         },
         style: ElevatedButton.styleFrom(
@@ -22,7 +20,11 @@ class ProfileButton extends StatelessWidget {
           padding: EdgeInsets.zero,
           shape: CircleBorder(),
         ),
-        child: const Icon(Icons.account_circle_outlined, size: 40,color: Colors.white,),
+        child: const Icon(
+          Icons.account_circle_outlined,
+          size: 40,
+          color: Colors.white,
+        ),
       ),
     );
   }

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:metro_ticketing_system_mobile/core/configs/api_client.dart';
 import 'package:metro_ticketing_system_mobile/features/cart/data/model/cart_info.dart';
@@ -21,7 +20,9 @@ class CartRepository {
       var response = await ApiClient.dio.get("/order/Cart");
       final data = response.data;
       final List<dynamic> cartData = data['data'];
-      return cartData.map((item) => CartInfo.fromJson(item as Map<String, dynamic>)).toList();
+      return cartData
+          .map((item) => CartInfo.fromJson(item as Map<String, dynamic>))
+          .toList();
     } catch (e) {
       throw ("Get Cart Items error: $e");
     }
@@ -39,11 +40,9 @@ class CartRepository {
 
   Future<bool> updateCart(String cartId, int quantity) async {
     try {
-      var response = await ApiClient.dio.put("/order/Cart",
-        data: {
-          "id": cartId,
-          "quantity": quantity,
-        },
+      var response = await ApiClient.dio.put(
+        "/order/Cart",
+        data: {"id": cartId, "quantity": quantity},
       );
       final data = response.data;
       return data['succeeded'] == true;
@@ -52,42 +51,40 @@ class CartRepository {
     }
   }
 
+  Future<String> startPayment(double amount, List<CartInfo> cartItems) async {
+    try {
+      List<Map<String, dynamic>> orderDetails =
+          cartItems.map((item) {
+            var orderDetail = {
+              "ticketId": item.ticketId,
+              "boughtPrice": item.price,
+              "quantity": item.quantity,
+              "entryStationId": null,
+              "destinationStationId": null,
+            };
+            if (item.entryStationId != null &&
+                item.entryStationId!.isNotEmpty) {
+              orderDetail["entryStationId"] = item.entryStationId!;
+            }
+            if (item.exitStationId != null && item.exitStationId!.isNotEmpty) {
+              orderDetail["destinationStationId"] = item.exitStationId!;
+            }
 
-  Future<String> startPayment(double amount, List<CartInfo> cartItems) async{
-    try{
-
-      List<Map<String, dynamic>> orderDetails = cartItems.map((item) {
-        var orderDetail = {
-          "ticketId": item.ticketId,
-          "boughtPrice": item.price,
-          "quantity": item.quantity,
-          "entryStationId": null,
-          "destinationStationId": null,
-        };
-        if (item.entryStationId != null && item.entryStationId!.isNotEmpty) {
-          orderDetail["entryStationId"] = item.entryStationId!;
-        }
-        if (item.exitStationId != null && item.exitStationId!.isNotEmpty) {
-          orderDetail["destinationStationId"] = item.exitStationId!;
-        }
-
-        return orderDetail;
-      }).toList();
+            return orderDetail;
+          }).toList();
 
       var response = await ApiClient.dio.post(
         "/order/Payment/momo/create",
-        data : {
-          "amount" : amount,
-          "orderDetails": orderDetails,
-        }
+        data: {"amount": amount, "orderDetails": orderDetails},
       );
       print(response.data);
 
       return response.data["data"]["deeplink"];
-    }catch(e){
-      throw("Error: $e");
+    } catch (e) {
+      throw ("Error: $e");
     }
   }
+
   Future<PaymentResult> confirmPayment(PaymentQuery query) async {
     try {
       final response = await ApiClient.dio.post(
@@ -104,7 +101,7 @@ class CartRepository {
           "message": query.message,
           "payType": query.payType,
           "responseTime": int.tryParse(query.responseTime) ?? 0,
-          "extraData": query.extraData ,
+          "extraData": query.extraData,
           "signature": query.signature,
         },
       );
@@ -112,7 +109,7 @@ class CartRepository {
       print("resultCode: ${query.resultCode}");
       print("responseTime: ${query.responseTime}");
 
-      print('Full response: ${response}'); // 👈 In ra toàn bộ JSON
+      print('Full response: $response'); // 👈 In ra toàn bộ JSON
 
       final rawData = response.data["data"];
       final json = rawData is String ? jsonDecode(rawData) : rawData;
@@ -122,7 +119,6 @@ class CartRepository {
         ticketCount: json['ticketCount'] ?? 0,
         message: json['message'] ?? '',
       );
-
     } catch (e) {
       if (e is DioException) {
         print('Dio error data: ${e.response?.data}');
@@ -131,6 +127,3 @@ class CartRepository {
     }
   }
 }
-
-
-

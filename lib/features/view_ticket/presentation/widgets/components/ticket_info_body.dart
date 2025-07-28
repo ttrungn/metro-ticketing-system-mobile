@@ -63,11 +63,7 @@ class TicketInfoBody extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 15),
-        _infoRow(
-          Icons.confirmation_number,
-          'Loại vé:',
-          _ticketRouteText(),
-        ),
+        _infoRow(Icons.confirmation_number, 'Loại vé:', _ticketRouteText()),
         _infoRow(
           Icons.check_circle_outline,
           'Trạng thái:',
@@ -97,8 +93,13 @@ class TicketInfoBody extends StatelessWidget {
     );
   }
 
-  Widget _infoRow(IconData icon, String label, String value,
-      {Color? color, bool isStatusRow = false}) {
+  Widget _infoRow(
+    IconData icon,
+    String label,
+    String value, {
+    Color? color,
+    bool isStatusRow = false,
+  }) {
     if (isStatusRow) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 6),
@@ -116,7 +117,10 @@ class TicketInfoBody extends StatelessWidget {
             ),
             IntrinsicWidth(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   border: Border.all(color: color ?? Colors.black, width: 1.2),
                   borderRadius: BorderRadius.circular(20),
@@ -142,37 +146,37 @@ class TicketInfoBody extends StatelessWidget {
       child: Table(
         columnWidths: const {
           0: IntrinsicColumnWidth(), // Icon
-          1: FixedColumnWidth(5),    // spacing
-          2: FixedColumnWidth(95),  // Label width
-          3: FlexColumnWidth(),      // Value column
+          1: FixedColumnWidth(5), // spacing
+          2: FixedColumnWidth(95), // Label width
+          3: FlexColumnWidth(), // Value column
         },
         defaultVerticalAlignment: TableCellVerticalAlignment.middle,
         children: [
-          TableRow(children: [
-            Icon(icon, size: 20, color: color ?? ConstantAppColor.primary),
-            const SizedBox(),
-            Text(
-              label,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            Text(
-              value,
-              style: TextStyle(
-                color: color ?? Colors.black87,
+          TableRow(
+            children: [
+              Icon(icon, size: 20, color: color ?? ConstantAppColor.primary),
+              const SizedBox(),
+              Text(
+                label,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
-            ),
-          ])
+              Text(value, style: TextStyle(color: color ?? Colors.black87)),
+            ],
+          ),
         ],
       ),
     );
   }
 
-
-
-
   String _ticketRouteText() {
-    final isEntryEmpty = entryStationName == null || entryStationName!.trim().isEmpty;
-    final isDestinationEmpty = destinationStationName == null || destinationStationName!.trim().isEmpty;
+    final isEntryEmpty =
+        entryStationName == null || entryStationName!.trim().isEmpty;
+    final isDestinationEmpty =
+        destinationStationName == null ||
+        destinationStationName!.trim().isEmpty;
 
     if (ticketType == 3) {
       return "Học Sinh, Sinh Viên";
@@ -182,7 +186,4 @@ class TicketInfoBody extends StatelessWidget {
     }
     return '$ticketName: $entryStationName - $destinationStationName';
   }
-
-
-  }
-
+}

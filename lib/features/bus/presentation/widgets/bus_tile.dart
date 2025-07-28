@@ -4,7 +4,7 @@ import 'package:metro_ticketing_system_mobile/features/bus/data/models/response/
 
 class BusTile extends StatelessWidget {
   final BusModel bus;
-  const BusTile({Key? key, required this.bus}) : super(key: key);
+  const BusTile({super.key, required this.bus});
 
   @override
   Widget build(BuildContext context) {

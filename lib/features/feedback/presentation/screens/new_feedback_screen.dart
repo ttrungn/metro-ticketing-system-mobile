@@ -6,7 +6,6 @@ import 'package:metro_ticketing_system_mobile/features/feedback/data/models/feed
 import 'package:metro_ticketing_system_mobile/features/feedback/logic/feedback_cubit.dart';
 import 'package:metro_ticketing_system_mobile/features/feedback/logic/feedback_type_cubit.dart';
 
-
 class NewFeedbackScreen extends StatefulWidget {
   const NewFeedbackScreen({super.key});
 
@@ -43,9 +42,9 @@ class _NewFeedbackScreenState extends State<NewFeedbackScreen> {
       setState(() {
         _errorText = null;
       });
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Vui lòng chọn trạm')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Vui lòng chọn trạm')));
       return;
     }
 
@@ -64,15 +63,18 @@ class _NewFeedbackScreenState extends State<NewFeedbackScreen> {
       content: text,
     );
 
-    context.read<FeedbackCubit>().submitFeedback(request).then((_) {
-      Navigator.pop(context, true);
-    }).catchError((error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Gửi phản hồi thất bại: $error')),
-      );
-    });
+    context
+        .read<FeedbackCubit>()
+        .submitFeedback(request)
+        .then((_) {
+          Navigator.pop(context, true);
+        })
+        .catchError((error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Gửi phản hồi thất bại: $error')),
+          );
+        });
   }
-
 
   String? _selectedType;
   String? _selectedLocation;
@@ -108,14 +110,16 @@ class _NewFeedbackScreenState extends State<NewFeedbackScreen> {
                         decoration: InputDecoration(
                           labelText: 'Loại phản hồi',
                           labelStyle: const TextStyle(
-                              color: ConstantAppColor.primary,
-                              fontWeight: FontWeight.bold
+                            color: ConstantAppColor.primary,
+                            fontWeight: FontWeight.bold,
                           ),
                           prefixIcon: const Icon(
-                              Icons.category,
-                              color: ConstantAppColor.primary
+                            Icons.category,
+                            color: ConstantAppColor.primary,
                           ),
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: const BorderSide(
@@ -132,10 +136,15 @@ class _NewFeedbackScreenState extends State<NewFeedbackScreen> {
                           ),
                         ),
                         value: _selectedType,
-                        items: feedbackTypes.map((type) => DropdownMenuItem(
-                          value: type.id,
-                          child: Text(type.name),
-                        )).toList(),
+                        items:
+                            feedbackTypes
+                                .map(
+                                  (type) => DropdownMenuItem(
+                                    value: type.id,
+                                    child: Text(type.name),
+                                  ),
+                                )
+                                .toList(),
                         onChanged: (value) {
                           setState(() {
                             _selectedType = value;
@@ -147,14 +156,16 @@ class _NewFeedbackScreenState extends State<NewFeedbackScreen> {
                         decoration: InputDecoration(
                           labelText: 'Chọn trạm',
                           labelStyle: const TextStyle(
-                              color: ConstantAppColor.primary,
-                              fontWeight: FontWeight.bold
+                            color: ConstantAppColor.primary,
+                            fontWeight: FontWeight.bold,
                           ),
                           prefixIcon: const Icon(
-                              Icons.train,
-                              color: ConstantAppColor.primary
+                            Icons.train,
+                            color: ConstantAppColor.primary,
                           ),
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                             borderSide: const BorderSide(
@@ -171,10 +182,15 @@ class _NewFeedbackScreenState extends State<NewFeedbackScreen> {
                           ),
                         ),
                         value: _selectedLocation,
-                        items: stations.map((station) => DropdownMenuItem(
-                          value: station.id,
-                          child: Text(station.name),
-                        )).toList(),
+                        items:
+                            stations
+                                .map(
+                                  (station) => DropdownMenuItem(
+                                    value: station.id,
+                                    child: Text(station.name),
+                                  ),
+                                )
+                                .toList(),
                         onChanged: (value) {
                           setState(() {
                             _selectedLocation = value;

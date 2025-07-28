@@ -27,7 +27,10 @@ class TicketDialogShell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: Colors.transparent,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
+      insetPadding: const EdgeInsets.symmetric(
+        horizontal: 20.0,
+        vertical: 24.0,
+      ),
       child: ClipPath(
         clipper: CustomTicketShape(),
         child: Material(
@@ -42,8 +45,12 @@ class TicketDialogShell extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(25),
                   child: SizedBox(
-                    width: contentWidth ?? MediaQuery.of(context).size.width * 0.15,
-                    height: contentWidth ?? MediaQuery.of(context).size.width * 0.15,
+                    width:
+                        contentWidth ??
+                        MediaQuery.of(context).size.width * 0.15,
+                    height:
+                        contentWidth ??
+                        MediaQuery.of(context).size.width * 0.15,
                     child: Image.asset('assets/icon/sm_metro_logo_nobg.png'),
                   ),
                 ),
@@ -55,9 +62,7 @@ class TicketDialogShell extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   height: 10,
-                  child: CustomPaint(
-                    painter: DashedLinePainter(),
-                  ),
+                  child: CustomPaint(painter: DashedLinePainter()),
                 ),
 
                 // Footer
@@ -68,11 +73,17 @@ class TicketDialogShell extends StatelessWidget {
                   )
                 else
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                      vertical: 16.0,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        TextButton(onPressed: okBtnFunction, child: Text(okBtnText)),
+                        TextButton(
+                          onPressed: okBtnFunction,
+                          child: Text(okBtnText),
+                        ),
                         TextButton(
                           onPressed: () => Navigator.pop(context),
                           child: Text(cancelBtnText),

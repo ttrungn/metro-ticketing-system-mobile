@@ -45,6 +45,4 @@ class CartService {
   Future<PaymentResult> confirmPayment(PaymentQuery query) async {
     return await _repo.confirmPayment(query);
   }
-
-
 }

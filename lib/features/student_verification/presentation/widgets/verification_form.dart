@@ -83,9 +83,8 @@ class _VerificationFormState extends State<VerificationForm> {
     }
   }
 
-
   bool _isImagePickerActive = false;
-  Future<void> _pickImage() async{
+  Future<void> _pickImage() async {
     if (_isImagePickerActive) return;
     _isImagePickerActive = true;
     final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -107,10 +106,11 @@ class _VerificationFormState extends State<VerificationForm> {
           child: Column(
             children: [
               _buildTextField(
-                  label: "Mã Sinh Viên",
-                  controller: _studentCodeController,
-                  focusNode: _studentCodeFocusNode,
-                  icon: Icons.badge),
+                label: "Mã Sinh Viên",
+                controller: _studentCodeController,
+                focusNode: _studentCodeFocusNode,
+                icon: Icons.badge,
+              ),
               _buildTextField(
                 label: "Email Học Sinh",
                 controller: _studentEmailController,
@@ -120,7 +120,9 @@ class _VerificationFormState extends State<VerificationForm> {
                   if (value == null || value.isEmpty) {
                     return 'Vui lòng nhập Email Học Sinh';
                   }
-                  final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                  final emailRegex = RegExp(
+                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                  );
                   if (!emailRegex.hasMatch(value)) {
                     return 'Email không hợp lệ';
                   }
@@ -128,28 +130,38 @@ class _VerificationFormState extends State<VerificationForm> {
                 },
               ),
               _buildTextField(
-                  label: "Tên Trường Học",
-                  controller: _schoolController,
-                  focusNode: _schoolFocusNode,
-                  icon: Icons.school),
+                label: "Tên Trường Học",
+                controller: _schoolController,
+                focusNode: _schoolFocusNode,
+                icon: Icons.school,
+              ),
               _buildTextField(
-                  label: "Họ",
-                  controller: _firstNameController,
-                  focusNode: _firstNameFocusNode,
-                  icon: Icons.person),
+                label: "Họ",
+                controller: _firstNameController,
+                focusNode: _firstNameFocusNode,
+                icon: Icons.person,
+              ),
               _buildTextField(
-                  label: "Tên",
-                  controller: _lastNameController,
-                  focusNode: _lastNameFocusNode,
-                  icon: Icons.person),
+                label: "Tên",
+                controller: _lastNameController,
+                focusNode: _lastNameFocusNode,
+                icon: Icons.person,
+              ),
               _buildDateField(
-                  "Ngày Sinh",
-                  _dobController,
-                  focusNode: FocusNode()),
+                "Ngày Sinh",
+                _dobController,
+                focusNode: FocusNode(),
+              ),
               const SizedBox(height: 12),
               const Align(
                 alignment: Alignment.centerLeft,
-                child: Text("Ảnh Thẻ Sinh Viên *", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey)),
+                child: Text(
+                  "Ảnh Thẻ Sinh Viên *",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
+                  ),
+                ),
               ),
               const SizedBox(height: 8),
               _buildImagePicker(),
@@ -157,31 +169,36 @@ class _VerificationFormState extends State<VerificationForm> {
               SubmitButton(
                 formKey: _formKey,
                 onSubmit: () {
-              if (_formKey.currentState!.validate() && _studentCardImage != null){
-                try{
-                  final dob = DateFormat('dd-MM-yyyy').parse(_dobController.text);
+                  if (_formKey.currentState!.validate() &&
+                      _studentCardImage != null) {
+                    try {
+                      final dob = DateFormat(
+                        'dd-MM-yyyy',
+                      ).parse(_dobController.text);
 
-                  context.read<VerificationCubit>().submitVerification(
-                    studentCode: _studentCodeController.text,
-                    schoolName: _schoolController.text,
-                    studentEmail: _studentEmailController.text,
-                    firstName: _firstNameController.text,
-                    lastName: _lastNameController.text,
-                    // fullName: _fullNameController.text,
-                    dateOfBirth: dob,
-                    studentCardImage: _studentCardImage!,
-                  );
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Ngày sinh không hợp lệ')),
-                  );
-                }
-              } else if (_studentCardImage == null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Upload student card image')),
-                );
-              }
-              },
+                      context.read<VerificationCubit>().submitVerification(
+                        studentCode: _studentCodeController.text,
+                        schoolName: _schoolController.text,
+                        studentEmail: _studentEmailController.text,
+                        firstName: _firstNameController.text,
+                        lastName: _lastNameController.text,
+                        // fullName: _fullNameController.text,
+                        dateOfBirth: dob,
+                        studentCardImage: _studentCardImage!,
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Ngày sinh không hợp lệ')),
+                      );
+                    }
+                  } else if (_studentCardImage == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Upload student card image'),
+                      ),
+                    );
+                  }
+                },
               ),
             ],
           ),
@@ -209,9 +226,8 @@ class _VerificationFormState extends State<VerificationForm> {
             fontWeight: FontWeight.w500,
             color: (focusNode?.hasFocus ?? false) ? _focusColor : _unfocusColor,
           ),
-          prefixIcon: icon != null
-              ? Icon(icon, color: _getIconColor(focusNode))
-              : null,
+          prefixIcon:
+              icon != null ? Icon(icon, color: _getIconColor(focusNode)) : null,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),
             borderSide: BorderSide(color: _unfocusColor, width: 2.0),
@@ -224,16 +240,24 @@ class _VerificationFormState extends State<VerificationForm> {
             borderRadius: BorderRadius.circular(12.0),
             borderSide: BorderSide(color: _unfocusColor, width: 2.0),
           ),
-          contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 14,
+            horizontal: 12,
+          ),
         ),
-        validator: validator ?? (value) =>
-        value == null || value.isEmpty ? 'Please input $label' : null,
+        validator:
+            validator ??
+            (value) =>
+                value == null || value.isEmpty ? 'Please input $label' : null,
       ),
     );
   }
 
-
-  Widget _buildDateField(String label, TextEditingController controller, {FocusNode? focusNode}) {
+  Widget _buildDateField(
+    String label,
+    TextEditingController controller, {
+    FocusNode? focusNode,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: TextFormField(
@@ -248,7 +272,10 @@ class _VerificationFormState extends State<VerificationForm> {
             fontWeight: FontWeight.w500,
             color: (focusNode?.hasFocus ?? false) ? _focusColor : _unfocusColor,
           ),
-          prefixIcon: Icon(Icons.calendar_today, color: _getIconColor(focusNode)),
+          prefixIcon: Icon(
+            Icons.calendar_today,
+            color: _getIconColor(focusNode),
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),
             borderSide: BorderSide(color: _unfocusColor, width: 2.0),
@@ -261,14 +288,17 @@ class _VerificationFormState extends State<VerificationForm> {
             borderRadius: BorderRadius.circular(12.0),
             borderSide: BorderSide(color: _unfocusColor, width: 2.0),
           ),
-          contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 14,
+            horizontal: 12,
+          ),
         ),
-        validator: (value) =>
-        value == null || value.isEmpty ? 'Please choose $label' : null,
+        validator:
+            (value) =>
+                value == null || value.isEmpty ? 'Please choose $label' : null,
       ),
     );
   }
-
 
   Widget _buildImagePicker() {
     return GestureDetector(
@@ -283,21 +313,20 @@ class _VerificationFormState extends State<VerificationForm> {
           borderRadius: BorderRadius.circular(12),
           color: Colors.grey[50],
         ),
-        child: _studentCardImage == null
-            ? const Center(
-          child: Icon(Icons.add_a_photo, size: 40, color: Colors.grey),
-        )
-            : ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: Image.file(
-            _studentCardImage!,
-            fit: BoxFit.cover,
-            width: double.infinity,
-          ),
-        ),
+        child:
+            _studentCardImage == null
+                ? const Center(
+                  child: Icon(Icons.add_a_photo, size: 40, color: Colors.grey),
+                )
+                : ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.file(
+                    _studentCardImage!,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                  ),
+                ),
       ),
     );
   }
-
-
 }

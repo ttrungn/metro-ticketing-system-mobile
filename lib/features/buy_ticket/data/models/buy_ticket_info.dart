@@ -45,7 +45,6 @@ class BuyTicketInfo {
         return TicketType.singleUse; // fallback
     }
   }
-
 }
 
 enum TicketType { singleUse, multipleUse, student }

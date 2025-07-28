@@ -1,8 +1,4 @@
-import 'dart:convert';
-
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:injectable/injectable.dart';
-import 'package:metro_ticketing_system_mobile/core/configs/api_client.dart';
 
 @lazySingleton
 class CartInfo {
@@ -44,21 +40,18 @@ class CartInfo {
       price: (json['price'] as num?)?.toDouble() ?? 0.0,
     );
   }
-  CartInfo copyWith({
-    int? quantity,
-  }) {
+  CartInfo copyWith({int? quantity}) {
     return CartInfo(
-      id: this.id,
-      ticketId: this.ticketId,
-      ticketName: this.ticketName,
-      price: this.price,
+      id: id,
+      ticketId: ticketId,
+      ticketName: ticketName,
+      price: price,
       quantity: quantity ?? this.quantity,
-      routeName: this.routeName,
-      entryStationId: this.entryStationId,
-      entryStationName: this.entryStationName,
-      exitStationId: this.exitStationId,
-      exitStationName: this.exitStationName,
+      routeName: routeName,
+      entryStationId: entryStationId,
+      entryStationName: entryStationName,
+      exitStationId: exitStationId,
+      exitStationName: exitStationName,
     );
   }
-
 }

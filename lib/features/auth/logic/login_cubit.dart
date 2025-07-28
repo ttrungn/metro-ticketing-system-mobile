@@ -36,7 +36,7 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginLoading());
 
     try {
-      final response = await  _authService.loginUser(
+      final response = await _authService.loginUser(
         LoginRequest(email: email.trim(), password: password),
       );
 

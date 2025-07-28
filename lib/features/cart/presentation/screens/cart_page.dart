@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
 import 'package:intl/intl.dart';
@@ -103,6 +102,7 @@ class _CartPageState extends State<CartPage> {
       print(selectedMethod);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,16 +115,15 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-
   Widget _buildContent(BuildContext context) {
     return Scaffold(
-              appBar: AppBar(
-              title: Text(
-              "Thông tin đơn hàng",
-               style: TextStyle(color: Colors.white),
-              ),
-                backgroundColor: ConstantAppColor.primary,
-            ),
+      appBar: AppBar(
+        title: Text(
+          "Thông tin đơn hàng",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: ConstantAppColor.primary,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -188,22 +187,25 @@ class _CartPageState extends State<CartPage> {
                 ),
               ),
               const SizedBox(height: 8),
-              Text("Thông tin thanh toán",style: TextStyle(fontSize: 24)),
+              Text("Thông tin thanh toán", style: TextStyle(fontSize: 24)),
               const SizedBox(height: 8),
               _buildInfoCard(),
               const SizedBox(height: 8),
-              Text("Thông tin chi tiết",style: TextStyle(fontSize: 24)),
+              Text("Thông tin chi tiết", style: TextStyle(fontSize: 24)),
 
               BlocBuilder<CartCubit, CartState>(
                 builder: (context, state) {
                   if (state is CartLoaded) {
                     return Column(
-                      children: state.items
-                          .map((item) => Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: _buildTicketInfo(context, item),
-                      ))
-                          .toList(),
+                      children:
+                          state.items
+                              .map(
+                                (item) => Padding(
+                                  padding: const EdgeInsets.only(bottom: 10),
+                                  child: _buildTicketInfo(context, item),
+                                ),
+                              )
+                              .toList(),
                     );
                   } else if (state is CartLoading) {
                     return Center(child: CircularProgressIndicator());
@@ -237,14 +239,26 @@ class _CartPageState extends State<CartPage> {
 
                   return TextButton(
                     style: ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(selectedMethod != null?ConstantAppColor.primary : Colors.grey),
+                      backgroundColor: WidgetStatePropertyAll(
+                        selectedMethod != null
+                            ? ConstantAppColor.primary
+                            : Colors.grey,
+                      ),
                       shape: WidgetStatePropertyAll(
-                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
                       ),
                     ),
-                    onPressed: selectedMethod != null? (){
-                    context.read<CartCubit>().startPayment(total, cartItems);
-                  }: null,
+                    onPressed:
+                        selectedMethod != null
+                            ? () {
+                              context.read<CartCubit>().startPayment(
+                                total,
+                                cartItems,
+                              );
+                            }
+                            : null,
                     child: Text(
                       "Thanh toán ${currencyFormatter.format(total)}đ",
                       style: TextStyle(fontSize: 20, color: Colors.white),
@@ -260,10 +274,10 @@ class _CartPageState extends State<CartPage> {
   }
 
   Widget _buildTicketInfo(BuildContext context, CartInfo item) {
-
     if (!quantityControllers.containsKey(item.id)) {
-      quantityControllers[item.id] =
-          TextEditingController(text: item.quantity.toString());
+      quantityControllers[item.id] = TextEditingController(
+        text: item.quantity.toString(),
+      );
     }
 
     final controller = quantityControllers[item.id]!;
@@ -275,20 +289,23 @@ class _CartPageState extends State<CartPage> {
           onRemove: () async {
             final shouldRemove = await showDialog<bool>(
               context: context,
-              builder: (context) => AlertDialog(
-                title: Text("Xác nhận xoá vé"),
-                content: Text("Bạn có chắc chắn muốn xoá vé này khỏi giỏ hàng không?"),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, false),
-                    child: Text("Không"),
+              builder:
+                  (context) => AlertDialog(
+                    title: Text("Xác nhận xoá vé"),
+                    content: Text(
+                      "Bạn có chắc chắn muốn xoá vé này khỏi giỏ hàng không?",
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, false),
+                        child: Text("Không"),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, true),
+                        child: Text("Có"),
+                      ),
+                    ],
                   ),
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, true),
-                    child: Text("Có"),
-                  ),
-                ],
-              ),
             );
 
             if (shouldRemove == true) {
@@ -314,16 +331,22 @@ class _CartPageState extends State<CartPage> {
                   children: [
                     // Button -
                     InkWell(
-                      onTap: item.quantity > 1 ? () {
-                        context.read<CartCubit>().decreaseQuantity(item);
-                      } : null,
+                      onTap:
+                          item.quantity > 1
+                              ? () {
+                                context.read<CartCubit>().decreaseQuantity(
+                                  item,
+                                );
+                              }
+                              : null,
                       child: Container(
                         width: 26,
                         alignment: Alignment.center,
                         child: Icon(
                           Icons.remove,
                           size: 20,
-                          color: item.quantity > 1 ? Colors.black54 : Colors.grey,
+                          color:
+                              item.quantity > 1 ? Colors.black54 : Colors.grey,
                         ),
                       ),
                     ),
@@ -383,7 +406,8 @@ class _CartPageState extends State<CartPage> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  (item.entryStationName.trim().isNotEmpty || item.exitStationName.trim().isNotEmpty)
+                  (item.entryStationName.trim().isNotEmpty ||
+                          item.exitStationName.trim().isNotEmpty)
                       ? 'Ga ${item.entryStationName} - Ga ${item.exitStationName}'
                       : 'Vé Có Thể Sử Dụng Tại Bất Kỳ Ga Nào!',
                   style: TextStyle(color: Colors.black, fontSize: 14),
@@ -391,24 +415,31 @@ class _CartPageState extends State<CartPage> {
               ),
               SizedBox(height: 8),
               Align(
-
                 alignment: Alignment.center,
-              child: Text("Chúc quý khách có một chuyến đi vui vẻ!",
-                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black54, fontSize: 14)),
+                child: Text(
+                  "Chúc quý khách có một chuyến đi vui vẻ!",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54,
+                    fontSize: 14,
+                  ),
+                ),
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }
-
 
   Widget _buildInfoCard() {
     return BlocBuilder<CartCubit, CartState>(
       builder: (context, state) {
         if (state is CartLoaded) {
-          final totalQuantity = state.items.fold<int>(0, (sum, item) => sum + item.quantity);
+          final totalQuantity = state.items.fold<int>(
+            0,
+            (sum, item) => sum + item.quantity,
+          );
           final totalPrice = state.totalPrice;
 
           return Container(
@@ -421,10 +452,20 @@ class _CartPageState extends State<CartPage> {
             child: Column(
               children: [
                 _InfoRow(label: 'Số lượng:', value: '$totalQuantity vé'),
-                _InfoRow(label: 'Tạm tính:', value: '${currencyFormatter.format(totalPrice)}đ'),
+                _InfoRow(
+                  label: 'Tạm tính:',
+                  value: '${currencyFormatter.format(totalPrice)}đ',
+                ),
                 Divider(),
-                _InfoRow(label: 'Tổng giá tiền:', value: '${currencyFormatter.format(totalPrice)}đ'),
-                _InfoRow(label: 'Thành tiền:', value: '${currencyFormatter.format(totalPrice)}đ', isBold: true),
+                _InfoRow(
+                  label: 'Tổng giá tiền:',
+                  value: '${currencyFormatter.format(totalPrice)}đ',
+                ),
+                _InfoRow(
+                  label: 'Thành tiền:',
+                  value: '${currencyFormatter.format(totalPrice)}đ',
+                  isBold: true,
+                ),
               ],
             ),
           );
@@ -434,8 +475,8 @@ class _CartPageState extends State<CartPage> {
       },
     );
   }
-
 }
+
 class _InfoRow extends StatelessWidget {
   final String label;
   final String value;
@@ -449,9 +490,10 @@ class _InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final valueStyle = isBold
-        ? const TextStyle(fontWeight: FontWeight.bold)
-        : const TextStyle();
+    final valueStyle =
+        isBold
+            ? const TextStyle(fontWeight: FontWeight.bold)
+            : const TextStyle();
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),

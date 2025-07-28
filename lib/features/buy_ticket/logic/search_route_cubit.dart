@@ -7,19 +7,16 @@ import '../data/models/route_info.dart';
 import '../data/models/station_info.dart';
 
 final class SearchRouteState {
-   List<RouteInfo> routes =[];
-   List<StationInfo> stations = [];
-
-
+  List<RouteInfo> routes = [];
+  List<StationInfo> stations = [];
 }
-
 
 class SearchRouteCubit extends Cubit<SearchRouteState> {
   final BuyTicketService buyTicketService;
 
   SearchRouteCubit(this.buyTicketService) : super(SearchRouteState());
 
-  void fetchRoutes() async{
+  void fetchRoutes() async {
     print("fetch Routes");
     var newState = SearchRouteState();
     newState.routes = await buyTicketService.getRoutes();
@@ -27,7 +24,7 @@ class SearchRouteCubit extends Cubit<SearchRouteState> {
     emit(newState);
   }
 
-  void fetchStations(String routeId) async{
+  void fetchStations(String routeId) async {
     print("Fetch Stations");
     var newState = SearchRouteState();
     newState.routes = state.routes;
@@ -36,13 +33,23 @@ class SearchRouteCubit extends Cubit<SearchRouteState> {
     emit(newState);
   }
 
-  Future<SingleUseTicketInfo> fetchTicket(String routeId, String entryId, String exitId) async {
+  Future<SingleUseTicketInfo> fetchTicket(
+    String routeId,
+    String entryId,
+    String exitId,
+  ) async {
     var newState = SearchRouteState();
     newState.routes = state.routes;
     newState.stations = state.stations;
     emit(newState);
 
-    return  await buyTicketService.getSingleUseTicketInfo(SingleUseTicketRequest(routeId: routeId, entryStationId: entryId, exitStationId: exitId));
+    return await buyTicketService.getSingleUseTicketInfo(
+      SingleUseTicketRequest(
+        routeId: routeId,
+        entryStationId: entryId,
+        exitStationId: exitId,
+      ),
+    );
   }
 }
 

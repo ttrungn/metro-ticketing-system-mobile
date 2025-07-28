@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:metro_ticketing_system_mobile/features/view_ticket/presentation/widgets/components/ticket_info_body.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../../../data/qr_util.dart';
 import '../../../../../core/constants/app_color.dart';
-
 
 class TicketQRView extends StatefulWidget {
   final String orderId;
@@ -53,6 +51,7 @@ class TicketQRViewState extends State<TicketQRView> {
         return 'Không rõ';
     }
   }
+
   Color _statusColor(int status) {
     switch (status) {
       case 0:
@@ -229,7 +228,11 @@ class TicketQRViewState extends State<TicketQRView> {
       child: Row(
         children: [
           _buildTabButton('Mã QR', showQR, () => setState(() => showQR = true)),
-          _buildTabButton('Thông tin', !showQR, () => setState(() => showQR = false)),
+          _buildTabButton(
+            'Thông tin',
+            !showQR,
+            () => setState(() => showQR = false),
+          ),
         ],
       ),
     );
@@ -258,17 +261,20 @@ class TicketQRViewState extends State<TicketQRView> {
       ),
     );
   }
+
   String _ticketRouteText() {
-    final isEntryEmpty = widget.entryStationName == null || widget.entryStationName!.trim().isEmpty;
-    final isDestinationEmpty = widget.destinationStationName == null || widget.destinationStationName!.trim().isEmpty;
+    final isEntryEmpty =
+        widget.entryStationName == null ||
+        widget.entryStationName!.trim().isEmpty;
+    final isDestinationEmpty =
+        widget.destinationStationName == null ||
+        widget.destinationStationName!.trim().isEmpty;
 
     if (isEntryEmpty || isDestinationEmpty) {
       return widget.ticketName;
     }
     return '${widget.ticketName}: ${widget.entryStationName} - ${widget.destinationStationName}';
   }
-
-
 
   Widget _buildRouteTitle() {
     return Row(
@@ -279,10 +285,7 @@ class TicketQRViewState extends State<TicketQRView> {
         Flexible(
           child: Text(
             _ticketRouteText(),
-             style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             overflow: TextOverflow.ellipsis,
           ),
         ),

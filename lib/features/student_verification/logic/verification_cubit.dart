@@ -8,6 +8,7 @@ import 'package:metro_ticketing_system_mobile/features/student_verification/data
 
 @immutable
 abstract class VerificationState {}
+
 class VerificationInitial extends VerificationState {}
 
 class VerificationLoading extends VerificationState {}
@@ -27,7 +28,8 @@ class VerificationFailure extends VerificationState {
 @injectable
 class VerificationCubit extends Cubit<VerificationState> {
   final StudentVerificationService _studentVerificationService;
-  VerificationCubit(this._studentVerificationService) : super(VerificationInitial());
+  VerificationCubit(this._studentVerificationService)
+    : super(VerificationInitial());
 
   Future<void> submitVerification({
     required String studentCode,
@@ -55,15 +57,9 @@ class VerificationCubit extends Cubit<VerificationState> {
       final responseData = await _studentVerificationService
           .submitVerificationRequest(request);
 
-      if (responseData is Map<String, dynamic>) {
-        emit(VerificationSuccess(responseData as Map<String, dynamic>));
-      } else {
-        throw Exception('Unexpected response from server');
-      }
+      emit(VerificationSuccess(responseData));
     } catch (e) {
       emit(VerificationFailure('Error: ${e.toString()}'));
     }
   }
 }
-
-

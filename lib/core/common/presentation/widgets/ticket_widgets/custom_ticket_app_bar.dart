@@ -16,7 +16,6 @@ class CustomTicketAppBar extends StatelessWidget {
     this.onLeadingPressed,
   });
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -41,7 +40,9 @@ class CustomTicketAppBar extends StatelessWidget {
                 Positioned(
                   left: 0,
                   child: IconButton(
-                    onPressed: onLeadingPressed ?? () => Navigator.pushNamed(context, AppRoutes.home),
+                    onPressed:
+                        onLeadingPressed ??
+                        () => Navigator.pushNamed(context, AppRoutes.home),
                     icon: Icon(
                       leadingIcon ?? Icons.home_outlined,
                       color: ConstantAppColor.primaryLight,
@@ -49,10 +50,7 @@ class CustomTicketAppBar extends StatelessWidget {
                     ),
                   ),
                 ),
-                Positioned(
-                  right: 16,
-                  child: leftWidget ?? Container(),
-                ),
+                Positioned(right: 16, child: leftWidget ?? Container()),
               ],
             ),
           ),

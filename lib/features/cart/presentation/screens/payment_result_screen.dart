@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:metro_ticketing_system_mobile/core/constants/app_color.dart';
 import 'package:metro_ticketing_system_mobile/core/routes/app_routes.dart';
-import 'package:metro_ticketing_system_mobile/features/cart/logic/payment_cubit.dart';
-import '../../data/model/momo_payment_query.dart';
 import '../../data/model/payment_result.dart';
 
 class PaymentResultScreen extends StatelessWidget {
   final PaymentResult result;
 
-  const PaymentResultScreen({
-    super.key,
-    required this.result,
-  });
+  const PaymentResultScreen({super.key, required this.result});
 
   @override
   Widget build(BuildContext context) {
     final isSuccess = result.isConfirm;
     final icon = isSuccess ? Icons.check_circle : Icons.error;
     final color = isSuccess ? Colors.green : Colors.red;
-    final message = isSuccess
-        ? 'THANH TOÁN ${result.ticketCount} VÉ THÀNH CÔNG'
-        : 'THANH TOÁN THẤT BẠI';
+    final message =
+        isSuccess
+            ? 'THANH TOÁN ${result.ticketCount} VÉ THÀNH CÔNG'
+            : 'THANH TOÁN THẤT BẠI';
 
     return Scaffold(
       backgroundColor: ConstantAppColor.primaryLight,

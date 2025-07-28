@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class PaymentQuery {
   final String partnerCode;
   final String orderId;
@@ -32,8 +30,6 @@ class PaymentQuery {
   });
 
   factory PaymentQuery.fromQueryParameters(Map<String, String> params) {
-
-
     return PaymentQuery(
       partnerCode: params['partnerCode'] ?? '',
       orderId: params['orderId'] ?? '',
@@ -51,4 +47,3 @@ class PaymentQuery {
     );
   }
 }
-

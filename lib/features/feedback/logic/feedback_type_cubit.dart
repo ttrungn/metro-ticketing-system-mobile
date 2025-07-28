@@ -16,15 +16,13 @@ class FeedbackTypeCubit extends Cubit<FeedbackTypeState> {
       final feedbackTypes = await _userService.fetchFeedbackTypes();
       final stations = await _userService.fetchStations();
 
-      emit(FeedbackTypeLoaded(
-        feedbackTypes: feedbackTypes,
-        stations: stations,
-      ));
+      emit(
+        FeedbackTypeLoaded(feedbackTypes: feedbackTypes, stations: stations),
+      );
     } catch (e) {
       emit(FeedbackTypeError(e.toString()));
     }
   }
-
 }
 
 @immutable
@@ -38,10 +36,7 @@ class FeedbackTypeLoaded extends FeedbackTypeState {
   final List<FeedbackType> feedbackTypes;
   final List<StationModel> stations;
 
-  FeedbackTypeLoaded({
-    required this.feedbackTypes,
-    required this.stations,
-  });
+  FeedbackTypeLoaded({required this.feedbackTypes, required this.stations});
 }
 
 class FeedbackTypeError extends FeedbackTypeState {

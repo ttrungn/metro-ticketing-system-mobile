@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'buy_ticket_info.dart';
 
 class BuyTicketBoxInfoResponse {
@@ -7,12 +5,9 @@ class BuyTicketBoxInfoResponse {
 
   BuyTicketBoxInfoResponse({required this.buyTickets});
 
-
-  factory BuyTicketBoxInfoResponse.fromJson(List<dynamic> json){
-    return BuyTicketBoxInfoResponse(buyTickets:
-    json.map((e) => BuyTicketInfo.fromJson(e)).toList()
+  factory BuyTicketBoxInfoResponse.fromJson(List<dynamic> json) {
+    return BuyTicketBoxInfoResponse(
+      buyTickets: json.map((e) => BuyTicketInfo.fromJson(e)).toList(),
     );
   }
 }
-
-

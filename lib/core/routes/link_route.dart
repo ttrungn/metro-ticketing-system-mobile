@@ -12,10 +12,6 @@ class DeepLinkRoute {
   });
 
   bool matches(Uri uri) {
-    return uri.scheme == scheme &&
-        uri.host == host &&
-        uri.path == path;
+    return uri.scheme == scheme && uri.host == host && uri.path == path;
   }
 }
-
-

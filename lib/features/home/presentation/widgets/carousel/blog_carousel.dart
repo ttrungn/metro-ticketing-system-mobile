@@ -18,10 +18,7 @@ class BlogCarousel extends StatelessWidget {
               children: [
                 const Text(
                   'Tin tức',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 24,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
                 ),
                 Text(
                   'Tất cả',
@@ -62,9 +59,7 @@ class _BlogCard extends StatelessWidget {
       width: 180,
       child: Card(
         elevation: 2,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         clipBehavior: Clip.antiAlias,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,15 +92,12 @@ class _BlogCard extends StatelessWidget {
                       'Mua vé đúng thời điểm để đảm bảo quyền lợi',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: Colors.grey,
-                      ),
+                      style: TextStyle(fontSize: 11, color: Colors.grey),
                     ),
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

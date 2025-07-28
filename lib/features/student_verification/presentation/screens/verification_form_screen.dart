@@ -5,9 +5,7 @@ import 'package:metro_ticketing_system_mobile/core/di/service_locator.dart';
 import 'package:metro_ticketing_system_mobile/features/student_verification/presentation/widgets/verification_form.dart';
 import 'package:metro_ticketing_system_mobile/features/student_verification/logic/verification_cubit.dart';
 
-
 class VerificationFormScreen extends StatelessWidget {
-
   const VerificationFormScreen({super.key});
 
   @override
@@ -16,8 +14,9 @@ class VerificationFormScreen extends StatelessWidget {
       create: (context) => getIt<VerificationCubit>(),
       child: Scaffold(
         appBar: AppBar(
-            title: const Text('Xác thực sinh viên'),
-            backgroundColor: ConstantAppColor.primary,),
+          title: const Text('Xác thực sinh viên'),
+          backgroundColor: ConstantAppColor.primary,
+        ),
         body: const Padding(
           padding: EdgeInsets.all(16),
           child: VerificationForm(),
